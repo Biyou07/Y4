@@ -1,0 +1,30 @@
+{
+  "S7/AI&ETHICS": {
+    "notebook_id": "",
+    "title": "AI & Ethics"
+  },
+  "S7/DL": {
+    "notebook_id": "acd1aedc-d351-446d-8732-13a54b689cc2",
+    "title": "Deep Learning"
+  },
+  "S7/GEO_AI": {
+    "notebook_id": "",
+    "title": "Geo AI"
+  },
+  "S7/HCI": {
+    "notebook_id": "",
+    "title": "Human-Computer Interaction"
+  },
+  "S7/NLP": {
+    "notebook_id": "",
+    "title": "Natural Language Processing"
+  },
+  "S7/ROBOTICS": {
+    "notebook_id": "",
+    "title": "Robotics"
+  },
+  "S7/WC": {
+    "notebook_id": "",
+    "title": "Wireless Communications"
+  }
+}
