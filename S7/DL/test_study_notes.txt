@@ -1,0 +1,13 @@
+Deep Learning Lecture 1: Core Fundamentals
+==========================================
+
+Key Concepts:
+1. Artificial Neural Networks: Perceptrons, Multi-Layer Perceptrons (MLPs), and Activation Functions (ReLU, GELU, Sigmoid).
+2. Optimization: Gradient Descent, Stochastic Gradient Descent (SGD), Adam, and Learning Rate Schedules.
+3. Loss Functions: Cross-Entropy Loss for Classification, Mean Squared Error (MSE) for Regression.
+4. Generalization & Regularization: Dropout, Weight Decay (L2), Batch Normalization, and Early Stopping.
+
+Exam Review Questions:
+- Why does the vanishing gradient problem occur in deep networks using Sigmoid?
+- How does Adam optimizer combine Momentum and RMSprop?
+- Explain the role of the covariance matrix in PCA dimension reduction.

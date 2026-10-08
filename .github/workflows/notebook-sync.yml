@@ -43,7 +43,6 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-          cache: 'pip'
 
       - name: Install dependencies
         run: |
@@ -58,9 +57,24 @@ jobs:
             echo "::error::Secret NOTEBOOKLM_STORAGE_STATE is empty or not configured in GitHub Secrets!"
             exit 1
           fi
+
           mkdir -p ~/.notebooklm/profiles/default
           printf '%s\n' "$NOTEBOOKLM_STORAGE_STATE" > ~/.notebooklm/profiles/default/storage_state.json
           chmod 600 ~/.notebooklm/profiles/default/storage_state.json
+
+          # Validate JSON structure
+          python3 -c "
+          import json, sys
+          try:
+              with open(sys.argv[1]) as f:
+                  data = json.load(f)
+              if not isinstance(data, dict):
+                  raise ValueError('Root is not a JSON object')
+              print('Auth profile JSON format verified.')
+          except Exception as e:
+              print(f'::error::NOTEBOOKLM_STORAGE_STATE is not valid JSON ({e})! NotebookLM requires the full contents of ~/.notebooklm/profiles/default/storage_state.json (run: pbcopy < ~/.notebooklm/profiles/default/storage_state.json and paste into GitHub Secrets).')
+              sys.exit(1)
+          " ~/.notebooklm/profiles/default/storage_state.json
 
       - name: Verify NotebookLM Auth & CLI
         run: |
