@@ -520,20 +520,50 @@ def sync_course_file(
     # Check existing sources in target notebook to avoid duplicate notes
     existing_sources = get_notebook_sources(notebook_id)
     basename = os.path.basename(rel_path)
-    matched_source_id: Optional[str] = None
+    stem = os.path.splitext(basename)[0]
+    clean_stem = stem.replace("_", " ").replace("-", " ").strip()
 
+    # If deleting, also try to retrieve previous title from git history
+    possible_titles = {clean_title.lower(), basename.lower(), stem.lower(), clean_stem.lower()}
+    if action == "delete":
+        try:
+            prev_content = subprocess.run(
+                ["git", "show", f"HEAD~1:{rel_path}"],
+                cwd=repo_root,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.DEVNULL,
+                text=True,
+                check=False,
+            ).stdout
+            if prev_content:
+                for line in prev_content.splitlines()[:50]:
+                    sline = line.strip()
+                    if sline.startswith("# ") and not sline.startswith("## "):
+                        h1 = re.sub(r"[*_~`]", "", sline.lstrip("# ").strip())
+                        if h1:
+                            possible_titles.add(h1.lower())
+                            break
+                    elif sline.startswith("title:"):
+                        raw_t = sline.split(":", 1)[1].strip().strip("\"'")
+                        if raw_t:
+                            possible_titles.add(raw_t.lower())
+                            break
+        except Exception:
+            pass
+
+    matched_source_id: Optional[str] = None
     for s in existing_sources:
-        stitle = s.get("title", "")
-        if stitle == clean_title or stitle == basename:
+        stitle = (s.get("title") or "").strip().lower()
+        if stitle in possible_titles:
             matched_source_id = s.get("id")
             break
 
     if action == "delete":
         if matched_source_id:
-            print(f"[INFO] Removing deleted content source '{clean_title}' ({matched_source_id}) from {notebook_title}...")
+            print(f"[INFO] Removing deleted content source '{basename}' ({matched_source_id}) from notebook '{notebook_title}'...")
             return delete_source(notebook_id, matched_source_id)
         else:
-            print(f"[INFO] Source for deleted file '{rel_path}' was not in notebook {notebook_title}. Nothing to delete.")
+            print(f"[INFO] Source for deleted file '{rel_path}' was not in notebook '{notebook_title}'. Nothing to delete.")
             return True
 
     # Addition or Modification: Upsert
