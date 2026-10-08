@@ -2,18 +2,27 @@
 """
 sync_to_notebook.py
 ===================
-Automated synchronization script linking Git repository study notes directly
+Automated synchronization script linking Git repository study materials directly
 to Google NotebookLM (Gemini Notebooks) via the `notebooklm-py` CLI/library.
 
-Key Features:
-- Strict content ingestion filtering: only study-relevant documentation (.md).
-  Strictly ignores code (.py, .cpp, .c, .sh), notebooks (.ipynb), datasets (.csv),
-  virtual environments (.venv/), caches, and editor configurations (.obsidian/, .vscode/).
-- Dynamic notebook discovery and creation: automatically creates dedicated notebooks
-  on the fly when new coursework modules appear and records IDs in notebooks.json.
-- Clean title extraction from YAML frontmatter or Markdown H1 headers.
-- Duplicate prevention: replaces existing sources on note modification.
-- Bidirectional support: works seamlessly in GitHub Actions CI and local CLI runs.
+Supported Course Content Types:
+- Markdown notes & summaries: .md, .markdown, .txt
+- Lecture slides & presentations: .pptx, .ppt
+- Textbooks, lecture notes & handouts: .pdf, .docx, .doc
+- Educational diagrams & formulas: .png, .jpg, .jpeg, .webp
+
+Strictly Excluded:
+- Code files (.py, .cpp, .c, .sh, etc.)
+- Jupyter notebooks (.ipynb)
+- Datasets & raw archives (.csv, .tsv, .parquet, .json, .zip, etc.)
+- Virtual environments (.venv/, env/)
+- Caches and editor configurations (.obsidian/, .vscode/, .git/)
+
+Features:
+- Dynamic notebook discovery and creation: maps modules to dedicated notebooks.
+- Clean title extraction from YAML frontmatter, Markdown H1 headers, or clean filenames.
+- Duplicate prevention: replaces existing sources on document update.
+- Symlink safety and canonical path resolution.
 """
 
 import argparse
@@ -31,7 +40,25 @@ from typing import Any, Dict, List, Optional, Set, Tuple
 # Filter Definitions & Constants
 # ==============================================================================
 
-ALLOWED_EXTENSIONS: Set[str] = {".md", ".markdown"}
+# Ingest all course content: notes, slides, documents, and figures
+ALLOWED_EXTENSIONS: Set[str] = {
+    # Markdown & plain text notes
+    ".md",
+    ".markdown",
+    ".txt",
+    # Documents & Lecture notes
+    ".pdf",
+    ".docx",
+    ".doc",
+    # Slides & presentations
+    ".pptx",
+    ".ppt",
+    # Course figures, diagrams, and formulas
+    ".png",
+    ".jpg",
+    ".jpeg",
+    ".webp",
+}
 
 EXCLUDED_DIR_NAMES: Set[str] = {
     ".git",
@@ -60,6 +87,7 @@ EXCLUDED_ROOT_FILENAMES: Set[str] = {
     "AGENTS.md",
     "LICENSE.md",
     "CONTRIBUTING.md",
+    "build_bundle.sh",
 }
 
 # Known academic abbreviation to clean human title mapping
@@ -130,7 +158,6 @@ def run_cli_json(args: List[str]) -> Optional[Any]:
     try:
         return json.loads(stdout)
     except json.JSONDecodeError:
-        # Fallback: scan lines for valid JSON
         for line in stdout.splitlines():
             line = line.strip()
             if (line.startswith("{") and line.endswith("}")) or (line.startswith("[") and line.endswith("]")):
@@ -159,7 +186,6 @@ def create_new_notebook(title: str) -> Optional[str]:
     print(f"[INFO] Creating new NotebookLM notebook: '{title}'...")
     data = run_cli_json(["create", title])
     if isinstance(data, dict):
-        # Format: {"notebook": {"id": "...", "title": "..."}}
         if "notebook" in data and "id" in data["notebook"]:
             nb_id = data["notebook"]["id"]
             print(f"[SUCCESS] Notebook created with ID: {nb_id}")
@@ -167,7 +193,6 @@ def create_new_notebook(title: str) -> Optional[str]:
         if "active_notebook_id" in data:
             return data["active_notebook_id"]
 
-    # Fallback: parse plain text if JSON wasn't returned
     ret, stdout, _ = run_cli_command(["create", title])
     match = re.search(r"Created notebook:\s*([a-f0-9-]+)", stdout, re.IGNORECASE)
     if match:
@@ -225,10 +250,11 @@ def add_source_to_notebook(notebook_id: str, filepath: str, title: str) -> bool:
 # Filtering & Title Extraction
 # ==============================================================================
 
-def is_study_note(rel_path: str) -> bool:
+def is_course_content_file(rel_path: str) -> bool:
     """
-    Strict filter: returns True ONLY if the file is a study-relevant markdown note.
-    Excludes all code, notebooks, datasets, virtual environments, binaries, and configs.
+    Strict filter: returns True ONLY if the file is course content documentation,
+    slides, documents, or study diagrams.
+    Strictly excludes code, notebooks, datasets, virtual environments, binaries, and configs.
     """
     norm_path = os.path.normpath(rel_path)
     parts = norm_path.split(os.sep)
@@ -243,7 +269,7 @@ def is_study_note(rel_path: str) -> bool:
     if filename.startswith("."):
         return False
 
-    # 3. Whitelist file extensions: only markdown
+    # 3. Whitelist file extensions: course content formats only
     ext = os.path.splitext(filename)[1].lower()
     if ext not in ALLOWED_EXTENSIONS:
         return False
@@ -257,42 +283,53 @@ def is_study_note(rel_path: str) -> bool:
 
 def extract_clean_title(filepath: str) -> str:
     """
-    Extract a clean title from a Markdown document:
-    1. YAML Frontmatter 'title: ...'
-    2. Top-level Markdown header '# ...'
-    3. Fallback: Cleaned filename stem (e.g. '01_intro_lecture' -> '01 Intro Lecture')
+    Extract a clean title from course content:
+    - Markdown (.md, .markdown): YAML Frontmatter 'title: ...' or '# H1' header
+    - Text (.txt): First non-empty header line or cleaned filename
+    - Slides/Documents/Images (.pdf, .pptx, .docx, .png, etc.): Cleaned filename stem
     """
     stem = os.path.splitext(os.path.basename(filepath))[0]
     clean_stem = stem.replace("_", " ").replace("-", " ").strip()
+    ext = os.path.splitext(filepath)[1].lower()
 
-    try:
-        if os.path.exists(filepath):
-            with open(filepath, "r", encoding="utf-8", errors="replace") as f:
-                lines = [f.readline() for _ in range(50)]
+    if ext in {".md", ".markdown"}:
+        try:
+            if os.path.exists(filepath):
+                with open(filepath, "r", encoding="utf-8", errors="replace") as f:
+                    lines = [f.readline() for _ in range(50)]
 
-            # Check YAML frontmatter
-            in_frontmatter = False
-            for line in lines:
-                sline = line.strip()
-                if sline == "---":
-                    in_frontmatter = not in_frontmatter
-                    continue
-                if in_frontmatter and sline.startswith("title:"):
-                    raw_title = sline.split(":", 1)[1].strip().strip("\"'")
-                    if raw_title:
-                        return raw_title
+                # Check YAML frontmatter
+                in_frontmatter = False
+                for line in lines:
+                    sline = line.strip()
+                    if sline == "---":
+                        in_frontmatter = not in_frontmatter
+                        continue
+                    if in_frontmatter and sline.startswith("title:"):
+                        raw_title = sline.split(":", 1)[1].strip().strip("\"'")
+                        if raw_title:
+                            return raw_title
 
-            # Check Markdown H1
-            for line in lines:
-                sline = line.strip()
-                if sline.startswith("# ") and not sline.startswith("## "):
-                    h1 = sline.lstrip("# ").strip()
-                    # Strip basic markdown bold/italics/backticks
-                    h1 = re.sub(r"[*_~`]", "", h1).strip()
-                    if h1:
-                        return h1
-    except Exception as e:
-        print(f"[WARN] Error reading title from {filepath}: {e}", file=sys.stderr)
+                # Check Markdown H1
+                for line in lines:
+                    sline = line.strip()
+                    if sline.startswith("# ") and not sline.startswith("## "):
+                        h1 = sline.lstrip("# ").strip()
+                        h1 = re.sub(r"[*_~`]", "", h1).strip()
+                        if h1:
+                            return h1
+        except Exception as e:
+            print(f"[WARN] Error reading title from {filepath}: {e}", file=sys.stderr)
+
+    elif ext == ".txt":
+        try:
+            if os.path.exists(filepath):
+                with open(filepath, "r", encoding="utf-8", errors="replace") as f:
+                    first_line = f.readline().strip()
+                    if first_line and len(first_line) < 80 and not first_line.startswith("#"):
+                        return first_line
+        except Exception:
+            pass
 
     return clean_stem.title() if clean_stem.islower() else clean_stem
 
@@ -328,8 +365,8 @@ def derive_module_info(rel_path: str) -> Tuple[str, str]:
     Derive the module key and human-friendly title from a relative file path.
     Examples:
       'S7/DL/lab1/note.md' -> ('S7/DL', 'Deep Learning')
-      'S7/AI&ETHICS/lecture.md' -> ('S7/AI&ETHICS', 'AI & Ethics')
-      'Computer_Vision/week1.md' -> ('Computer_Vision', 'Computer Vision')
+      'S7/AI&ETHICS/slides.pptx' -> ('S7/AI&ETHICS', 'AI & Ethics')
+      'Computer_Vision/week1.pdf' -> ('Computer_Vision', 'Computer Vision')
       '01_PROFILE.md' -> ('_default', 'Career')
     """
     norm_path = os.path.normpath(rel_path)
@@ -340,7 +377,6 @@ def derive_module_info(rel_path: str) -> Tuple[str, str]:
         semester = parts[0].upper()
         raw_mod = parts[1]
         module_key = f"{semester}/{raw_mod}"
-        # Friendly title
         clean_name = FRIENDLY_MODULE_TITLES.get(
             raw_mod.upper(),
             raw_mod.replace("_", " ").replace("-", " ").title()
@@ -421,7 +457,6 @@ def resolve_notebook_id(
 
         print(f"[INFO] Missing Notebook ID for '{matched_key}'. Searching existing notebooks...")
         existing_nbs = get_account_notebooks()
-        # Look for notebook with identical or matching title
         for nb in existing_nbs:
             nb_title = (nb.get("title") or "").strip().lower()
             if nb_title and (nb_title == notebook_title.strip().lower() or nb_title == matched_key.strip().lower()):
@@ -429,7 +464,6 @@ def resolve_notebook_id(
                 print(f"[INFO] Found matching existing notebook: '{nb.get('title')}' -> {notebook_id}")
                 break
 
-        # If still not found, create new notebook
         if not notebook_id:
             notebook_id = create_new_notebook(notebook_title)
 
@@ -454,7 +488,7 @@ def resolve_notebook_id(
 # Synchronization Core
 # ==============================================================================
 
-def sync_study_file(
+def sync_course_file(
     repo_root: str,
     rel_path: str,
     action: str,
@@ -463,7 +497,7 @@ def sync_study_file(
     dry_run: bool = False,
 ) -> bool:
     """
-    Sync an individual study file (addition, update, or deletion) to its target Notebook.
+    Sync an individual course file (addition, update, or deletion) to its target Notebook.
     """
     abs_path = os.path.join(repo_root, rel_path)
     clean_title = extract_clean_title(abs_path) if action != "delete" else os.path.basename(rel_path)
@@ -496,7 +530,7 @@ def sync_study_file(
 
     if action == "delete":
         if matched_source_id:
-            print(f"[INFO] Removing deleted note source '{clean_title}' ({matched_source_id}) from {notebook_title}...")
+            print(f"[INFO] Removing deleted content source '{clean_title}' ({matched_source_id}) from {notebook_title}...")
             return delete_source(notebook_id, matched_source_id)
         else:
             print(f"[INFO] Source for deleted file '{rel_path}' was not in notebook {notebook_title}. Nothing to delete.")
@@ -528,7 +562,6 @@ def get_git_changed_files(repo_root: str) -> List[Tuple[str, str]]:
     if before_sha and current_sha and before_sha != "0000000000000000000000000000000000000000":
         cmd += [before_sha, current_sha]
     else:
-        # Check if HEAD~1 is available
         rev_check = subprocess.run(
             ["git", "rev-parse", "--verify", "HEAD~1"],
             cwd=repo_root,
@@ -538,7 +571,6 @@ def get_git_changed_files(repo_root: str) -> List[Tuple[str, str]]:
         if rev_check.returncode == 0:
             cmd += ["HEAD~1", "HEAD"]
         else:
-            # Initial commit or untracked state: list tracked files
             print("[INFO] No commit history to diff against. Listing all tracked repository files...")
             ls_proc = subprocess.run(
                 ["git", "ls-files"],
@@ -588,7 +620,6 @@ def get_git_changed_files(repo_root: str) -> List[Tuple[str, str]]:
         if status.startswith("D"):
             changes.append(("delete", parts[1]))
         elif status.startswith("R"):
-            # Rename: delete old path, add new path
             if len(parts) >= 3:
                 changes.append(("delete", parts[1]))
                 changes.append(("upsert", parts[2]))
@@ -598,16 +629,15 @@ def get_git_changed_files(repo_root: str) -> List[Tuple[str, str]]:
     return changes
 
 
-def get_all_study_files(repo_root: str) -> List[Tuple[str, str]]:
-    """Scan the entire repository for eligible study documentation files."""
+def get_all_course_files(repo_root: str) -> List[Tuple[str, str]]:
+    """Scan the entire repository for eligible course content files."""
     files = []
     for root, dirs, filenames in os.walk(repo_root):
-        # Prune excluded directories in place
         dirs[:] = [d for d in dirs if d not in EXCLUDED_DIR_NAMES and not d.startswith(".")]
         for fname in filenames:
             full_path = os.path.join(root, fname)
             rel_path = os.path.relpath(full_path, repo_root)
-            if is_study_note(rel_path):
+            if is_course_content_file(rel_path):
                 files.append(("upsert", rel_path))
     return files
 
@@ -618,7 +648,7 @@ def get_all_study_files(repo_root: str) -> List[Tuple[str, str]]:
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Sync study documentation notes from Git repository to NotebookLM."
+        description="Sync course content files (.md, .pdf, .docx, .pptx, images) from Git repository to NotebookLM."
     )
     parser.add_argument(
         "--files",
@@ -628,7 +658,7 @@ def main():
     parser.add_argument(
         "--all",
         action="store_true",
-        help="Scan and sync all study markdown files in the repository.",
+        help="Scan and sync all course content files in the repository.",
     )
     parser.add_argument(
         "--dry-run",
@@ -643,12 +673,11 @@ def main():
 
     args = parser.parse_args()
 
-    # Determine repository root (current working directory or parent of scripts/)
     repo_root = os.getcwd()
     mapping_path = os.path.abspath(os.path.join(repo_root, args.mapping_file))
 
     print(f"============================================================")
-    print(f"NotebookLM Sync Pipeline")
+    print(f"NotebookLM Course Content Sync Pipeline")
     print(f"Repository Root : {repo_root}")
     print(f"Mapping File    : {mapping_path}")
     print(f"Dry Run Mode    : {args.dry_run}")
@@ -664,7 +693,7 @@ def main():
             target_items.append(("upsert", f))
     elif args.all:
         print("[INFO] Mode: Full repository scan (--all)")
-        target_items = get_all_study_files(repo_root)
+        target_items = get_all_course_files(repo_root)
     else:
         print("[INFO] Mode: Git change detection")
         target_items = get_git_changed_files(repo_root)
@@ -674,24 +703,24 @@ def main():
     ignored_count = 0
 
     for action, rel_path in target_items:
-        if is_study_note(rel_path):
+        if is_course_content_file(rel_path):
             eligible_items.append((action, rel_path))
         else:
             ignored_count += 1
 
-    print(f"[INFO] Found {len(eligible_items)} eligible study notes ({ignored_count} files excluded by filters).")
+    print(f"[INFO] Found {len(eligible_items)} eligible course content files ({ignored_count} files excluded by filters).")
 
     if not eligible_items:
-        print("[INFO] No study notes to sync. Pipeline complete.")
+        print("[INFO] No course content files to sync. Pipeline complete.")
         return
 
-    # Process each study note
+    # Process each course file
     success_count = 0
     fail_count = 0
 
     for action, rel_path in eligible_items:
         print(f"\n--- Processing: {rel_path} ({action}) ---")
-        ok = sync_study_file(
+        ok = sync_course_file(
             repo_root=repo_root,
             rel_path=rel_path,
             action=action,

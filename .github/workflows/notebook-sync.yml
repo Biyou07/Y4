@@ -6,12 +6,21 @@ on:
       - main
     paths:
       - '**.md'
+      - '**.markdown'
+      - '**.pdf'
+      - '**.docx'
+      - '**.pptx'
+      - '**.txt'
+      - '**.png'
+      - '**.jpg'
+      - '**.jpeg'
+      - '**.webp'
       - 'notebooks.json'
       - 'scripts/**'
   workflow_dispatch:
     inputs:
       sync_all:
-        description: 'Force sync all study notes in the repository'
+        description: 'Force sync all course materials in the repository'
         required: false
         type: boolean
         default: false
@@ -21,7 +30,7 @@ permissions:
 
 jobs:
   sync:
-    name: Ingest Notes to Gemini Notebooks
+    name: Ingest Course Content to Gemini Notebooks
     runs-on: ubuntu-latest
 
     steps:
@@ -58,7 +67,7 @@ jobs:
           notebooklm --version
           notebooklm list || echo "::warning::notebooklm list returned non-zero or empty list."
 
-      - name: Run Study Notes Ingestion
+      - name: Run Course Content Ingestion
         env:
           GITHUB_EVENT_BEFORE: ${{ github.event.before }}
           GITHUB_SHA: ${{ github.sha }}

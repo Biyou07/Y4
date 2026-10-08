@@ -1,6 +1,6 @@
 {
   "S7/AI&ETHICS": {
-    "notebook_id": "",
+    "notebook_id": "9b838f2b-f876-4830-b193-69373f59dc00",
     "title": "AI & Ethics"
   },
   "S7/DL": {
@@ -8,23 +8,23 @@
     "title": "Deep Learning"
   },
   "S7/GEO_AI": {
-    "notebook_id": "",
+    "notebook_id": "4e1d71bf-25aa-4a72-a62f-2d14fba14758",
     "title": "Geo AI"
   },
   "S7/HCI": {
-    "notebook_id": "",
+    "notebook_id": "76b2e3a0-c687-4435-8aa0-60043ea93479",
     "title": "Human-Computer Interaction"
   },
   "S7/NLP": {
-    "notebook_id": "",
+    "notebook_id": "bb3cf686-8a95-4a52-b5fa-be7d83ee7e26",
     "title": "Natural Language Processing"
   },
   "S7/ROBOTICS": {
-    "notebook_id": "",
+    "notebook_id": "ad0ede3d-f20e-4ce2-a671-6b1ef2718918",
     "title": "Robotics"
   },
   "S7/WC": {
-    "notebook_id": "",
+    "notebook_id": "dc7ed11a-1b6e-48c2-8ee9-c3ce6448c080",
     "title": "Wireless Communications"
   }
 }
