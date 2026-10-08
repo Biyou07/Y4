@@ -400,6 +400,7 @@ def resolve_notebook_id(
     rel_path: str,
     mapping: Dict[str, Any],
     mapping_path: str,
+    action: str = "upsert",
     dry_run: bool = False,
 ) -> Tuple[Optional[str], str]:
     """
@@ -431,7 +432,7 @@ def resolve_notebook_id(
         derived_key, derived_title = derive_module_info(rel_path)
         if derived_key in mapping:
             matched_key = derived_key
-        elif "_default" in mapping and len(parts) == 1:
+        elif "_default" in mapping:
             matched_key = "_default"
         else:
             matched_key = derived_key
@@ -451,6 +452,10 @@ def resolve_notebook_id(
 
     # 4. If notebook ID is missing, dynamically discover or create
     if not notebook_id:
+        # Never attempt to create a notebook if the file is being deleted
+        if action == "delete":
+            return None, notebook_title
+
         if dry_run:
             print(f"[DRY-RUN] Would create new notebook for '{notebook_title}' ({matched_key})")
             return "dry-run-notebook-id", notebook_title
@@ -506,10 +511,14 @@ def sync_course_file(
         rel_path,
         mapping,
         mapping_path,
+        action=action,
         dry_run=dry_run,
     )
 
     if not notebook_id:
+        if action == "delete":
+            print(f"[INFO] No existing notebook mapped for '{rel_path}' to delete from. Skipping.")
+            return True
         print(f"[SKIP] No notebook available for {rel_path}")
         return False
 
