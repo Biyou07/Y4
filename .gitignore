@@ -45,10 +45,6 @@ wheels/
 .claude/settings.local.json
 .gemini/
 
-# Credentials and Authentication (CRITICAL: Never commit NotebookLM auth state)
-.notebooklm/
-storage_state.json
-*.session
 
 # Logs and temporary files
 *.log
