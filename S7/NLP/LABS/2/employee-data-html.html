@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TechMaghreb Solutions - Employee Directory</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background: #f5f5f5; }
+        .header { text-align: center; background: #2c3e50; color: white; padding: 20px; margin-bottom: 30px; }
+        .news-ticker { background: #34495e; color: white; padding: 10px; margin-bottom: 20px; }
+        .employee-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        .employee-card { background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .department-section { margin-bottom: 30px; }
+        footer { margin-top: 30px; text-align: center; padding: 20px; background: #2c3e50; color: white; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>TechMaghreb Solutions</h1>
+        <p>Employee Directory - Updated June 2024</p>
+    </div>
+
+    <div class="news-ticker">
+        <marquee>Company News: Ramadan working hours announced | New project launch in Oran | Team building event in Algiers next month</marquee>
+    </div>
+
+    <nav>
+        <ul>
+            <li><a href="#home">Accueil</a></li>
+            <li><a href="#departments">Départements</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <div class="department-section" id="engineering">
+        <h2>Département d'Ingénierie</h2>
+        <div class="employee-grid">
+            <div class="employee-card">
+                <h3>Ingénieur Logiciel</h3>
+                <p>Nom: <span class="firstname">Karim</span> <span class="lastname">Bendaoud</span></p>
+                <p>Email: k.bendaoud@techmaghreb.dz</p>
+                <p>Téléphone: +213 551 23 45 67</p>
+                <p>Code d'identification: BD93#k4R1m*25</p>
+                <p>Date de naissance: 1993-05-25</p>
+                <p>Site Web: https://karim-bendaoud.dz</p>
+                <p>Ville: Alger, Algérie</p>
+            </div>
+            <div class="employee-card">
+                <h3>Développeur Backend</h3>
+                <p>Nom: <span class="firstname">Amira</span> <span class="lastname">Meziane</span></p>
+                <p>Email: amira.meziane@techmaghreb.dz</p>
+                <p>Téléphone: +213 770 12 34 56</p>
+                <p>Code d'identification: MZ89#Am1r@*30</p>
+                <p>Date de naissance: 1989-08-30</p>
+                <p>Site Web: http://amirameziane.dz</p>
+                <p>Ville: Oran, Algérie</p>
+            </div>
+            <div class="employee-card">
+                <h3>Développeur Frontend</h3>
+                <p>Nom: <span class="firstname">Sofiane</span> <span class="lastname">Bouaziz</span></p>
+                <p>Email: s.bouaziz@techmaghreb.dz</p>
+                <p>Téléphone: +213 555 98 76 54</p>
+                <p>Code d'identification: BZ91#s0F1@*18</p>
+                <p>Date de naissance: 1991-11-18</p>
+                <p>Site Web: www.sofiane-bouaziz.dz</p>
+                <p>Ville: Constantine, Algérie</p>
+            </div>
+            <div class="employee-card">
+                <h3>Ingénieur DevOps</h3>
+                <p>Nom: <span class="firstname">Sophie</span> <span class="lastname">Dubois</span></p>
+                <p>Email: sophie.dubois@techmaghreb.fr</p>
+                <p>Téléphone: +33 6 12 34 56 78</p>
+                <p>Code d'identification: FR94#s0Ph!*22</p>
+                <p>Date de naissance: 1994-03-22</p>
+                <p>Site Web: https://sophiedubois.fr</p>
+                <p>Ville: Paris, France</p>
+            </div>
+            <div class="employee-card">
+                <h3>Architecte Système</h3>
+                <p>Nom: <span class="firstname">Mohammed</span> <span class="lastname">Khelifa</span></p>
+                <p>Email: m.khelifa_arch@techmaghreb.dz</p>
+                <p>Téléphone: +213 661 87 65 43</p>
+                <p>Code d'identification: KH87#m0H@*09</p>
+                <p>Date de naissance: 1987-12-09</p>
+                <p>Site Web: http://mohammedkhelifa.dz</p>
+                <p>Ville: Annaba, Algérie</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="department-section" id="marketing">
+        <h2>Département Marketing</h2>
+        <div class="employee-grid">
+            <div class="employee-card">
+                <h3>Responsable Marketing</h3>
+                <p>Nom: <span class="firstname">Leila</span> <span class="lastname">Benali</span></p>
+                <p>Email: l.benali_mkt@techmaghreb.dz</p>
+                <p>Téléphone: +213 550 11 22 33</p>
+                <p>Code d'identification: BN92#L3!l@*14</p>
+                <p>Date de naissance: 1992-07-14</p>
+                <p>Site Web: www.leilabenali.dz</p>
+                <p>Ville: Sétif, Algérie</p>
+            </div>
+            <div class="employee-card">
+                <h3>Stratège de Contenu</h3>
+                <p>Nom: <span class="firstname">Jean-Pierre</span> <span class="lastname">Moreau</span></p>
+                <p>Email: jp.moreau@techmaghreb.fr</p>
+                <p>Téléphone: +33 7 98 76 54 32</p>
+                <p>Code d'identification: FR88#jP!3R*25</p>
+                <p>Date de naissance: 1988-04-25</p>
+                <p>Site Web: https://jeanpierremoreau.fr</p>
+                <p>Ville: Lyon, France</p>
+            </div>
+            <div class="employee-card">
+                <h3>Spécialiste Marketing Digital</h3>
+                <p>Nom: <span class="firstname">Fatima</span> <span class="lastname">Slimani</span></p>
+                <p>Email: f.Slimani_digital@techmaghreb.dz</p>
+                <p>Téléphone: +213 770 98 76 54</p>
+                <p>Code d'identification: SH95#f@T1m*03</p>
+                <p>Date de naissance: 1995-10-03</p>
+                <p>Site Web: http://fatimaSl.dz</p>
+                <p>Ville: Bordj El Bahri, Algérie</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="department-section" id="finance">
+        <h2>Département Financier</h2>
+        <div class="employee-grid">
+            <div class="employee-card">
+                <h3>Analyste Financier</h3>
+                <p>Nom: <span class="firstname">Carlos</span> <span class="lastname">Rodríguez</span></p>
+                <p>Email: c.rodriguez_fin@techmaghreb.es</p>
+                <p>Téléphone: +34 612 345 678</p>
+                <p>Code d'identification: ES89#c@Rl0*30</p>
+                <p>Date de naissance: 1989-06-30</p>
+                <p>Site Web: www.carlosrodriguez.es</p>
+                <p>Ville: Madrid, Espagne</p>
+            </div>
+            <div class="employee-card">
+                <h3>Comptable Senior</h3>
+                <p>Nom: <span class="firstname">Naima</span> <span class="lastname">Bouzidi</span></p>
+                <p>Email: n.bouzidi_compta@techmaghreb.dz</p>
+                <p>Téléphone: +213 555 44 33 22</p>
+                <p>Code d'identification: BZ90#n@!M@*17</p>
+                <p>Date de naissance: 1990-11-17</p>
+                <p>Site Web: https://naimabouzidi.dz</p>
+                <p>Ville: Blida, Algérie</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="department-section" id="hr">
+        <h2>Ressources Humaines</h2>
+        <div class="employee-grid">
+            <div class="employee-card">
+                <h3>Directeur RH</h3>
+                <p>Nom: <span class="firstname">Ahmed</span> <span class="lastname">Boudjemaa</span></p>
+                <p>Email: a.boudjemaa_rh2024@techmaghreb.dz</p>
+                <p>Téléphone: +213 770 55 66 77</p>
+                <p>Code d'identification: BJ86#@Hm3d*14</p>
+                <p>Date de naissance: 1986-02-14</p>
+                <p>Site Web: http://ahmedboudjemaa.dz</p>
+                <p>Ville: Béjaïa, Algérie</p>
+            </div>
+            <div class="employee-card">
+                <h3>Spécialiste du Recrutement</h3>
+                <p>Nom: <span class="firstname">Isabella</span> <span class="lastname">Rossi</span></p>
+                <p>Email: i.rossi_recruit@techmaghreb.it</p>
+                <p>Téléphone: +39 333 123 4567</p>
+                <p>Code d'identification: IT93#!s@B3*19</p>
+                <p>Date de naissance: 1993-07-19</p>
+                <p>Site Web: www.isabellarossi.it</p>
+                <p>Ville: Rome, Italie</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="department-section" id="sales">
+        <h2>Département Commercial</h2>
+        <div class="employee-grid">
+            <div class="employee-card">
+                <h3>Directeur Commercial</h3>
+                <p>Nom: <span class="firstname">Kamel</span> <span class="lastname">Hadj</span></p>
+                <p>Email: k.hadj_sales@techmaghreb.dz</p>
+                <p>Téléphone: +213 550 99 88 77</p>
+                <p>Code d'identification: HD88#k@M3l*05</p>
+                <p>Date de naissance: 1988-03-25</p>
+                <p>Site Web: https://kamelhadj.dz</p>
+                <p>Ville: Oran, Algérie</p>
+            </div>
+            <div class="employee-card">
+                <h3>Gestionnaire de Comptes</h3>
+                <p>Nom: <span class="firstname">Marie</span> <span class="lastname">Lefèvre</span></p>
+                <p>Email: m.lefevre_acct@techmaghreb.fr</p>
+                <p>Téléphone: +33 6 98 76 54 32</p>
+                <p>Code d'identification: FR91#m@R!3*08</p>
+                <p>Date de naissance: 1991-10-08</p>
+                <p>Site Web: www.marielefevre.fr</p>
+                <p>Ville: Marseille, France</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2024 TechMaghreb Solutions. Tous droits réservés.</p>
+        <p>Contact: info@techmaghreb.dz | Tél: +213 (0) 21 00 00 00</p>
+        <div class="social-links">
+            <a href="#">Facebook</a> | <a href="#">Twitter</a> | <a href="#">LinkedIn</a>
+        </div>
+    </footer>
+</body>
+</html>

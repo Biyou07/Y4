@@ -1,0 +1,110 @@
+[
+  {
+    "full_name": "Karim Bendaoud",
+    "email": "k.bendaoud@techmaghreb.dz",
+    "phone": "+213 551 23 45 67",
+    "identification_code": "BD93#k4R1m*25",
+    "date_of_birth": "1993-05-25",
+    "website": "https://karim-bendaoud.dz",
+    "city": "Alger",
+    "country": "Algérie",
+    "job_title": "Ingénieur Logiciel",
+    "department": "Département d'Ingénierie"
+  },
+  {
+    "full_name": "Amira Meziane",
+    "email": "amira.meziane@techmaghreb.dz",
+    "phone": "+213 770 12 34 56",
+    "identification_code": "MZ89#Am1r@*30",
+    "date_of_birth": "1989-08-30",
+    "website": "http://amirameziane.dz",
+    "city": "Oran",
+    "country": "Algérie",
+    "job_title": "Développeur Backend",
+    "department": "Département d'Ingénierie"
+  },
+  {
+    "full_name": "Sofiane Bouaziz",
+    "email": "s.bouaziz@techmaghreb.dz",
+    "phone": "+213 555 98 76 54",
+    "identification_code": "BZ91#s0F1@*18",
+    "date_of_birth": "1991-11-18",
+    "website": "www.sofiane-bouaziz.dz",
+    "city": "Constantine",
+    "country": "Algérie",
+    "job_title": "Développeur Frontend",
+    "department": "Département d'Ingénierie"
+  },
+  {
+    "full_name": "Sophie Dubois",
+    "email": "sophie.dubois@techmaghreb.fr",
+    "phone": "+33 6 12 34 56 78",
+    "identification_code": "FR94#s0Ph!*22",
+    "date_of_birth": "1994-03-22",
+    "website": "https://sophiedubois.fr",
+    "city": "Paris",
+    "country": "France",
+    "job_title": "Ingénieur DevOps",
+    "department": "Département d'Ingénierie"
+  },
+  {
+    "full_name": "Leila Benali",
+    "email": "l.benali_mkt@techmaghreb.dz",
+    "phone": "+213 550 11 22 33",
+    "identification_code": "BN92#L3!l@*14",
+    "date_of_birth": "1992-07-14",
+    "website": "www.leilabenali.dz",
+    "city": "Sétif",
+    "country": "Algérie",
+    "job_title": "Responsable Marketing",
+    "department": "Département Marketing"
+  },
+  {
+    "full_name": "Jean-Pierre Moreau",
+    "email": "jp.moreau@techmaghreb.fr",
+    "phone": "+33 7 98 76 54 32",
+    "identification_code": "FR88#jP!3R*25",
+    "date_of_birth": "1988-04-25",
+    "website": "https://jeanpierremoreau.fr",
+    "city": "Lyon",
+    "country": "France",
+    "job_title": "Stratège de Contenu",
+    "department": "Département Marketing"
+  },
+  {
+    "full_name": "Carlos Rodríguez",
+    "email": "c.rodriguez_fin@techmaghreb.es",
+    "phone": "+34 612 345 678",
+    "identification_code": "ES89#c@Rl0*30",
+    "date_of_birth": "1989-06-30",
+    "website": "www.carlosrodriguez.es",
+    "city": "Madrid",
+    "country": "Espagne",
+    "job_title": "Analyste Financier",
+    "department": "Département Financier"
+  },
+  {
+    "full_name": "Ahmed Boudjemaa",
+    "email": "a.boudjemaa_rh2024@techmaghreb.dz",
+    "phone": "+213 770 55 66 77",
+    "identification_code": "BJ86#@Hm3d*14",
+    "date_of_birth": "1986-02-14",
+    "website": "http://ahmedboudjemaa.dz",
+    "city": "Béjaïa",
+    "country": "Algérie",
+    "job_title": "Directeur RH",
+    "department": "Ressources Humaines"
+  },
+  {
+    "full_name": "Kamel Hadj",
+    "email": "k.hadj_sales@techmaghreb.dz",
+    "phone": "+213 550 99 88 77",
+    "identification_code": "HD88#k@M3l*05",
+    "date_of_birth": "1988-03-25",
+    "website": "https://kamelhadj.dz",
+    "city": "Oran",
+    "country": "Algérie",
+    "job_title": "Directeur Commercial",
+    "department": "Département Commercial"
+  }
+]
