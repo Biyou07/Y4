@@ -1,0 +1,130 @@
+{
+  "ex1_task1_1neuron": {
+    "title": "Exercise 1 Task 1: 1 hidden neuron, ReLU",
+    "epoch": "000,521",
+    "epoch_int": 521,
+    "train_loss": "0.392",
+    "test_loss": "0.424",
+    "screenshot": "/home/ayub/Y4/S7/DL/LABS/4/4. DL - Lab 4/screenshots/ex1_task1_1neuron.png"
+  },
+  "ex1_task2_2neurons_linear": {
+    "title": "Exercise 1 Task 2: 2 hidden neurons, Linear",
+    "epoch": "000,620",
+    "epoch_int": 620,
+    "train_loss": "0.496",
+    "test_loss": "0.502",
+    "screenshot": "/home/ayub/Y4/S7/DL/LABS/4/4. DL - Lab 4/screenshots/ex1_task2_2neurons_linear.png"
+  },
+  "ex1_task2_2neurons_relu": {
+    "title": "Exercise 1 Task 2: 2 hidden neurons, ReLU",
+    "epoch": "000,816",
+    "epoch_int": 816,
+    "train_loss": "0.250",
+    "test_loss": "0.294",
+    "screenshot": "/home/ayub/Y4/S7/DL/LABS/4/4. DL - Lab 4/screenshots/ex1_task2_2neurons_relu.png"
+  },
+  "ex1_task3_3neurons_run1": {
+    "title": "Exercise 1 Task 3: 3 hidden neurons, ReLU (Run 1)",
+    "epoch": "002,516",
+    "epoch_int": 2516,
+    "train_loss": "0.018",
+    "test_loss": "0.029",
+    "screenshot": "/home/ayub/Y4/S7/DL/LABS/4/4. DL - Lab 4/screenshots/ex1_task3_3neurons_run1.png"
+  },
+  "ex1_task3_3neurons_run2": {
+    "title": "Exercise 1 Task 3: 3 hidden neurons, ReLU (Run 2)",
+    "epoch": "002,521",
+    "epoch_int": 2521,
+    "train_loss": "0.008",
+    "test_loss": "0.058",
+    "screenshot": "/home/ayub/Y4/S7/DL/LABS/4/4. DL - Lab 4/screenshots/ex1_task3_3neurons_run2.png"
+  },
+  "ex1_task4_layers_3_2": {
+    "title": "Exercise 1 Task 4: 2 hidden layers (3, 2 neurons)",
+    "epoch": "001,524",
+    "epoch_int": 1524,
+    "train_loss": "0.042",
+    "test_loss": "0.065",
+    "screenshot": "/home/ayub/Y4/S7/DL/LABS/4/4. DL - Lab 4/screenshots/ex1_task4_layers_3_2.png"
+  },
+  "ex1_task4_layers_3_3": {
+    "title": "Exercise 1 Task 4: 2 hidden layers (3, 3 neurons)",
+    "epoch": "001,221",
+    "epoch_int": 1221,
+    "train_loss": "0.020",
+    "test_loss": "0.046",
+    "screenshot": "/home/ayub/Y4/S7/DL/LABS/4/4. DL - Lab 4/screenshots/ex1_task4_layers_3_3.png"
+  },
+  "ex2_task1_reg_0": {
+    "title": "Exercise 2 Task 1: Regularization rate 0 (L2)",
+    "epoch": "001,518",
+    "epoch_int": 1518,
+    "train_loss": "0.018",
+    "test_loss": "0.060",
+    "screenshot": "/home/ayub/Y4/S7/DL/LABS/4/4. DL - Lab 4/screenshots/ex2_task1_reg_0.png"
+  },
+  "ex2_task2_reg_0_03": {
+    "title": "Exercise 2 Task 2: Regularization rate 0.03 (L2)",
+    "epoch": "001,526",
+    "epoch_int": 1526,
+    "train_loss": "0.078",
+    "test_loss": "0.061",
+    "screenshot": "/home/ayub/Y4/S7/DL/LABS/4/4. DL - Lab 4/screenshots/ex2_task2_reg_0_03.png"
+  },
+  "ex2_task3_reg_0_001": {
+    "title": "Exercise 2 Task 3: Regularization rate 0.001 (L2)",
+    "epoch": "001,221",
+    "epoch_int": 1221,
+    "train_loss": "0.023",
+    "test_loss": "0.058",
+    "screenshot": "/home/ayub/Y4/S7/DL/LABS/4/4. DL - Lab 4/screenshots/ex2_task3_reg_0_001.png"
+  },
+  "ex2_task3_reg_0_003": {
+    "title": "Exercise 2 Task 3: Regularization rate 0.003 (L2)",
+    "epoch": "001,527",
+    "epoch_int": 1527,
+    "train_loss": "0.029",
+    "test_loss": "0.054",
+    "screenshot": "/home/ayub/Y4/S7/DL/LABS/4/4. DL - Lab 4/screenshots/ex2_task3_reg_0_003.png"
+  },
+  "ex2_task3_reg_0_01": {
+    "title": "Exercise 2 Task 3: Regularization rate 0.01 (L2)",
+    "epoch": "001,505",
+    "epoch_int": 1505,
+    "train_loss": "0.047",
+    "test_loss": "0.043",
+    "screenshot": "/home/ayub/Y4/S7/DL/LABS/4/4. DL - Lab 4/screenshots/ex2_task3_reg_0_01.png"
+  },
+  "ex2_task3_reg_0_1": {
+    "title": "Exercise 2 Task 3: Regularization rate 0.1 (L2)",
+    "epoch": "001,226",
+    "epoch_int": 1226,
+    "train_loss": "0.499",
+    "test_loss": "0.497",
+    "screenshot": "/home/ayub/Y4/S7/DL/LABS/4/4. DL - Lab 4/screenshots/ex2_task3_reg_0_1.png"
+  },
+  "ex3_task1_spiral_small": {
+    "title": "Exercise 3 Task 1: Spiral 2 hidden layers (3, 2), X1 and X2 only",
+    "epoch": "002,022",
+    "epoch_int": 2022,
+    "train_loss": "0.360",
+    "test_loss": "0.495",
+    "screenshot": "/home/ayub/Y4/S7/DL/LABS/4/4. DL - Lab 4/screenshots/ex3_task1_small.png"
+  },
+  "ex3_task1_spiral_deep": {
+    "title": "Exercise 3 Task 1: Spiral 3 hidden layers (5, 5, 4), X1 and X2 only",
+    "epoch": "003,019",
+    "epoch_int": 3019,
+    "train_loss": "0.014",
+    "test_loss": "0.102",
+    "screenshot": "/home/ayub/Y4/S7/DL/LABS/4/4. DL - Lab 4/screenshots/ex3_task1_deep.png"
+  },
+  "ex3_task2_spiral_features": {
+    "title": "Exercise 3 Task 2: Spiral with Engineered Features (sinX, sinY, xTimesY, xSquared, ySquared)",
+    "epoch": "001,509",
+    "epoch_int": 1509,
+    "train_loss": "0.190",
+    "test_loss": "0.220",
+    "screenshot": "/home/ayub/Y4/S7/DL/LABS/4/4. DL - Lab 4/screenshots/ex3_task2_features.png"
+  }
+}
