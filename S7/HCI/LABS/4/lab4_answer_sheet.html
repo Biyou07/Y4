@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HCI Lab 4 (II) - Answer Sheet</title>
+<style>
+@page{size:A4;margin:10mm 12mm}
+*{box-sizing:border-box}
+body{font:12px/1.45 "Segoe UI",Arial,sans-serif;color:#1e293b;max-width:820px;margin:0 auto;padding:12px}
+.h{background:linear-gradient(135deg,#1e40af,#2563eb);color:#fff;border-radius:8px;padding:8px 12px;display:flex;justify-content:space-between;gap:12px;font-size:11.5px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+h1{font-size:16px;color:#1d4ed8;margin:8px 0 4px;text-align:center}
+h2{font-size:14px;color:#1d4ed8;border-bottom:2px solid #bfdbfe;padding-bottom:2px;margin:12px 0 6px;break-after:avoid;page-break-after:avoid}
+h3{font-size:12.5px;margin:7px 0 3px;break-after:avoid;page-break-after:avoid}
+.id{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin:6px 0}
+.id div{border:1px solid #cbd5e1;border-radius:6px;padding:4px 6px;min-height:36px;font-size:12px}
+.id b{display:block;font-size:9px;color:#64748b;text-transform:uppercase;margin-bottom:2px}
+.step{border:1px solid #e2e8f0;border-radius:8px;padding:6px 10px;margin:6px 0;break-inside:auto}
+.box{border:1px dashed #94a3b8;border-radius:6px;min-height:auto;padding:5px 8px;margin:3px 0;color:#1e293b;white-space:pre-wrap;font-size:11.5px;line-height:1.4}
+table{border-collapse:collapse;width:100%;margin:5px 0;break-inside:auto}
+tr{break-inside:avoid;page-break-inside:avoid}
+th,td{border:1px solid #cbd5e1;padding:3.5px 5px;vertical-align:top;font-size:11px;line-height:1.35;color:#1e293b}
+th{background:#eff6ff;font-weight:600}
+.tip{background:#fef9c3;border-left:3px solid #ca8a04;padding:3px 6px;margin:4px 0;font-size:11px}
+.ft{margin-top:14px;font-size:10.5px;color:#64748b;border-top:1px solid #e2e8f0;padding-top:4px}
+.pb{position:fixed;right:12px;top:12px;background:#1d4ed8;color:#fff;border:0;border-radius:8px;padding:9px 14px;font-weight:700;cursor:pointer}
+[contenteditable]:focus{outline:2px solid #93c5fd;background:#f8fbff}
+@media print{.pb{display:none}[contenteditable]:focus{outline:none;background:none}body{padding:0}}
+</style>
+</head>
+<body>
+<button class="pb" onclick="window.print()">Print / save as PDF</button>
+<script>
+(function(){
+  try {
+    for (var k in localStorage) {
+      if (k.indexOf('lab4_answer_sheet') !== -1) localStorage.removeItem(k);
+    }
+  } catch(e){}
+})();
+</script>
+
+<div class="h">
+  <div>
+    <b>People's Democratic Republic of Algeria</b><br>
+    Ministry of Higher Education and Scientific Research<br>
+    The National School of Artificial Intelligence (ENSIA)<br>
+    Intelligent Systems Engineering Department
+  </div>
+  <div style="text-align:right">
+    <b>HCI Lab 4 (Part II)</b><br>
+    Semester 7, 2026/2027<br>
+    Date: <span class="box" style="display:inline-block;min-height:0;width:110px;border:0;border-bottom:1px solid #fff;color:#fff;padding:0"> </span>
+  </div>
+</div>
+
+<h1>Lab Report: Heuristics in User-Centered Design</h1>
+
+<div class="id">
+  <div contenteditable="true" style="grid-column:span 2"><b>Full name(s)</b>BELHIMER Mohmaed Ayoub</div>
+  <div contenteditable="true"><b>Student ID</b>232331674810</div>
+  <div contenteditable="true"><b>Group</b>1</div>
+</div>
+<div class="id">
+  <div contenteditable="true" style="grid-column:span 2"><b>Full name(s) (2nd, 3rd, 4th member)</b>&nbsp;</div>
+  <div contenteditable="true"><b>Student ID(s)</b>&nbsp;</div>
+  <div contenteditable="true"><b>Lab session date</b>05/11/2026</div>
+</div>
+
+<h2>1. Pre-Lab A: Notions (no LLMs)</h2>
+<div class="step">
+  <h3>Say how Nielsen's 10 heuristics, Shneiderman's 8 golden rules and Gerhardt-Powals' principles are the same and how they are different.</h3>
+  <div class="box" contenteditable="true">Similarities (points):
+- All three focus on minimizing user cognitive load and preventing user errors.
+- Shared core mechanics: interface consistency, timely feedback, easy error recovery, and prioritizing recognition over recall.
+- All three let evaluators find design problems quickly without testing on real users.
+
+Differences (points):
+- Nielsen (10 Heuristics): Broad, general-purpose UI rules of thumb emphasizing interface aesthetics, navigation freedom (undo/redo), and error prevention.
+- Shneiderman (8 Golden Rules): Focuses on interaction flow and user control—making users feel in charge, giving clear confirmation when tasks are finished, and providing shortcuts for frequent users.
+- Gerhardt-Powals (Cognitive Engineering): Focuses on reducing mental effort—combining raw data into meaningful summaries and grouping related information to avoid cognitive overload.</div>
+  <h3>Give one real example from Airbnb (or another app) where a heuristic works or fails. Why?</h3>
+  <div class="box" contenteditable="true">App and screen: Instagram Stories viewer
+Heuristic and framework: Visibility of system status (Nielsen #1) / Offer informative feedback (Shneiderman #3)
+Works or fails? Why?: Works. The segmented progress bar at the top displays how many stories the user has posted, which one is currently playing, and how much time remains. Tapping advances or rewinds instantly, keeping the user fully informed of their current position and state at all times.</div>
+  <h3>Link these ideas to the UCD principles from earlier labs, or to an app you use every day.</h3>
+  <div class="box" contenteditable="true">Your answer: User-Centered Design (UCD) emphasizes designing around real user behaviors and minimizing mental friction. Heuristics turn UCD principles into concrete rules that keep Instagram intuitive every day:
+1. Consistency and standards (Nielsen #4): The bottom navigation bar stays in the exact same place across tabs, adhering to mobile design conventions.
+2. User control and freedom (Nielsen #3): The "unsend" feature in direct messages and the ability to archive posts instead of permanently deleting them give users full control to reverse actions.
+3. Recognition rather than recall (Nielsen #6): Tapping the search bar immediately shows recent searches and suggested accounts, eliminating the need to memorize exact usernames.</div>
+</div>
+
+<h2>2. Pre-Lab B: Articles</h2>
+<div class="step">
+  <h3>What new heuristics (not in Part A) did you find in the articles?</h3>
+  <div class="box" contenteditable="true">Your answer (points):
+- Support user's emotions and feelings: Designing for positive emotional experience, motivation, and delight, not just task completion.
+- Ensure trust and security: Building confidence through clear privacy terms, data safety, and transparency.
+- Enable positive social interaction: Facilitating healthy sharing, communication, and community connection.
+- Support user's lifestyle and identity: Aligning design with personal identity and user self-expression.
+- Provide adaptability and personalization: Allowing users to customize themes, layout, and settings to fit their unique context.</div>
+  <h3>Are some heuristics universal (any system) and others only for one context (mobile, AI, VR)? Give examples.</h3>
+  <div class="box" contenteditable="true">Universal: Apply to any interactive system regardless of technology.
+- Example: "Visibility of system status" (immediate feedback is always needed) and "Error prevention" (preventing accidental data loss).
+
+Context-dependent: Apply to specific hardware, environment, or interaction types.
+- Mobile: One-handed thumb reachability and visibility under changing light/sunlight.
+- AI Systems: Explainability (making the AI's reasoning transparent) and graceful handling of model hallucinations.
+- VR / AR: Ergonomic comfort and preventing motion sickness (cybersickness).</div>
+  <h3>Can heuristics conflict (for example minimalist design and enough help)? How would you decide?</h3>
+  <div class="box" contenteditable="true">Example of a conflict:
+Minimalist design vs. Recognition rather than recall / Help & documentation. Removing labels, tooltips, and explanatory text creates a sleek, minimal interface, but leaves users confused about how features work.
+
+How you would decide:
+1. Prioritize based on the user's primary goal and familiarity level.
+2. Use progressive disclosure: keep the main view clean and uncluttered, but provide contextual help on demand (e.g., subtle info icons, tooltips on hover, or expandable hints) so neither heuristic is sacrificed.</div>
+</div>
+
+<h2>3. Activity 1: Cross-Heuristic Challenge</h2>
+<div class="step">
+  <h3>A. App or website chosen: <span contenteditable="true" style="border-bottom:1px solid #94a3b8;display:inline-block;min-width:200px">Steam (Valve)</span></h3>
+  <div class="tip">Find at least 3 examples where the system follows a heuristic and 3 where it fails. Name the heuristic and give a reason about the user.</div>
+  <table>
+    <tr><th style="width:5%">#</th><th>What you observed (screen or element)</th><th style="width:22%">Heuristic</th><th style="width:12%">Follows / Fails</th><th>Why? (effect on the user)</th></tr>
+    <tr><td>1</td><td contenteditable="true">Downloads page: Real-time progress bar showing download speed, disk write rate, and estimated time remaining.</td><td contenteditable="true">Visibility of system status (Nielsen #1)</td><td contenteditable="true">Follows</td><td contenteditable="true">The user always knows the exact status of the game download and when it will be ready to play.</td></tr>
+    <tr><td>2</td><td contenteditable="true">Purchases & Support: Automated refund option available directly within 14 days and under 2 hours of playtime.</td><td contenteditable="true">User control and freedom (Nielsen #3)</td><td contenteditable="true">Follows</td><td contenteditable="true">Users can easily undo an accidental or unsatisfactory purchase without fear of losing money.</td></tr>
+    <tr><td>3</td><td contenteditable="true">Store Search: Autocomplete dropdown showing game cover art, platform icons, and current price as you type.</td><td contenteditable="true">Recognition rather than recall (Nielsen #6)</td><td contenteditable="true">Follows</td><td contenteditable="true">Users recognize titles visually and verify games immediately without needing to remember exact spellings.</td></tr>
+    <tr><td>4</td><td contenteditable="true">Settings Menu: Dense options scattered across desktop preferences, in-game overlay, and web account settings.</td><td contenteditable="true">Aesthetic and minimalist design (Nielsen #8)</td><td contenteditable="true">Fails</td><td contenteditable="true">Cluttered, multi-layered menus overwhelm users and make finding basic options frustrating.</td></tr>
+    <tr><td>5</td><td contenteditable="true">Community Market & Store: Inconsistent mix of legacy desktop UI, embedded web frames, and newer React elements.</td><td contenteditable="true">Consistency and standards (Nielsen #4)</td><td contenteditable="true">Fails</td><td contenteditable="true">Different button styles and inconsistent back-button behavior break user navigation expectations.</td></tr>
+    <tr><td>6</td><td contenteditable="true">Workshop / Mods: Silent mod installation failures or crashes without explaining missing dependencies.</td><td contenteditable="true">Help users recognize, diagnose, and recover from errors (Nielsen #9)</td><td contenteditable="true">Fails</td><td contenteditable="true">Users are left confused by cryptic crashes without plain-language explanations or recovery steps.</td></tr>
+  </table>
+  <h3>B. Framework chosen (Nielsen, Shneiderman, Gerhardt-Powals, SMASH…): <span contenteditable="true" style="border-bottom:1px solid #94a3b8;display:inline-block;min-width:200px">Nielsen's 10 Usability Heuristics</span></h3>
+  <div class="box" contenteditable="true">Main problems found with this framework (Airbnb case study):
+- Successfully detected layout, search filter, and checkout usability issues.
+- Struggled to evaluate modern UX factors like host credibility, trust badges, photo quality, and emotional reassurance.</div>
+  <h3>Which framework gave more useful results? Which was harder or easier to use? Why?</h3>
+  <div class="box" contenteditable="true">Your answer:
+- Easier to use: Nielsen's heuristics were much easier and faster to apply to standard interface flows (search filters, booking steps).
+- More in-depth for complex displays: Gerhardt-Powals was harder to use because it requires understanding cognitive workload, but it provided deeper insights on how Airbnb combines map pins, pricing, and dates into single visual chunks.</div>
+</div>
+
+<h2>4. Activity 2: Heuristic Remix, Design Challenge</h2>
+<div class="step">
+  <h3>Option chosen: &#9745; A. Old project (REV Mobile - Car Rental App) &nbsp;&nbsp; &#9744; B. Airbnb (search bar, booking confirmation, host profile…)</h3>
+  <h3>What part did you redesign, and what was the problem before?</h3>
+  <div class="box" contenteditable="true">Your answer:
+- Redesigned part: Car Details & Booking Checkout screen in REV Mobile.
+- Problem before: The original screen only displayed the car name, one image, and a simple daily rate next to a "Rent Now" button. There was no date summary, no itemized breakdown of rental duration or deposit, and no clear cancellation policy, which created user hesitation and accidental wrong-date bookings.</div>
+  <h3>Before and after (paste a screenshot or sketch, or describe it)</h3>
+  <table>
+    <tr><th>Before</th><th>After</th></tr>
+    <tr><td contenteditable="true" style="height:110px">Description:
+- Simple card with car image and daily rate (e.g. 8000 DZD/day).
+- Static text without date calculation.
+- Single generic "Rent Now" button leading straight to payment without a summary.</td><td contenteditable="true" style="height:110px">Description:
+- Interactive booking summary card showing selected pickup & return dates and total days.
+- Transparent price breakdown (Daily rate × days + refundable security deposit).
+- Clear "Free cancellation up to 24h before pickup" reassurance badge.
+- Explicit "Confirm Booking" button with confirmation modal.</td></tr>
+  </table>
+  <h3>Use at least 3 different heuristics (any framework) to explain your redesign</h3>
+  <table>
+    <tr><th>Heuristic and framework</th><th>Change you made</th><th>How it helps the user</th></tr>
+    <tr><td contenteditable="true">Visibility of system status (Nielsen #1)</td><td contenteditable="true">Added live calculation of total rental cost based on selected start and end dates.</td><td contenteditable="true">Keeps user immediately informed of the total cost before committing to a rental.</td></tr>
+    <tr><td contenteditable="true">Error prevention (Nielsen #5)</td><td contenteditable="true">Added clear pickup/return summary card with a confirmation prompt before final submission.</td><td contenteditable="true">Prevents users from accidentally booking incorrect dates or locations.</td></tr>
+    <tr><td contenteditable="true">Ensure trust and security (Arhippainen UX Heuristic #7)</td><td contenteditable="true">Added itemized security deposit details and explicit free cancellation guarantee badge.</td><td contenteditable="true">Builds user trust and eliminates hesitation around hidden fees or rigid policies.</td></tr>
+  </table>
+</div>
+
+<h2>5. Activity 3: AI and Creativity with Heuristic Testing</h2>
+<div class="step">
+  <h3>A. Prototype or UI image tested (name or description)</h3>
+  <div class="box" contenteditable="true">REV Mobile App - CheckoutScreen (checkout.dart in Flutter).</div>
+  <h3>B. AI tool(s) used (ChatGPT, Gemini, Claude, SynthUX…) and the prompt you wrote</h3>
+  <div class="box" contenteditable="true">Tool(s): Gemini / Autonomous UX Subagent
+Prompt: "Act as a senior UX researcher. Perform a heuristic evaluation of this mobile car rental checkout screen using Nielsen's 10 Usability Heuristics. Identify usability violations and suggest improvements."
+Summary of what the AI found:
+- Constructor vehicle details (carTitle, imageAsset, provider) were never rendered on the checkout screen (Heuristics #4, #6).
+- Silently disabled "Confirm" button at 30% opacity without progress indicator or field error validation (Heuristics #1, #9).
+- Hardcoded US date format ('MM/dd/yyyy') conflicting with Algerian Dinar (DA) local context (Heuristic #2).
+- High interaction friction: 4 separate modal pickers (2 date pickers + 2 location sheets) instead of a unified date-range picker (Heuristics #4, #7).
+- Redundant info banner cluttering screen real estate and complete absence of cancellation policies (Heuristics #8, #10).</div>
+  <h3>C. Compare the AI feedback with Nielsen's heuristics</h3>
+  <table>
+    <tr><th>Nielsen heuristic</th><th style="width:16%">AI found a problem? (Yes / No)</th><th>Was the AI right? What did a human need to add?</th></tr>
+    <tr><td>1. Visibility of system status</td><td contenteditable="true">Yes</td><td contenteditable="true">Right: AI caught the silently disabled button at 30% opacity. Human added: The 2-second transient SnackBar after booking leaves no permanent booking ID or status page.</td></tr>
+    <tr><td>2. Match between system and the real world</td><td contenteditable="true">Yes</td><td contenteditable="true">Right: AI spotted US date format ('MM/dd/yyyy') mismatch with Algerian Dinar (DA). Human added: Real car rentals require pickup/return hours, not just date subtractions.</td></tr>
+    <tr><td>3. User control and freedom</td><td contenteditable="true">Yes</td><td contenteditable="true">Right: AI identified that choosing a new pickup date silently wiped the return date without confirmation or smart auto-adjustment.</td></tr>
+    <tr><td>4. Consistency and standards</td><td contenteditable="true">Yes</td><td contenteditable="true">Right: AI noticed two separate date pickers violate mobile standards (should be a single DateRangePicker), and the vehicle header is missing.</td></tr>
+    <tr><td>5. Error prevention</td><td contenteditable="true">Yes</td><td contenteditable="true">Right: AI caught that empty location lists freeze the form, and suggested adding a default "Return to same location" toggle.</td></tr>
+    <tr><td>6. Recognition rather than recall</td><td contenteditable="true">Yes</td><td contenteditable="true">Right: AI noted that users must memorize car model, transmission, and specs from the previous screen because checkout displays no vehicle summary.</td></tr>
+    <tr><td>7. Flexibility and efficiency of use</td><td contenteditable="true">Yes</td><td contenteditable="true">Right: AI highlighted high tap friction (4 modal dialogs) and suggested quick duration presets ("Weekend", "1 Week").</td></tr>
+    <tr><td>8. Aesthetic and minimalist design</td><td contenteditable="true">Yes</td><td contenteditable="true">Right: AI flagged the redundant info banner ("Duration and pricing update automatically") as wasted vertical space.</td></tr>
+    <tr><td>9. Help users recognize, diagnose and recover from errors</td><td contenteditable="true">Yes</td><td contenteditable="true">Right: AI noted tapping the disabled button produces no feedback or inline field highlights, and cubit API failures have no retry action.</td></tr>
+    <tr><td>10. Help and documentation</td><td contenteditable="true">Yes</td><td contenteditable="true">Right: AI flagged the absence of cancellation terms, security deposit policies, insurance coverage details, and help contacts.</td></tr>
+  </table>
+  <h3>Which heuristics were easy for the AI to find? Which needed human judgment?</h3>
+  <div class="box" contenteditable="true">Easy for AI:
+- Structural omissions (missing vehicle header, missing cancellation terms), format clashes (US date format with DZD currency), and checklist compliance across all 10 heuristics.
+
+Needed a human:
+- Physical device touch ergonomics (one-handed reachability), keyboard overlap during location search, and understanding real-world rental logistics (hourly billing, airport branch opening times).</div>
+  <h3>D. Class reflection: how can AI make heuristic evaluation faster? Where does AI fail, and where do we still need human experts?</h3>
+  <div class="box" contenteditable="true">AI can help by:
+- Providing an exhaustive first-pass audit in seconds, catching omitted components, and systematically mapping issues to all 10 heuristics without human fatigue.
+
+AI fails when:
+- Evaluating physical ergonomics, tactile responsiveness, real device performance (lag/stutter), and nuanced local user expectations.
+
+Human experts are needed for:
+- Testing on physical hardware under real conditions, prioritizing fixes according to business goals, and validating user emotional trust.</div>
+</div>
+
+<h2>6. Observations and notes</h2>
+<div class="step">
+  <div class="box" contenteditable="true">Observations & Discussion Points:
+- Applying heuristics to mobile applications requires extra attention to physical ergonomics (one-handed thumb zone) and network variability that classic desktop heuristics do not explicitly cover.
+- Pairing AI tools with human evaluation creates a strong hybrid workflow: AI rapidly catches superficial visual issues, leaving human evaluators free to focus on complex user flows and cognitive workload.</div>
+</div>
+
+<div class="ft">Lab report: HCI Lab 4 (Part II), ENSIA, Intelligent Systems Engineering Department, Semester 7, 2026/2027. Each member must be able to explain the answers.</div>
+
+</body>
+</html>
