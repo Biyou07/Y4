@@ -53,3 +53,4 @@ wheels/
 *.tmp
 *.bak
 kenlm/
+*.arpa
