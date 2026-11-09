@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HCI Lab 4 (I) - Answer Sheet</title><style>
+@page{size:A4;margin:12mm}
+*{box-sizing:border-box}
+body{font:13px/1.5 "Segoe UI",Arial,sans-serif;color:#1f2937;max-width:820px;margin:0 auto;padding:16px}
+.hd{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;font-size:11.5px;text-align:center}
+.hd .ar{direction:rtl;font-size:13px}
+.logo{font-weight:800;font-size:26px;color:#1e3a8a;line-height:1}.logo small{display:block;font-size:9px;color:#f97316;font-weight:700}
+.bar{background:#f97316;height:22px;margin:10px 0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.meta{display:flex;justify-content:space-between;font-weight:700;font-size:13px}
+h1{font-size:19px;margin:10px 0;text-align:center;border-top:1px solid #111;padding-top:8px}
+h2{font-size:14px;color:#fff;background:#f97316;padding:3px 10px;margin:22px 0 8px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+h3{font-size:13.5px;margin:12px 0 4px}
+.id{display:grid;grid-template-columns:2fr 1fr;gap:6px;margin:8px 0}
+.id div{border:1px solid #cbd5e1;border-radius:6px;padding:5px 8px;min-height:40px}
+.id b{display:block;font-size:10px;color:#64748b;text-transform:uppercase}
+.task{background:#fff7ed;border-left:3px solid #f97316;padding:6px 10px;margin:6px 0;font-size:12.5px}
+.task ul{margin:4px 0 0 18px;padding:0}
+.box{border:1px dashed #94a3b8;border-radius:6px;min-height:70px;padding:6px 8px;margin:4px 0;color:#64748b;white-space:pre-wrap}
+table{border-collapse:collapse;width:100%;margin:6px 0}
+th,td{border:1px solid #cbd5e1;padding:4px 6px;vertical-align:top;font-size:12px}
+th{background:#fff7ed}
+.pc{border:1px solid #fdba74;border-radius:10px;padding:10px 12px;margin:12px 0;break-inside:avoid-page}
+.pc h3{margin-top:0;color:#c2410c}
+.pc td:first-child{width:24%;background:#f8fafc;font-weight:600}
+.grp td{background:#ffedd5!important;font-weight:700;color:#9a3412;font-size:11px;text-transform:uppercase}
+.hint{color:#94a3b8;font-style:italic}
+.neg{border-color:#fca5a5}.neg h3{color:#b91c1c}
+.ft{margin-top:22px;font-size:11px;color:#64748b;border-top:1px solid #111;padding-top:6px;display:flex;justify-content:space-between;font-style:italic}
+.pb{position:fixed;right:12px;top:12px;background:#f97316;color:#fff;border:0;border-radius:8px;padding:9px 14px;font-weight:700;cursor:pointer}
+[contenteditable]:focus{outline:2px solid #fdba74;background:#fffbf5}
+@media print{.pb{display:none}[contenteditable]:focus{outline:none;background:none}}
+</style></head><body>
+<button class="pb" onclick="window.print()">Print / save as PDF</button>
+<script>
+(function(){
+  var KEY='lab4p1_answer_sheet_ensia_v5';
+  function load(){ try{ var d=localStorage.getItem(KEY); if(d){ var a=JSON.parse(d); document.querySelectorAll('[contenteditable]').forEach(function(e,i){ if(a[i]!=null) e.innerHTML=a[i]; }); } }catch(e){} }
+  function save(){ try{ var a=[]; document.querySelectorAll('[contenteditable]').forEach(function(e){ a.push(e.innerHTML); }); localStorage.setItem(KEY, JSON.stringify(a)); }catch(e){} }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', load); else load();
+  document.addEventListener('input', save);
+})();
+</script>
+
+<div class="hd">
+<div>PEOPLE'S DEMOCRATIC REPUBLIC OF ALGERIA<br>Ministry of Higher Education and Scientific Research<br>The National School of Artificial Intelligence<br><b>Intelligent Systems Engineering Department</b></div>
+<div class="logo">ensia<small>The National School of<br>Artificial Intelligence</small></div>
+<div class="ar">الجمهورية الجزائرية الديمقراطية الشعبية<br>وزارة التعليم العالي والبحث العلمي<br>المدرسة الوطنية العليا للذكاء الاصطناعي<br>قسم هندسة الأنظمة الذكية</div>
+</div>
+<div class="bar"></div>
+<div class="meta"><span>Human Computer Interaction Labs</span><span>4<sup>th</sup> Year 2026/2027</span></div>
+<div class="meta"><span>Lab 4 (I) Semester: S7</span><span>Answer Sheet</span></div>
+<h1>From Users to Interfaces - part I:<br>From Personas to Prototypes</h1>
+<div class="bar"></div>
+
+<div class="id">
+<div contenteditable="true"><b>Member 1: full name</b>&nbsp;</div><div contenteditable="true"><b>Student ID</b>&nbsp;</div>
+<div contenteditable="true"><b>Member 2: full name</b>&nbsp;</div><div contenteditable="true"><b>Student ID</b>&nbsp;</div>
+<div contenteditable="true"><b>Member 3: full name</b>&nbsp;</div><div contenteditable="true"><b>Student ID</b>&nbsp;</div>
+<div contenteditable="true"><b>Member 4: full name (if any)</b>&nbsp;</div><div contenteditable="true"><b>Student ID</b>&nbsp;</div>
+<div contenteditable="true"><b>Group</b>&nbsp;</div><div contenteditable="true"><b>Date</b>&nbsp;</div>
+</div>
+
+<!-- ================= ACTIVITY 1 ================= -->
+<h2>1. Activity 1: Personas &amp; Scenarios [45 mins + 15 Disc]</h2>
+<p><b>The work in this activity must be done in groups of 3 or 4 students.</b></p>
+
+<div class="task"><b>A.</b> We have the Car Showroom case, as presented in <i>appendix (A)</i>.</div>
+
+<div class="task"><b>B.</b> Create the following 3 personas: <i>The Road Trip Enthusiast; The Weekend Racer and F1 enthusiast (Ferrari Tifosi); The Student on a Budget; introduce a negative persona for this app.</i> <b>You may as well create alternative personas; use your creativity and inspiration.</b></div>
+<div class="task"><b>C.</b> For each persona, define: <i>demographic info, goals, pain points, expected interaction</i> (See <i>appendix (B)</i>).</div>
+
+<div class="pc"><h3>Persona 1: The Road Trip Enthusiast</h3><table>
+<tr class="grp"><td colspan="2">Demographic info</td></tr>
+<tr><td>Name</td><td contenteditable="true">&nbsp;</td></tr>
+<tr><td>Age</td><td contenteditable="true">&nbsp;</td></tr>
+<tr><td>Occupation</td><td contenteditable="true">&nbsp;</td></tr>
+<tr><td>Tech skill level</td><td contenteditable="true">&nbsp;</td></tr>
+<tr class="grp"><td colspan="2">Goals</td></tr>
+<tr><td>Goals</td><td contenteditable="true">1-<br>2-<br>3-</td></tr>
+<tr class="grp"><td colspan="2">Pain points</td></tr>
+<tr><td>Pain points</td><td contenteditable="true">1-<br>2-<br>3-</td></tr>
+<tr class="grp"><td colspan="2">Expected interaction</td></tr>
+<tr><td>Expected interaction</td><td contenteditable="true">&nbsp;</td></tr>
+</table></div>
+
+<div class="pc"><h3>Persona 2: The Weekend Racer and F1 enthusiast (Ferrari Tifosi)</h3><table>
+<tr class="grp"><td colspan="2">Demographic info</td></tr>
+<tr><td>Name</td><td contenteditable="true">&nbsp;</td></tr>
+<tr><td>Age</td><td contenteditable="true">&nbsp;</td></tr>
+<tr><td>Occupation</td><td contenteditable="true">&nbsp;</td></tr>
+<tr><td>Tech skill level</td><td contenteditable="true">&nbsp;</td></tr>
+<tr class="grp"><td colspan="2">Goals</td></tr>
+<tr><td>Goals</td><td contenteditable="true">1-<br>2-<br>3-</td></tr>
+<tr class="grp"><td colspan="2">Pain points</td></tr>
+<tr><td>Pain points</td><td contenteditable="true">1-<br>2-<br>3-</td></tr>
+<tr class="grp"><td colspan="2">Expected interaction</td></tr>
+<tr><td>Expected interaction</td><td contenteditable="true">&nbsp;</td></tr>
+</table></div>
+
+<div class="pc"><h3>Persona 3: The Student on a Budget</h3><table>
+<tr class="grp"><td colspan="2">Demographic info</td></tr>
+<tr><td>Name</td><td contenteditable="true">&nbsp;</td></tr>
+<tr><td>Age</td><td contenteditable="true">&nbsp;</td></tr>
+<tr><td>Occupation</td><td contenteditable="true">&nbsp;</td></tr>
+<tr><td>Tech skill level</td><td contenteditable="true">&nbsp;</td></tr>
+<tr class="grp"><td colspan="2">Goals</td></tr>
+<tr><td>Goals</td><td contenteditable="true">1-<br>2-<br>3-</td></tr>
+<tr class="grp"><td colspan="2">Pain points</td></tr>
+<tr><td>Pain points</td><td contenteditable="true">1-<br>2-<br>3-</td></tr>
+<tr class="grp"><td colspan="2">Expected interaction</td></tr>
+<tr><td>Expected interaction</td><td contenteditable="true">&nbsp;</td></tr>
+</table></div>
+
+<div class="pc neg"><h3>Persona 4: Negative persona: <span contenteditable="true" style="border-bottom:1px solid #94a3b8;display:inline-block;min-width:200px">Samir, The Unauthorized Reseller ("Courtier")</span></h3><table>
+<tr class="grp"><td colspan="2">Demographic info</td></tr>
+<tr><td>Name</td><td contenteditable="true">Samir</td></tr>
+<tr><td>Age</td><td contenteditable="true">45</td></tr>
+<tr><td>Occupation</td><td contenteditable="true">Security Agent (Single)</td></tr>
+<tr><td>Tech skill level</td><td contenteditable="true">Low (Almost literate; relies on images, icons, and voice messages, struggles with dense text)</td></tr>
+<tr class="grp"><td colspan="2">Goals</td></tr>
+<tr><td>Goals</td><td contenteditable="true">1- Browse featured promotions and swipeable car cards to spot high-demand vehicles to resell as an unofficial middleman.<br>2- Extract high-quality photos and basic pricing from car description pages to repost on external platforms (Facebook Marketplace, Ouedkniss) with an added commission.<br>3- Schedule visits and test drives to inspect the cars and capture live photos and videos to convince external buyers.</td></tr>
+<tr class="grp"><td colspan="2">Pain points</td></tr>
+<tr><td>Pain points</td><td contenteditable="true">1- Confused by dense text, technical specification tables (engine type, horsepower, safety features), and multi-step filter forms.<br>2- Frustrated by showroom image watermarks and copyright protections that make copying listings difficult.<br>3- Blocked by mandatory identity pre-qualification (driver's license upload and deposit hold) when attempting to schedule visits or test drives.</td></tr>
+<tr class="grp"><td colspan="2">Expected interaction</td></tr>
+<tr><td>Expected interaction</td><td contenteditable="true">Samir uses the mobile app exclusively for visual browsing via swipeable cards, completely skipping text filters and specification tables. He saves vehicles to his wishlist to track new arrivals and price changes, takes screenshots of car description galleries to create unofficial listings on Facebook and Ouedkniss, and initiates in-app messaging with sales representatives to book test drives for photo opportunities or negotiate informal broker cuts without intending to buy.</td></tr>
+</table></div>
+
+<div class="pc"><h3>Alternative persona (optional): <span contenteditable="true" style="border-bottom:1px solid #94a3b8;display:inline-block;min-width:220px">&nbsp;</span></h3><table>
+<tr class="grp"><td colspan="2">Demographic info</td></tr>
+<tr><td>Name</td><td contenteditable="true">&nbsp;</td></tr>
+<tr><td>Age</td><td contenteditable="true">&nbsp;</td></tr>
+<tr><td>Occupation</td><td contenteditable="true">&nbsp;</td></tr>
+<tr><td>Tech skill level</td><td contenteditable="true">&nbsp;</td></tr>
+<tr class="grp"><td colspan="2">Goals</td></tr>
+<tr><td>Goals</td><td contenteditable="true">1-<br>2-<br>3-</td></tr>
+<tr class="grp"><td colspan="2">Pain points</td></tr>
+<tr><td>Pain points</td><td contenteditable="true">1-<br>2-<br>3-</td></tr>
+<tr class="grp"><td colspan="2">Expected interaction</td></tr>
+<tr><td>Expected interaction</td><td contenteditable="true">&nbsp;</td></tr>
+</table></div>
+
+<div class="task"><b>D.</b> Write one short scenario per persona (See <i>appendix (B)</i>).</div>
+<h3>Scenario 1: The Road Trip Enthusiast</h3><div class="box" contenteditable="true">&nbsp;</div>
+<h3>Scenario 2: The Weekend Racer and F1 enthusiast (Ferrari Tifosi)</h3><div class="box" contenteditable="true">&nbsp;</div>
+<h3>Scenario 3: The Student on a Budget</h3><div class="box" contenteditable="true">&nbsp;</div>
+<h3>Scenario 4: Negative persona</h3><div class="box" contenteditable="true">Samir starts by opening the mobile app to browse new arrivals using the swipeable cards, skipping written search filters and focusing entirely on vehicle images. On the car description page, he screenshots the high-quality photos and saves the car to his wishlist to track promotional price changes, then immediately reposts the vehicle on Ouedkniss and Facebook Marketplace with a personal markup. When an external buyer calls him asking for live video proof, Samir uses the in-app messaging feature to schedule a showroom visit and test drive, aiming to test the car and record live walk-around videos to close his resale. However, when the app prompts him with a required verification step to upload a valid driver's license and pre-authorize a deposit before the sales representative confirms the booking, Samir feels overwhelmed by the written requirements and cancels the request.</div>
+<h3>Scenario 5: Alternative persona (optional)</h3><div class="box" contenteditable="true">&nbsp;</div>
+
+<div class="task"><b>E.</b> Based on the personas and scenarios, brainstorm <b>conceptual design directions</b>. Think of major design headlines, such as:
+<ul>
+<li>Key features that would be essential for each persona.</li>
+<li>Possible navigation or interaction priorities (e.g., quick access to comparisons, immersive visuals, budget-friendly filters).</li>
+<li>Any potential conflicts between user needs.</li>
+</ul>
+At this stage, you are not designing interfaces yet, just outlining the <b>big ideas</b> that should guide your future design choices.</div>
+
+<h3>Key features that would be essential for each persona</h3>
+<table><tr><th style="width:28%">Persona</th><th>Key features</th></tr>
+<tr><td>The Road Trip Enthusiast</td><td contenteditable="true">&nbsp;</td></tr>
+<tr><td>The Weekend Racer and F1 enthusiast</td><td contenteditable="true">&nbsp;</td></tr>
+<tr><td>The Student on a Budget</td><td contenteditable="true">&nbsp;</td></tr>
+<tr><td>Negative persona</td><td contenteditable="true">Defensive design features: Dynamic showroom watermarks on photos/videos to prevent external resale reposts; mandatory test-drive pre-qualification (ID/driving license upload and card pre-authorization); automated chatbot screening to filter out middleman inquiries before routing to live sales reps.</td></tr>
+<tr><td>Alternative persona</td><td contenteditable="true">&nbsp;</td></tr></table>
+
+<h3>Possible navigation or interaction priorities</h3>
+<div class="box" contenteditable="true">1-<br>2-<br>3-</div>
+
+<h3>Any potential conflicts between user needs</h3>
+<table><tr><th>Conflict</th><th style="width:24%">Personas involved</th><th>Possible solution</th></tr>
+<tr><td contenteditable="true">Frictionless 1-click test drives & unwatermarked clean photos vs. Unauthorized resale reposting & test-drive exploitation</td><td contenteditable="true">Negative persona (Samir) vs. Genuine Buyers / Dealership Sales Team</td><td contenteditable="true">Implement branded watermarks on public catalog photos, and use a tiered test-drive booking gate (light verification for known registered buyers, mandatory license upload & deposit hold for new/unverified accounts).</td></tr>
+<tr><td contenteditable="true">&nbsp;</td><td contenteditable="true">&nbsp;</td><td contenteditable="true">&nbsp;</td></tr>
+<tr><td contenteditable="true">&nbsp;</td><td contenteditable="true">&nbsp;</td><td contenteditable="true">&nbsp;</td></tr></table>
+
+<h3>Major design headlines</h3>
+<div class="box" contenteditable="true">1-<br>2-<br>3-<br>4-<br>5-</div>
+
+<p style="font-size:12px">Use <i>appendix (B)</i> for inspiration, or you can use the following <i>AI Persona Generators</i>: AI User Persona, User Persona.</p>
+
+<!-- ================= ACTIVITY 2 ================= -->
+<h2>2. Activity 2: Sharing Insights &amp; Reflection [30 mins Disc]</h2>
+<p><b>This activity is an open discussion between the groups.</b></p>
+
+<div class="task"><b>A.</b> Present your personas, scenarios, and <b>major design headlines</b> to the class. Explain your choices (e.g., inspiration sources, use of AI tools, personal observations).</div>
+<table>
+<tr><td style="width:28%;font-weight:600;background:#f8fafc">Inspiration sources</td><td contenteditable="true">&nbsp;</td></tr>
+<tr><td style="font-weight:600;background:#f8fafc">Use of AI tools</td><td contenteditable="true">&nbsp;</td></tr>
+<tr><td style="font-weight:600;background:#f8fafc">Personal observations</td><td contenteditable="true">&nbsp;</td></tr>
+</table>
+
+<div class="task"><b>B. Class reflection:</b></div>
+<h3>• How do personas and scenarios shape the direction of a design before any interface is built?</h3>
+<div class="box" contenteditable="true">&nbsp;</div>
+<h3>• Were there any conflicts between personas that challenged your design headlines?</h3>
+<div class="box" contenteditable="true">&nbsp;</div>
+<h3>• What did you learn about the importance of understanding users at this early stage?</h3>
+<div class="box" contenteditable="true">&nbsp;</div>
+<h3>• What do you think about the use of AI to create personas (Synthetic Users vs. Real Voices)?</h3>
+<div class="box" contenteditable="true">&nbsp;</div>
+
+<div class="ft"><span>Human Computer Interaction: Lab 4 (I)</span><span>Answer Sheet</span><span>Semester 7, 2026/2027</span></div>
+</body></html>
