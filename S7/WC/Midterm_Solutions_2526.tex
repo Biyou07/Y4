@@ -1,0 +1,249 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper, margin=1.25cm, top=1.30cm, bottom=1.30cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{booktabs}
+\usepackage{colortbl}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{needspace}
+\usepackage{array}
+\usepackage{hyperref}
+
+% DL style color palette
+\definecolor{themeblue}{rgb}{0.1686, 0.3529, 0.5294}   % #2B5A87
+\definecolor{lightbg}{rgb}{0.9098, 0.9333, 0.9569}     % #E8EEF4
+\definecolor{accentred}{rgb}{0.7843, 0.2706, 0.2275}   % #C8453A
+\definecolor{accentgreen}{rgb}{0.1804, 0.4902, 0.1961} % #2E7D32
+\definecolor{codebg}{rgb}{0.96, 0.97, 0.98}
+
+% Header and Footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\textcolor{themeblue}{\small Official Exam Solutions --- Midterm 2025/2026}}
+\fancyhead[R]{\textcolor{themeblue}{\small WCNS (ENSIA Fourth Year)}}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{themeblue}\leaders\hrule height \headrulewidth\hfill}}
+\fancyfoot[C]{\thepage}
+
+\begin{document}
+
+% Title Block
+\begin{center}
+    {\LARGE\bfseries\color{themeblue} Wireless Communications \& Networking Systems (WCNS)}\\[2pt]
+    {\large\bfseries\color{themeblue} Midterm Examination 2025/2026 --- Official Detailed Solutions}\\[2pt]
+    {\small\itshape National School of Artificial Intelligence (ENSIA) --- Fourth Year, Semester 7}\\[2pt]
+    \textcolor{themeblue}{\rule{\textwidth}{0.6pt}}
+\end{center}
+
+\vspace{-8pt}
+
+\begin{tcolorbox}[
+    colframe=themeblue,
+    colback=lightbg,
+    coltitle=white,
+    fonttitle=\bfseries\sffamily\small,
+    title={Exam Metadata \& Structure},
+    arc=1.4mm,
+    boxrule=0.6pt,
+    left=6pt, right=6pt, top=3pt, bottom=3pt
+]
+\footnotesize
+\begin{itemize}[leftmargin=12pt, itemsep=1pt, topsep=1pt]
+    \item \textbf{Date \& Duration:} Monday, November 10, 2025 --- 9:00 AM to 10:30 AM (90 minutes).
+    \item \textbf{Total Score:} 20.0 points across 4 sections:
+    \begin{itemize}[leftmargin=10pt, itemsep=0.5pt]
+        \item \textbf{Course Questions - Part 1 (8.0 pts):} 16 Multiple Choice Questions (Correct: $+0.5$ pt, Wrong: $-0.25$ pt, Blank: $0$ pt).
+        \item \textbf{Course Questions - Part 2 (4.0 pts):} 6 Short-Answer Theoretical / Architectural Questions.
+        \item \textbf{Exercise 1 (4.0 pts):} Signal Periodicity, Harmonic Spectrum, and Moving Average Low-Pass Filter Design.
+        \item \textbf{Exercise 2 (4.0 pts):} Line Coding (NRZ), Carrier Modulation (ASK \& BPSK), SNR, and Bit Error Rate Evaluation.
+    \end{itemize}
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{1pt}
+
+% =========================================================================
+% PART 1: COURSE QUESTIONS - MULTIPLE CHOICE
+% =========================================================================
+\noindent{\Large\bfseries\color{themeblue} Part 1: Course Questions --- Multiple Choice (8.0 pts)}\par\vspace{2pt}
+
+\begin{center}
+\small
+\begin{tabular}{p{0.5cm} p{6.8cm} p{4.2cm} p{5.5cm}}
+\toprule
+\rowcolor{lightbg}
+\textbf{\#} & \textbf{Question} & \textbf{Correct Answer} & \textbf{Detailed Justification \& Slide Ref.} \\
+\midrule
+\textbf{1} & Modulation is necessary to: & \textbf{Carry a signal on a high-frequency radio carrier.} & Allows practical antenna size ($L \approx \lambda/4 = c/4f$) and channel sharing (*CH03, 5-9*). \\
+\textbf{2} & Advantage of modulating digital data into a digital signal: & \textbf{The simplicity and low cost of the equipment.} & Baseband logic circuitry is much simpler and cheaper than analog modulators (*CH05, 5-3*). \\
+\textbf{3} & ASK modulation is rarely used on its own because: & \textbf{Very sensitive to variations in signal power.} & Amplitude variations, channel fading, and noise severely distort decision thresholds (*CH05, 5-11*). \\
+\textbf{4} & In TDMA, users share the channel by being assigned: & \textbf{Different time slots.} & Divides transmission time into non-overlapping slots across the same band (*CH04, 4-15*). \\
+\textbf{5} & Sky-wave propagation allows long distance because: & \textbf{The signal is reflected by the ionosphere.} & HF waves (2--30 MHz) reflect between ionospheric plasma layers and Earth (*CH04, 4-18*). \\
+\textbf{6} & ISM frequency bands are important because they: & \textbf{Can be used without a license for devices like Wi-Fi.} & Unlicensed spectrum open to consumer electronics under power limits (*CH04, 4-13*). \\
+\textbf{7} & Wi-Fi signal passing through a wall: & \textbf{Transmission.} & Wave passes through a physical dielectric barrier with attenuation/refraction (*CH04, 4-21*). \\
+\textbf{8} & Noise present in all devices that cannot be eliminated: & \textbf{Thermal noise.} & Fundamental thermodynamic electron agitation ($N_0 = kT$) present at all $T > 0$ K (*CH04, 4-31*). \\
+\textbf{9} & Multiple copies arriving at slightly different times: & \textbf{Multipath propagation.} & Signal reflects off structures, creating paths of unequal propagation delay (*CH04, 4-37*). \\
+\textbf{10} & Channel changing very slowly compared to bit duration: & \textbf{Slow fading.} & Coherence time is much larger than bit time ($T_c \gg T_b$) (*CH04, 4-42*). \\
+\textbf{11} & MIMO technology uses multiple antennas to: & \textbf{Improve reception and/or data rate.} & Spatial diversity (reliability) + spatial multiplexing (multiplied throughput) (*CH04, 4-54*). \\
+\textbf{12} & Advantage of QPSK modulation over BPSK: & \textbf{Allows a higher bit rate for the same bandwidth.} & Transmits 2 bits/symbol ($L = 2$), doubling spectral efficiency ($D = R/2$) (*CH05, 5-21*). \\
+\textbf{13} & Technique spreading signal over wide bandwidth: & \textbf{Spread Spectrum.} & Broadens bandwidth far beyond information rate for high interference immunity (*CH04, 4-47*). \\
+\textbf{14} & Intersymbol Interference (ISI) is primarily caused by: & \textbf{Different delays from multiple paths (multipath).} & Multipath delay spread disperses pulse energy into adjacent bit windows (*CH04, 4-39*). \\
+\textbf{15} & Forward Error Correction (FEC) allows system to: & \textbf{Detect and correct some errors without retransmission.} & Mathematical parity allows receiver to autonomously correct errors (*CH04, 4-47*). \\
+\textbf{16} & Signal path loss increases with: & \textbf{Increasing distance and increasing frequency.} & Friis law: $L = (4\pi f d / c)^2 \propto f^2 d^2$ (*CH04, 4-24*). \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{2pt}
+
+% =========================================================================
+% PART 2: COURSE QUESTIONS - SHORT ANSWERS
+% =========================================================================
+\noindent{\Large\bfseries\color{themeblue} Part 2: Course Questions --- Short Answers (4.0 pts)}\par\vspace{2pt}
+
+\begin{enumerate}[leftmargin=14pt, itemsep=2.5pt, topsep=1pt]
+    \item \textbf{Shannon's Formula Capacity Scaling [0.5 pts]:}  
+    Formula: $C = B \log_2(1 + \text{SNR})$.  
+    \begin{itemize}[leftmargin=10pt, itemsep=0.5pt]
+        \item If bandwidth $B$ increases $\implies$ maximum capacity $C$ \textbf{increases linearly} (assuming constant SNR).
+        \item If SNR improves $\implies$ maximum capacity $C$ \textbf{increases logarithmically}.
+    \end{itemize}
+
+    \item \textbf{Disadvantage of Complex Modulation (More Bits per Symbol) [0.5 pts]:}  
+    \textbf{Significantly increased sensitivity to noise and channel impairments (requiring a much higher SNR for the same BER).} Packing more constellation points into the same average signal power reduces the minimum Euclidean distance ($d_{\min}$) between adjacent symbols.
+
+    \item \textbf{Building-to-Building Wi-Fi Link [1.0 pt]:}  
+    \begin{itemize}[leftmargin=10pt, itemsep=0.5pt]
+        \item \textit{a. Two reasons for weak signal [0.5 pts]:}  
+        (1) \textbf{Free-Space Path Loss:} Signal power drops with the square of distance ($P_r \propto 1/d^2$).  
+        (2) \textbf{Environmental Obstacles / 1st Fresnel Zone Blockage:} Foliage, walls, or buildings in the path introduce absorption, diffraction loss, and destructive multipath reflection.
+        \item \textit{b. Effect of High-Gain Directional Antennas [0.5 pts]:}  
+        The received signal strength will \textbf{increase substantially}. Directional antennas focus radiated RF energy into a narrow beam directly toward the receiver ($P_r \propto P_t G_t G_r$), boosting link SNR.
+    \end{itemize}
+
+    \item \textbf{Urban Vehicular Mobile Channel [1.0 pt]:}  
+    \begin{itemize}[leftmargin=10pt, itemsep=0.5pt]
+        \item \textit{a. Physical phenomenon [0.5 pts]:} \textbf{Small-scale multipath fading (Rayleigh fading with Doppler spread).}
+        \item \textit{b. Classification \& justification [0.5 pts]:}  
+        -- \textbf{Fast fading:} Car movement causes rapid Doppler shift and very short coherence time ($T_c \le T_{\text{symbol}}$).  
+        -- \textbf{Frequency-selective fading:} Dense city buildings create distant reflection paths with large delay spread ($\tau$), making coherence bandwidth ($B_c \approx 1/\tau$) smaller than signal bandwidth ($B_s$).
+    \end{itemize}
+
+    \item \textbf{Why 16-QAM is More Sensitive to Noise than QPSK [0.5 pts]:}  
+    16-QAM packs 16 points into the same average power area where QPSK packs only 4. The **minimum Euclidean distance ($d_{\min}$) between points is much smaller**, so smaller noise perturbations cross decision boundaries.
+
+    \item \textbf{QPSK Constellation Diagram [0.5 pts]:}  
+    Points mapped at $\pm 45^\circ, \pm 135^\circ$ with Gray coding: Quadrant I ($+1,+1$) = \textbf{11}, Quadrant II ($-1,+1$) = \textbf{01}, Quadrant III ($-1,-1$) = \textbf{00}, Quadrant IV ($+1,-1$) = \textbf{10}.
+\end{enumerate}
+
+\clearpage
+
+% =========================================================================
+% EXERCISE 1: SIGNAL PERIODICITY & FILTERING
+% =========================================================================
+\noindent{\Large\bfseries\color{themeblue} Exercise 1: Signal Periodicity, Spectrum \& Low-Pass Filter (4.0 pts)}\par\vspace{2pt}
+
+\begin{tcolorbox}[
+    colframe=themeblue,
+    colback=lightbg,
+    arc=1.2mm,
+    boxrule=0.5pt,
+    left=5pt, right=5pt, top=2.5pt, bottom=2.5pt
+]
+\footnotesize
+\textbf{Parameters:} Square wave $f_0 = 0.3\text{ kHz} = 300\text{ Hz}$, sampling frequency $f_s = 10\text{ kHz} = 10,000\text{ Hz}$, total observation duration $= 50\text{ ms}$.
+\end{tcolorbox}
+
+\vspace{1pt}
+
+\noindent\textbf{1- Time Period [1.0 pt]:}
+\begin{itemize}[leftmargin=12pt, itemsep=1.5pt]
+    \item \textbf{Period $T$ (0.5 pts):} $T = \frac{1}{f_0} = \frac{1}{300\text{ Hz}} = \frac{10}{3}\text{ ms} \approx \mathbf{3.333\text{ ms}}$.
+    \item \textbf{Complete periods in $10\text{ ms}$ window (0.5 pts):} $N = \frac{T_{\text{window}}}{T} = \frac{10\text{ ms}}{10/3\text{ ms}} = \mathbf{3\text{ complete periods}}$.
+\end{itemize}
+
+\vspace{1pt}
+
+\noindent\textbf{2- Signal Spectrum [1.0 pt]:}
+\begin{itemize}[leftmargin=12pt, itemsep=1.5pt]
+    \item \textbf{Frequencies of first three harmonics (0.5 pts):} Square waves contain only odd harmonics:
+    \begin{itemize}[leftmargin=10pt, itemsep=0.5pt]
+        \item 1st harmonic (Fundamental): $f_1 = f_0 = \mathbf{300\text{ Hz}}\ (0.3\text{ kHz})$.
+        \item 2nd non-zero harmonic (3rd order): $f_3 = 3f_0 = \mathbf{900\text{ Hz}}\ (0.9\text{ kHz})$.
+        \item 3rd non-zero harmonic (5th order): $f_5 = 5f_0 = \mathbf{1500\text{ Hz}}\ (1.5\text{ kHz})$.
+    \end{itemize}
+    \item \textbf{Bandwidth Requirement Explanation (0.5 pts):} A pure sinusoid concentrates all power in a single frequency line. A square wave has instantaneous step transitions (discontinuities in time), which Fourier series decomposes into an **infinite sum of odd harmonics**. Preserving steep vertical transitions without edge rounding requires transmitting many high-frequency harmonics, demanding wide (theoretically infinite) bandwidth.
+\end{itemize}
+
+\vspace{1pt}
+
+\noindent\textbf{3- Low-Pass Filtering (Moving Average) [2.0 pts]:}
+$$h[n] = \begin{cases} \frac{1}{M}, & 0 \le n < M \\ 0, & \text{otherwise} \end{cases} \qquad \Longleftrightarrow \qquad H(f) = \frac{1}{M} \frac{\sin(\omega M / 2)}{\sin(\omega / 2)} e^{-j\omega(M-1)/2}, \quad \omega = 2\pi \frac{f}{f_s}$$
+
+\begin{itemize}[leftmargin=12pt, itemsep=1.5pt]
+    \item \textbf{First Zero Frequency for $M = 21$ (1.0 pt):}
+    $$\omega_{\text{null}} \frac{M}{2} = \pi \implies \left(2\pi \frac{f_{\text{null}}}{f_s}\right) \frac{M}{2} = \pi \implies f_{\text{null}} = \frac{f_s}{M} = \frac{10,000\text{ Hz}}{21} \approx \mathbf{476.19\text{ Hz}}$$
+    \item \textbf{Minimum Odd Value of $M$ (1.0 pt):}
+    \begin{itemize}[leftmargin=10pt, itemsep=0.5pt]
+        \item To pass the fundamental ($300\text{ Hz}$) and first harmonic ($900\text{ Hz}$): $f_{\text{null}} > 900\text{ Hz} \implies M < \frac{10,000}{900} \approx 11.11$.
+        \item To attenuate higher harmonics ($1500\text{ Hz}$ onward): $f_{\text{null}} \le 1500\text{ Hz} \implies M \ge \frac{10,000}{1500} \approx 6.67$.
+        \item Allowable odd integers: $M \in \{7, 9, 11\}$.
+        \begin{itemize}[leftmargin=8pt, itemsep=0.5pt]
+            \item **Applying Hint 2** (*zero placed just after $900\text{ Hz}$*): $\mathbf{M = 11} \implies f_{\text{null}} = \frac{10,000}{11} \approx \mathbf{909.09\text{ Hz}}$.
+            \item **Applying literal "minimum odd $M$"**: $\mathbf{M = 7} \implies f_{\text{null}} = \frac{10,000}{7} \approx \mathbf{1428.57\text{ Hz}} < 1500\text{ Hz}$.
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\vspace{2pt}
+
+% =========================================================================
+% EXERCISE 2: MODULATION & PERFORMANCE EVALUATION
+% =========================================================================
+\noindent{\Large\bfseries\color{themeblue} Exercise 2: Baseband Coding, Modulation \& Error Performance (4.0 pts)}\par\vspace{2pt}
+
+\begin{tcolorbox}[
+    colframe=themeblue,
+    colback=lightbg,
+    arc=1.2mm,
+    boxrule=0.5pt,
+    left=5pt, right=5pt, top=2.5pt, bottom=2.5pt
+]
+\footnotesize
+\textbf{Parameters:} 20-bit sequence $B = [1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0]$.  
+Bit rate $R_b = 100\text{ bps} \implies T_b = 10\text{ ms}$. Carrier frequency $f_c = 200\text{ Hz}$. Window $= 80\text{ ms} \implies 8\text{ bits}$: `[1, 0, 1, 1, 0, 0, 1, 0]`.
+\end{tcolorbox}
+
+\vspace{1pt}
+
+\noindent\textbf{1. Line Coding over 80 ms Window:}
+\begin{itemize}[leftmargin=12pt, itemsep=1pt]
+    \item \textbf{Unipolar NRZ:} Bit $1 \to +1\text{V}$, Bit $0 \to 0\text{V}$.
+    \item \textbf{Bipolar NRZ:} Bit $1 \to +1\text{V}$, Bit $0 \to -1\text{V}$.
+\end{itemize}
+
+\noindent\textbf{2. Carrier Modulated Waveforms (ASK \& BPSK):}
+\begin{itemize}[leftmargin=12pt, itemsep=1pt]
+    \item \textbf{Carrier Cycles per Bit:} $f_c \times T_b = 200\text{ Hz} \times 0.01\text{ s} = \mathbf{2\text{ full cycles per bit}}$.
+    \item \textbf{ASK (OOK):} Bit 1 $\to$ 2 full sinusoidal cycles; Bit 0 $\to$ 0 V flat line (0 cycles).
+    \item \textbf{BPSK:} Bit 1 $\to$ 2 cycles at phase $0^\circ$; Bit 0 $\to$ 2 cycles at phase $180^\circ$ (inverted wave).
+\end{itemize}
+
+\noindent\textbf{3. SNR Computation in Decibels:}
+$$\frac{P_s}{P_n} = 6 \implies \text{SNR}_{\text{dB}} = 10 \log_{10}(6) \approx 10 \times 0.77815 = \mathbf{7.78\text{ dB}}$$
+
+\noindent\textbf{4. Performance Under Noise:}
+\begin{enumerate}[leftmargin=14pt, itemsep=1.5pt]
+    \item \textbf{Bit Error Rate (BER):}
+    $$\text{BER}_{\text{ASK}} = \frac{4\text{ errors}}{20\text{ bits}} = \mathbf{0.20}\ (20\%), \qquad \text{BER}_{\text{BPSK}} = \frac{0\text{ errors}}{20\text{ bits}} = \mathbf{0.00}\ (0\%)$$
+    \item \textbf{Physical Explanation for Different Results:}
+    -- \textbf{Euclidean Distance:} In ASK, symbols $\{0, A\} \implies d_{\min} = A$. In BPSK, antipodal symbols $\{-A, +A\} \implies d_{\min} = 2A$ (**twice as large**). Decision threshold margin is doubled, giving $4\times$ noise power tolerance.  
+    -- \textbf{Detection Mechanism:} ASK uses envelope detection, which easily trips on noise spikes during zero bits. BPSK uses coherent matched filtering, integrating out zero-mean noise and rejecting out-of-phase noise.
+    \item \textbf{Recommendation:} **Recommend BPSK**. It provides superior noise resilience ($\text{BER}=0$ vs $20\%$ at $7.8\text{ dB}$ SNR), requires 3--4 dB less transmission power, and maintains constant envelope power.
+\end{enumerate}
+
+\end{document}
