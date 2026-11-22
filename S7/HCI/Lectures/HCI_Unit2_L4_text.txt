@@ -1,0 +1,444 @@
+HUMAN-COMPUTER
+INTERACTION (HCI)
+Prof. KamelEddine Heraguemi
+
+Dr. Hayet Saadi
+
+kameleddine.heraguemi@ensia.edu.dz
+
+hayet.saadi@ensia.edu.dz
+
+4th Year (7S) 2026/2027
+
+Unit 2:
+The Design
+Process & User
+Research
+
+Created in ENSIA
+Date: 14 April 2040
+
+Lecture 4:
+Mobile Design and
+Heuristics
+
+Learning Goals
+Goal 1: Understand mobile
+usability challenges and the
+impact
+of
+smartphone
+interaction constraints and
+platform-speciﬁc
+design
+conventions on UX.
+Goal 2: Apply the SMASH
+heuristic
+framework
+to
+identify, analyze, and report
+usability
+problems
+in
+smartphone interfaces.
+
+Open Discussion:
+The app works perfectly.
+So why can't I use it?
+
+We have this scenario:
+
+You are standing on a crowded bus. You have one hand available, poor
+network connectivity, and 20 seconds to complete a mobile payment.
+The main button is difﬁcult to reach, an error message disappears too
+quickly, and the app loses your progress.
+
+Reﬂection Questions:
+
+1. What makes completing this task difﬁcult, even if the app works correctly?
+2. Would the same interface be equally usable in a quiet room, on a desktop, or
+while moving in a crowded environment? Why?
+
+Open Discussion:
+The interrupted mobile
+task
+
+We have this scenario:
+
+You are ﬁlling out an online university registration form on your
+smartphone. A phone call interrupts you. When you return to the form,
+some of your information has disappeared, and the internet
+connection is unstable.
+
+Reﬂection Questions
+
+➔ What difﬁculties does the user face when trying to resume and
+complete the task?
+➔ Why can completing the same task on a smartphone be more
+challenging than on a desktop computer?
+
+HCI/ Mobile
+
+Why is smartphone
+usability different?
+Mobile Constraints
+
+1. Hardware and
+screen constraints
+➔
+
+➔
+
+➔
+
+➔
+
+Small screen means a high information density
+trade-off, so layout and navigation depth
+become critical.
+Limited CPU, battery, and memory mean
+response time and efﬁciency are affected by
+the device, not only by the design.
+Multimedia content keeps growing in size, and
+with no external storage, cloud services
+become necessary.
+Evaluation impact: it is hard to separate a
+usability problem from a performance
+problem.
+
+2. Interaction
+constraints
+
+➔ Mobile devices are used mainly in the hands (How Do Users Really
+Hold Mobile Devices?).
+➔ Touch targets, gestures, and grip posture affect accuracy and
+speed.
+➔ Multifunction buttons raise the risk of mode errors and increase
+learning effort.
+➔ Evaluation impact: you need to observe real posture and grip,
+which desktop methods ignore.
+
+Interaction
+constraints
+
+3. Context of use:
+lab vs. ﬁeld
+➔
+➔
+➔
+➔
+➔
+
+Mobile use happens on the move, with divided attention,
+interruptions, and changing environments.
+Lab testing gives control and easy recording but low realism.
+Field testing gives realism but is harder to control and to
+record.
+Some studies found ﬁeld testing revealed problems that lab
+testing missed, though not in every case.
+Evaluation impact: the choice of setting changes which
+problems you ﬁnd.
+
+4. Ecosystem and
+connectivity constraints
+➔
+➔
+➔
+➔
+
+Wireless operation: devices depend on network quality, so
+connection drops or slow responses can break a task midway.
+New apps and Internet access: users keep installing apps, and
+interface conventions vary from one app to another.
+Cloud dependence: with no external memory slot, storage and
+content depend on the connection.
+Evaluation impact: you must test under different network
+conditions and across app contexts, not on one isolated app.
+
+➔
+
+From the presented constraints: small screens, hand-based and touch
+interaction, limited resources, and mobile contexts
+
+➔
+
+Beside, the classic heuristics (e.g., Nielsen, 1994), from the previous lecture,
+which were designed for desktop software
+
+Reﬂection Question
+
+Can those classic
+heuristics cover
+everything that can go
+wrong on a
+smartphone?
+
+SMArtphone's uSability
+Heuristics
+(SMASH)
+
+The gap in evaluation and the
+solution
+➔
+
+Inostroza et al. (2016) reviewed the literature and found no speciﬁc usability
+heuristics set for smartphones.
+
+➔
+
+To ﬁll this gap, they developed SMASH, a set of heuristics designed for the
+constraints of smartphones: small screens, touch and hand-based
+interaction, limited resources, and mobile contexts.
+
+➔
+
+Goal: help evaluators ﬁnd usability problems that general heuristics, like
+Nielsen’s, can miss.
+
+SMASH1: Visibility of system status
+
+➔
+
+The device should keep the user informed
+about all the processes and state
+changes through feedback and in a
+reasonable time.
+
+➔
+
+Some of the most common existing
+speciﬁc feedback types on mobile
+devices are:
+
+1. Visibility of system status
+
+SMASH2: Match between system and the real
+world
+➔
+
+The device should speak the users'
+language instead of being system-oriented
+concepts and technicalities. The device
+should follow the real-world conventions
+and display the information in a logical and
+natural order.
+
+➔
+
+example of match between system and the
+real world. The screen rotates when the
+user rotates the device.
+
+➔
+
+Touchscreen
+devices
+allow
+novel
+interaction beyond the usual keyboards, as
+follows:
+
+SMASH3: User control
+and freedom
+
+➔
+
+The device should allow the user to undo and redo
+their actions and provide clearly pointed emergency
+exits to leave unwanted states. These options
+should be available preferably through a physical
+button or equivalent.
+
+SMASH4: Consistency
+and standards
+
+➔ The device should follow the established
+conventions, allowing the user to do
+things in a familiar, standard, and
+consistent way.
+
+SMASH5: Error
+prevention
+
+➔ The device should hide or deactivate
+unavailable functionalities, warn users
+about critical actions, and provide access
+to additional information.
+
+SMASH6: Minimize
+the user's
+memory load
+
+➔ The device should offer visible objects,
+actions, and options in order to prevent
+users
+from
+having
+to
+memorize
+information from one part of the dialog to
+another.
+➔ Small screens force designers to hide
+some elements, so place important
+information in a visible spot.
+➔ Let users select and copy instead of
+retyping text.
+
+SMASH6: Minimize
+the user's
+memory load
+
+➔ In this example, the Dropbox™ application
+shows a header with the name of the
+current folder, even if the user scrolls
+down the screen.
+
+SMASH7:
+customization and
+shortcuts
+
+➔
+
+The device should provide basic and advanced
+conﬁguration options and allow deﬁnition and
+customization of shortcuts to frequent
+actions.
+
+➔
+
+Each user has different needs, and one
+standard menu or interface can’t satisfy all of
+them: Let users create their own shortcuts
+and customize most parts of the system, and
+give them a stronger sense of ownership.
+
+➔
+
+➔
+
+SMASH8:
+Efﬁciency of use
+and performance
+The device should be able to load and display
+the required information in a reasonable time
+and minimize the required steps to perform a
+task. Animations and transitions should be
+displayed smoothly.
+Example: After an update, the app opens on a
+loading screen with a spinning icon. For more
+than 30 seconds, taps do nothing, there is no
+cancel button, and there is no progress
+information. (Violation of the heuristic)
+
+SMASH9: Esthetic
+and minimalist
+design
+➔
+
+The device should avoid displaying
+information overloading the screen.
+
+➔
+
+Designers should be careful when displaying
+information through the screen. Besides, an overloaded
+UI may produce stress for the user.
+The minimalist design with few controls for most
+popular functions (The red box): Dropbox (all ﬁles),
+Pictures, Favorites and Notiﬁcations. For further
+options there is a secondary menu (upper-right control:
+⋮ ; ☰ ; ⋯ ).
+
+➔
+
+unwanted
+
+SMASH10: Help users
+recognize, diagnose, and
+recover from errors
+
+➔
+
+The device should display error messages in a language familiar to the user,
+indicating the issue in a precise way and suggesting a constructive solution.
+
+➔
+
+Example: The error message on the left side uses a system-oriented term that
+does not help the user on how to recover from the error
+(“process.com.android.settings has stopped”). Contrary to the right side.
+
+SMASH10: Help users
+recognize, diagnose, and
+recover from errors
+
+➔
+
+SMASH11: Help and
+documentation
+
+The device should provide easy-to-ﬁnd
+documentation and help, centered on the
+user's current task and indicating
+concrete steps to follow.
+
+SMASH12: Physical
+interaction and
+ergonomics
+➔
+
+The device should provide physical buttons
+or the equivalent for main functionalities,
+located in positions recognizable by the
+user, which should ﬁt the natural posture
+(and reach) of the user's dominant hand.
+
+➔
+
+Example: Samsung Galaxy S6 device that,
+with its 5.1 in. screen, does not ﬁt the user's
+palm. The circle marks the thumb's reach
+area. This is a usability issue according to
+this heuristic
+
+Final reﬂection
+
+Closing up Section
+
+Final reﬂection
+
+Question for the class:
+which heuristic could
+detect each problem?
+(From the Intro Section)
+
+Problems
+
+SMASH
+Heuristics
+
+References
+
+●
+
+●
+
+●
+●
+
+Inostroza, R., Rusu, C., Roncagliolo, S., Rusu, V., & Collazos, C. A. (2016).
+Developing SMASH: A set of SMArtphone’s uSability Heuristics. Computer
+Standards & Interfaces, 43, 40-52.
+https://doi.org/10.1016/j.csi.2015.08.007
+Hoober, S. (2013, February). How do users really hold mobile devices?
+UXmatters.
+https://www.uxmatters.com/mt/archives/2013/02/how-do-users-really-h
+old-mobile-devices.php
+Nielsen, J., & Mack, R. L. (Eds.). (1994). Usability Inspection Methods. Wiley.
+Jeong, Y. W., & Kim, J. A. (2017). Development and cross-cultural validation
+of the Korean version of SMArtphone’s uSability Heuristics (SMASH).
+Healthcare Informatics Research, 23(4), 328-332.
+
+THANK YOU ALL!!
+
+

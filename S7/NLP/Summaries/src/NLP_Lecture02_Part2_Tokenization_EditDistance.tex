@@ -1,0 +1,479 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[margin=1.0cm,top=1.05cm,bottom=1.05cm]{geometry}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{colortbl}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage{fancyhdr}
+\usepackage{needspace}
+\usepackage{hyperref}
+
+% =========================================================================
+% Canonical ENSIA / DL Color Palette
+% =========================================================================
+\definecolor{themeblue}{HTML}{2B5A87}   % Primary headings, borders
+\definecolor{lightbg}{HTML}{E8EEF4}     % Background fills for overview & headers
+\definecolor{accentred}{HTML}{C8453A}   % Deletions, warnings, errors
+\definecolor{accentgreen}{HTML}{2E7D32} % Insertions, matches, optimality
+\definecolor{darkgray}{HTML}{333333}    % Metadata, body accents
+\definecolor{lightgray}{HTML}{D0D8E0}   % Table borders, soft dividers
+\definecolor{codebg}{HTML}{F6F8FA}
+\definecolor{pathcolor}{HTML}{D0DFEE}      % Background for code snippets
+\definecolor{inlinecode}{HTML}{1A365D}  % Syntax highlight color
+
+\newcommand{\rx}[1]{\texttt{\bfseries\color{inlinecode}#1}}
+\newcommand{\cmark}{\textcolor{accentgreen}{\textbf{\checkmark}}}
+\newcommand{\xmark}{\textcolor{accentred}{\textbf{\texttimes}}}
+
+% =========================================================================
+% Running Header & Footer Setup
+% =========================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyhead[L]{\footnotesize\bfseries\color{themeblue} Natural Language Processing --- Lecture 2: Normalization, BPE \& Edit Distance (Part 2)}
+\fancyhead[R]{\footnotesize\color{darkgray} ENSIA 2026--2027}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{themeblue}\leaders\hrule height \headrulewidth\hfill}}
+\renewcommand{\footrule}{\hbox to\headwidth{\color{lightgray}\leaders\hrule height \footrulewidth\hfill}}
+\fancyfoot[L]{\footnotesize\color{darkgray} Instructor: Prof. Ahmed Guessoum}
+\fancyfoot[R]{\footnotesize\color{themeblue}\bfseries Page \thepage\ of 4}
+
+% =========================================================================
+% Custom Box Environments
+% =========================================================================
+\newtcolorbox{overviewbox}[1][]{
+    colframe=themeblue, colback=lightbg, coltitle=white,
+    fonttitle=\bfseries\sffamily\small,
+    arc=1.2mm, boxrule=0.5pt,
+    left=6pt, right=6pt, top=3pt, bottom=3pt,
+    title={Lecture Scope: Text Normalization, Subwords \& String Distance Metrics},
+    #1
+}
+
+\newtcolorbox{examplebox}[1][]{
+    colframe=themeblue!75!black, colback=codebg,
+    arc=1.2mm, boxrule=0.5pt,
+    left=6pt, right=6pt, top=2.5pt, bottom=2.5pt,
+    #1
+}
+
+\newtcolorbox{theoremprompt}[1][]{
+    colframe=accentred, colback=white, coltitle=white,
+    fonttitle=\bfseries\sffamily\small,
+    arc=1.2mm, boxrule=0.5pt,
+    left=6pt, right=6pt, top=3pt, bottom=3pt,
+    #1
+}
+
+\newtcolorbox{insightbox}[1][]{
+    colframe=accentgreen, colback=white, coltitle=white,
+    fonttitle=\bfseries\sffamily\small,
+    arc=1.2mm, boxrule=0.5pt,
+    left=6pt, right=6pt, top=2.5pt, bottom=2.5pt,
+    #1
+}
+
+\begin{document}
+
+% =========================================================================
+% PAGE 1: Corpus Metrics, Tokenization, Learners vs Segmenters
+% =========================================================================
+\begin{center}
+    \vspace{-4pt}
+    {\LARGE\bfseries\color{themeblue} Natural Language Processing: Text Normalization \& Edit Distance}\\[1.5pt]
+    {\normalsize\bfseries Part 2: Tokenization, BPE Learners/Segmenters, Morphological Processing \& Levenshtein Alignment}\\[1.5pt]
+    {\footnotesize\color{darkgray} ENSIA 2026--2027 \quad$\vert$\quad Instructor: Prof. Ahmed Guessoum \quad$\vert$\quad Lecture 2 (Part 2 Summary)}
+\end{center}
+
+\vspace{-7pt}
+
+\begin{overviewbox}
+\footnotesize
+Raw natural language text is unstructured, ambiguous, and morphologically diverse. Before feeding textual data into statistical models or deep neural architectures, corpora must undergo \textbf{text normalization}: transforming raw character streams into standardized sequences of linguistic tokens. This summary details word and subword tokenization, the distinction between token learners and segmenters, Byte-Pair Encoding (BPE), morphological lemmatization vs. stemming, sentence boundary detection, and the exact dynamic programming formulation of Minimum Edit Distance (Levenshtein alignment).
+\end{overviewbox}
+
+\vspace{-3pt}
+
+\noindent{\large\bfseries\color{themeblue} 1. Corpus Dimensions: Tokens ($N$) vs. Word Types ($|V|$)}\par\vspace{1pt}
+Formal analysis of text requires a rigorous mathematical distinction between tokens and types:
+\begin{itemize}[leftmargin=12pt, itemsep=1pt, parsep=0pt, topsep=1pt]
+    \item \textbf{Token Count ($N$):} The total number of running word occurrences in a corpus.
+    \item \textbf{Type Count ($|V|$):} The number of distinct, unique words forming the corpus vocabulary $V$.
+    \item \textbf{Heaps' Law (Vocabulary Growth):} As corpus size $N$ expands, vocabulary size grows continuously according to:
+    \[
+    |V| = k N^\beta \qquad (k > 0, \quad 0 < \beta < 1, \quad \text{typically } \beta \approx 0.45 - 0.7)
+    \]
+    Large textual corpora never completely saturate vocabulary growth; new types continuously appear.
+\end{itemize}
+
+\vspace{-2pt}
+\begin{examplebox}
+\footnotesize
+\textbf{Token vs. Type Case Study:} \textit{``They slumber, and they dream, and they awake.''}
+\begin{itemize}[leftmargin=12pt, itemsep=1.5pt, parsep=0pt, topsep=1pt]
+    \item \textbf{Running Tokens ($N$):} 8 word occurrences ($N = 8$).
+    \item \textbf{Unique Word Types ($|V|$):} 5 distinct vocabulary types: \{\textit{they}, \textit{slumber}, \textit{and}, \textit{dream}, \textit{awake}\} ($|V| = 5$).
+\end{itemize}
+\end{examplebox}
+
+\vspace{1pt}
+\noindent{\large\bfseries\color{themeblue} 2. Tokenization Challenges in Natural Language}\par\vspace{1pt}
+Naive whitespace splitting fails across multiple linguistic phenomena:
+
+\vspace{1pt}
+\noindent{\footnotesize
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{2.8cm} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}p{6.6cm}}
+\toprule
+\rowcolor{lightbg}
+\textbf{Linguistic Phenomenon} & \textbf{Structural Challenge} & \textbf{Prominent Example \& Tokenization Resolution} \\
+\midrule
+\textbf{Embedded Punctuation} & Punctuation symbols embedded inside domain entities cannot be stripped blindly. & \rx{m.p.h.}, \rx{Ph.D.}, \rx{AT\&T}, \rx{\$45.55}, \rx{01/02/06}, \rx{\#nlproc}, \rx{someone@cs.edu} must each be preserved as individual single tokens. \\
+\midrule
+\textbf{Clitics} & A grammatical element that functions phonologically like a word but adheres syntactically to another. & Contractions: \textit{``we're''} $\longrightarrow$ \textit{we} + \textit{'re} (verb \textit{are}). French: \textit{``j'ai''} $\longrightarrow$ \textit{j'} (je) + \textit{ai}; \textit{``l'honneur''} $\longrightarrow$ \textit{l'} (le) + \textit{honneur}. \\
+\midrule
+\textbf{Multiword Expressions (MWE)} & Lexical units composed of multiple whitespace-separated tokens that form a single non-compositional semantic concept. & Named locations and idioms: \textit{``Hassi Messaoud''}, \textit{``rock 'n' roll''}, \textit{``New York''} must frequently be treated as single token units. \\
+\midrule
+\textbf{Scripts Without Whitespace} & Languages that do not use whitespace delimiters between words (e.g., Chinese, Japanese, Thai). & Chinese \textit{hanzi} characters: Each represents a morpheme (meanings: 2.4 morphemes/word). Requires character-level segmentation or statistical sequence models. \\
+\bottomrule
+\end{tabularx}}
+
+\vspace{3pt}
+\noindent{\large\bfseries\color{themeblue} 3. The Modern Subword Paradigm: Token Learners vs. Segmenters}\par\vspace{1pt}
+To resolve the dichotomy between massive sparse word vocabularies (which suffer from Out-Of-Vocabulary / OOV words) and pure character tokens (which produce excessively long sequence representations), modern NLP uses \textbf{subword tokenization}.
+
+\begin{itemize}[leftmargin=12pt, itemsep=1pt, parsep=0pt, topsep=1pt]
+    \item \textbf{Subword Architecture Division:} All modern subword algorithms are decoupled into two distinct processing stages:
+\end{itemize}
+
+\vspace{-2pt}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{1.1}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{3.2cm} >{\raggedright\arraybackslash}p{4.2cm} >{\raggedright\arraybackslash}X}
+\toprule
+\rowcolor{lightbg}
+\textbf{Subword Component} & \textbf{Operational Pipeline Stage} & \textbf{Algorithmic Responsibility \& Behavior} \\
+\midrule
+\textbf{1. Token Learner} & \textbf{Offline Training Phase} \newline (Run once on raw training corpus) & Takes a large raw text corpus, initializes a vocabulary of base characters, and induces a fixed vocabulary of $k$ subwords and words by iteratively optimizing a merge or likelihood criterion. \\
+\midrule
+\textbf{2. Token Segmenter} & \textbf{Online Inference / Runtime} \newline (Run on every unseen input sentence) & Takes unseen raw text and segments it into a sequence of tokens strictly derived from the induced vocabulary, applying learned rules deterministically or greedily. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\newpage
+
+% =========================================================================
+% PAGE 2: Comparison of Subwords, BPE Deep Dive, Word Normalization
+% =========================================================================
+
+\noindent{\large\bfseries\color{themeblue} 4. Comparison of Major Subword Tokenization Algorithms}\par\vspace{1pt}
+Modern language models rely on three canonical subword algorithms:
+
+\vspace{1pt}
+\noindent{\footnotesize
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{2.6cm} >{\raggedright\arraybackslash}p{3.4cm} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}p{2.8cm}}
+\toprule
+\rowcolor{lightbg}
+\textbf{Algorithm} & \textbf{Induction / Learner Criterion} & \textbf{Segmentation Strategy at Inference} & \textbf{Representative Models} \\
+\midrule
+\textbf{Byte-Pair Encoding (BPE)} \newline \textit{(Sennrich et al., 2016)} & Iterative merge of the most frequent adjacent symbol pair in the training corpus. & Greedy sequential application of learned merges in their exact historical training order. & GPT-2, GPT-3, GPT-4, RoBERTa, LLaMA \\
+\midrule
+\textbf{WordPiece} \newline \textit{(Schuster \& Nakajima, 2012)} & Merges symbol pairs that maximize language model likelihood of the training data. & Longest-match-first (greedy search from left to right matching longest subword in vocabulary). & BERT, DistilBERT, Electra \\
+\midrule
+\textbf{Unigram LM} \newline \textit{(Kudo, 2018)} & Starts with an over-complete vocabulary and progressively prunes tokens that minimize loss. & Probabilistic Viterbi search finding the segmentation maximizing joint token probability. & T5, ALBERT, SentencePiece \\
+\bottomrule
+\end{tabularx}}
+
+\vspace{2pt}
+\noindent{\large\bfseries\color{themeblue} 5. Byte-Pair Encoding (BPE): Algorithmic Mechanics}\par\vspace{1pt}
+Byte-Pair Encoding (BPE) is a data-driven subword tokenization algorithm building variable-length tokens from bottom-up character merges.
+
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{End-of-Word Delimiter (\rx{\_} or \rx{</w>}):} BPE operates inside whitespace-separated words. A special boundary marker (e.g., \rx{\_}) is appended to the final character of each word to distinguish word-final characters from word-internal characters.
+    \item \textbf{Vocabulary Initialization:} Vocabulary $V$ is initialized to the set of all unique individual characters appearing in the training corpus.
+\end{itemize}
+
+\vspace{-2pt}
+\begin{insightbox}[title={\bfseries\sffamily Formal Algorithmic Specification: BPE Learner \& Segmenter}]
+\footnotesize
+\textbf{BPE Token Learner Algorithm (Training Phase):}
+\begin{enumerate}[leftmargin=14pt, itemsep=0.5pt, parsep=0pt, topsep=0.5pt]
+    \item Represent every word in training corpus as space-separated characters plus end-of-word marker \rx{\_}. Count word frequencies.
+    \item \textbf{Iterative Merge Loop:} Repeat for $k$ merge iterations:
+    \begin{itemize}[leftmargin=10pt, itemsep=0.5pt]
+        \item Count co-occurrence frequencies of all adjacent symbol pairs $(c_i, c_j)$ across the corpus vocabulary.
+        \item Identify the most frequent pair: $(A, B) = \arg\max_{(c_i, c_j)} \text{Count}(c_i, c_j)$.
+        \item Add new token $AB$ to vocabulary $V$, and record $(A, B) \rightarrow AB$ in the ordered merge list.
+        \item Replace all adjacent occurrences of $A$ and $B$ in the corpus representation with the merged token $AB$.
+    \end{itemize}
+\end{enumerate}
+\textbf{BPE Token Segmenter Algorithm (Inference Phase):}
+Given an unseen test string:
+\begin{enumerate}[leftmargin=14pt, itemsep=0.5pt, parsep=0pt, topsep=0.5pt]
+    \item Tokenize into space-separated characters with trailing \rx{\_} on each word.
+    \item Apply each learned merge rule $(A, B) \rightarrow AB$ \textbf{greedily in the exact sequential order} in which they were learned during training.
+    \item Note: Test data frequencies play \textbf{zero role} during inference; only the learned rule priority matters.
+\end{enumerate}
+\end{insightbox}
+
+\vspace{-2pt}
+\begin{examplebox}
+\footnotesize
+\textbf{Complete Step-by-Step Walkthrough: BPE Learner Trace (Slide Corpus)}
+\newline \textbf{Raw Corpus:} \textit{5 low, 2 lowest, 6 newer, 3 wider, 2 new} $\vert$ \textbf{Initial Repr:} \rx{5 l o w \_} \ \rx{2 l o w e s t \_} \ \rx{6 n e w e r \_} \ \rx{3 w i d e r \_} \ \rx{2 n e w \_}
+\newline \textbf{Initial Vocabulary:} \{\rx{d}, \rx{e}, \rx{i}, \rx{l}, \rx{n}, \rx{o}, \rx{r}, \rx{s}, \rx{t}, \rx{w}, \rx{\_}\}
+
+\vspace{1pt}
+\noindent\begin{tabularx}{\textwidth}{c l c >{\raggedright\arraybackslash}X}
+\toprule
+\rowcolor{lightbg}
+\textbf{Iter} & \textbf{Merged Pair} & \textbf{Count} & \textbf{Updated Corpus Tokens \& State} \\
+\midrule
+\textbf{1} & \rx{(e, r)} $\rightarrow$ \rx{er} & $6 + 3 = 9$ & \rx{... 6 n e w er \_} \quad \rx{3 w i d er \_} $\Longrightarrow$ New token \rx{er} added to $V$. \\
+\textbf{2} & \rx{(er, \_)} $\rightarrow$ \rx{er\_} & $6 + 3 = 9$ & \rx{... 6 n e w er\_} \quad \rx{3 w i d er\_} $\Longrightarrow$ New token \rx{er\_} added to $V$. \\
+\textbf{3} & \rx{(n, e)} $\rightarrow$ \rx{ne} & $6 + 2 = 8$ & \rx{... 6 ne w er\_} \quad \rx{2 ne w \_} $\Longrightarrow$ New token \rx{ne} added to $V$. \\
+\textbf{4} & \rx{(ne, w)} $\rightarrow$ \rx{new} & $6 + 2 = 8$ & \rx{... 6 new er\_} \quad \rx{2 new \_} $\Longrightarrow$ New token \rx{new} added to $V$. \\
+\textbf{5} & \rx{(l, o)} $\rightarrow$ \rx{lo} & $5 + 2 = 7$ & \rx{5 lo w \_} \quad \rx{2 lo w e s t \_} $\Longrightarrow$ New token \rx{lo} added to $V$. \\
+\textbf{6} & \rx{(lo, w)} $\rightarrow$ \rx{low} & $5 + 2 = 7$ & \rx{5 low \_} \quad \rx{2 low e s t \_} $\Longrightarrow$ New token \rx{low} added to $V$. \\
+\bottomrule
+\end{tabularx}
+
+\vspace{1pt}
+\textbf{Segmenter Execution on Unseen Test Strings:}
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{Input 1:} \rx{n e w e r \_} $\longrightarrow$ Merges apply sequentially: \rx{er} $\rightarrow$ \rx{er\_} $\rightarrow$ \rx{ne} $\rightarrow$ \rx{new} $\rightarrow$ \cmark\ \textbf{Single Token:} \rx{newer\_}.
+    \item \textbf{Input 2 (Novel Word):} \rx{l o w e r \_} $\longrightarrow$ Merges apply: \rx{er\_} and \rx{low}. \rx{low} and \rx{er\_} were never merged $\rightarrow$ \cmark\ \textbf{Two Subwords:} \rx{[low, er\_]}.
+\end{itemize}
+\end{examplebox}
+
+\vspace{-2pt}
+\noindent{\large\bfseries\color{themeblue} 6. Core Linguistic Properties of BPE Tokens}\par\vspace{1pt}
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{Morpheme Induction Without Supervision:} High-frequency merged subwords naturally correspond to linguistic \textbf{morphemes} (roots, affixes \rx{-er}, \rx{-est}). E.g., \textit{``unlikeliest''} is segmented into three intuitive morphemes: \rx{un-}, \rx{likely}, \rx{-est}.
+    \item \textbf{Complete Elimination of OOV Words:} Any rare or out-of-vocabulary word is cleanly broken down into known subwords or characters.
+\end{itemize}
+
+\vspace{-2pt}
+\noindent{\large\bfseries\color{themeblue} 7. Word Normalization: Case Folding}\par\vspace{1pt}
+Case folding (lowercasing all letters) reduces vocabulary sparsity in Information Retrieval (IR) where user queries are lowercase. However, it is \textbf{harmful} in Sentiment Analysis, Machine Translation, Information Extraction, and Named Entity Recognition (NER):
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{Entity vs. Pronoun:} \textit{``US''} (United States) vs. \textit{``us''} (pronoun). Lowercasing destroys entity detection.
+    \item \textbf{Proper Noun vs. Verb:} \textit{``Fed''} (Federal Reserve Bank) vs. \textit{``fed''} (past tense of feed).
+    \item \textbf{Acronym vs. Noun:} \textit{``SAIL''} (Stanford AI Lab) vs. \textit{``sail''} (nautical cloth).
+\end{itemize}
+
+\newpage
+
+% =========================================================================
+% PAGE 3: Lemmatization, Stemming & Sentence Segmentation
+% =========================================================================
+
+\noindent{\large\bfseries\color{themeblue} 8. Lemmatization \& Morphological Parsing}\par\vspace{1pt}
+Lemmatization represents each word token as its \textbf{lemma}: its shared root and canonical dictionary headword form.
+
+\begin{itemize}[leftmargin=12pt, itemsep=1pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{Lemma Definition:} The canonical base form shared by inflected variants:
+    \newline E.g., \textit{``am, are, is''} $\longrightarrow$ \rx{be}; \quad \textit{``car, cars, car's, cars' ''} $\longrightarrow$ \rx{car}; \quad Spanish \textit{``quiero, quieres''} $\longrightarrow$ \rx{querer}.
+    \item \textbf{Morphological Parsing:} The structural decomposition of words into morphemes:
+    \begin{itemize}[leftmargin=10pt, itemsep=0.5pt]
+        \item \textbf{Stem:} The central, meaning-bearing lexical core.
+        \item \textbf{Affixes:} Bound morphemes (prefixes, suffixes, infixes) that attach to stems to encode grammatical functions (tense, number, person, case).
+    \end{itemize}
+    \item \textbf{Contextual Disambiguation:} Full morphological parsers determine the part of speech (POS) before reducing forms: \textit{``saw''} $\rightarrow$ \rx{see} (if verb) vs. \rx{saw} (if noun).
+\end{itemize}
+
+\vspace{-2pt}
+\begin{examplebox}
+\footnotesize
+\textbf{Prominent Morphological Parsing Demonstrations:}
+\begin{itemize}[leftmargin=12pt, itemsep=1.5pt, parsep=0pt, topsep=1pt]
+    \item \textbf{English Lemmatization:} \textit{``He is reading detective stories''} $\longrightarrow$ \rx{He be read detective story}.
+    \item \textbf{Morpheme Feature Extraction:} \textit{``cats''} $\longrightarrow$ Stem: \rx{cat} + Affix: \rx{-s} (\textit{Number=Plural}).
+    \item \textbf{Inflected Verb Parsing (Spanish):} \textit{``amaren''} $\longrightarrow$ Stem: \rx{amar} (`to love') + Features: \rx{3PL} + \rx{Future Subjunctive}.
+    \item \textbf{Complex Agglutinative Morphology (Turkish):} \textit{Uygarlastiramadiklarimizdanmissinizcasina} (`as if you are among those whom we could not civilize') decomposes into 10 distinct morphemes:
+    \newline \rx{Uygar} (civilized) + \rx{las} (become) + \rx{tir} (cause) + \rx{ama} (not able) + \rx{dik} (past) + \rx{lar} (plural) + \rx{imiz} (1pl possessive) + \rx{dan} (ablative) + \rx{mis} (past) + \rx{siniz} (2pl) + \rx{casina} (as if).
+\end{itemize}
+\end{examplebox}
+
+\vspace{-1pt}
+\noindent{\large\bfseries\color{themeblue} 9. Stemming \& The Porter Stemmer Algorithm}\par\vspace{1pt}
+Stemming is a crude, heuristic process that chops off affixes to reduce tokens to a base stem, without dictionary lookups or morphological feature analysis. Stems are \textbf{not guaranteed} to be valid words.
+
+\vspace{1pt}
+\noindent{\footnotesize
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{2.8cm} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X}
+\toprule
+\rowcolor{lightbg}
+\textbf{Dimension} & \textbf{Lemmatization} & \textbf{Stemming (Porter Stemmer)} \\
+\midrule
+\textbf{Theoretical Basis} & Full morphological analysis with dictionary headwords. & Heuristic, rule-based suffix chopping. \\
+\midrule
+\textbf{Output Validity} & Always produces a valid dictionary headword (\rx{be}, \rx{goose}). & Often produces non-words (\textit{``accur''}, \textit{``copi''}, \textit{``singl''}). \\
+\midrule
+\textbf{Part-of-Speech Sensitivity} & Context-aware (differentiates noun vs. verb forms). & Blind to context and POS categories. \\
+\midrule
+\textbf{Computational Cost} & Slower; requires large lexical databases (e.g., WordNet). & Extremely fast; simple cascade of string rewrite rules. \\
+\bottomrule
+\end{tabularx}}
+
+\vspace{2pt}
+\begin{insightbox}[title={\bfseries\sffamily The Porter Stemmer: Cascaded Rewrite Rules (Porter, 1980)}]
+\footnotesize
+The Porter Stemmer applies a cascade of sequential rewrite rules organized into 5 successive phases. The output of each phase forms the direct input to the next phase.
+
+\vspace{2pt}
+\noindent\begin{tabularx}{\textwidth}{l >{\raggedright\arraybackslash}p{3.5cm} >{\raggedright\arraybackslash}X}
+\toprule
+\rowcolor{lightbg}
+\textbf{Phase / Step} & \textbf{Rewrite Rule Syntax} & \textbf{Prominent Example \& Transformation} \\
+\midrule
+\textbf{Step 1a} & \rx{sses} $\longrightarrow$ \rx{ss} & \textit{``caresses''} $\longrightarrow$ \rx{caress} \\
+& \rx{ies} $\longrightarrow$ \rx{i} & \textit{``ponies''} $\longrightarrow$ \rx{poni}; \quad \textit{``ties''} $\longrightarrow$ \rx{ti} \\
+& \rx{ss} $\longrightarrow$ \rx{ss} & \textit{``caress''} $\longrightarrow$ \rx{caress} (intact) \\
+& \rx{s} $\longrightarrow$ $\emptyset$ & \textit{``cats''} $\longrightarrow$ \rx{cat} \\
+\midrule
+\textbf{Step 1b} & \rx{(*v*)ing} $\longrightarrow$ $\emptyset$ & If stem contains a vowel: \textit{``motoring''} $\longrightarrow$ \rx{motor}. \newline But \textit{``sing''} remains \rx{sing} (no prior vowel in stem). \\
+& \rx{(*v*)ed} $\longrightarrow$ $\emptyset$ & \textit{``plastered''} $\longrightarrow$ \rx{plaster} \\
+\midrule
+\textbf{Step 2 \& 3} & \rx{ational} $\longrightarrow$ \rx{ate} & \textit{``relational''} $\longrightarrow$ \rx{relate} \\
+& \rx{tional} $\longrightarrow$ \rx{tion} & \textit{``conditional''} $\longrightarrow$ \rx{condition} \\
+\bottomrule
+\end{tabularx}
+\end{insightbox}
+
+\vspace{-1pt}
+\noindent{\large\bfseries\color{themeblue} 10. Stemming Failure Modes: Over-Stemming vs. Under-Stemming}\par\vspace{1pt}
+\begin{itemize}[leftmargin=12pt, itemsep=1pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{Over-Stemming (False Positive Conflation):} Unrelated words are collapsed to the same stem:
+    \newline \cmark\ \textit{``organization''} and \textit{``organ''} are both reduced to \rx{organ}, conflating biological and institutional meanings.
+    \item \textbf{Under-Stemming (False Negative Separation):} Words that share a morphological root fail to collapse:
+    \newline \cmark\ \textit{``European''} $\rightarrow$ \rx{european} while \textit{``Europe''} $\rightarrow$ \rx{europ}.
+\end{itemize}
+
+\vspace{-1pt}
+\noindent{\large\bfseries\color{themeblue} 11. Sentence Segmentation (Sentence Boundary Detection)}\par\vspace{1pt}
+Dividing running text into discrete sentences is complicated by the severe polysemy of punctuation:
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{Punctuation Ambiguity:} While `\rx{!}' and `\rx{?}' are relatively unambiguous sentence terminators, the period `\rx{.}' serves three distinct linguistic roles: (1) Sentence boundary delimiter, (2) Abbreviation marker (\textit{Dr.}, \textit{Inc.}, \textit{m.p.h.}), and (3) Numerical decimal point (\textit{4.3}, \textit{.02\%}).
+    \item \textbf{Standard Architecture:} Tokenize first, then classify each period using rule-based abbreviation dictionaries or supervised binary classifiers (decision trees, logistic regression) to assign a probability $P(\text{boundary} \mid \text{period})$.
+\end{itemize}
+
+\newpage
+
+% =========================================================================
+% PAGE 4: Minimum Edit Distance (Levenshtein), DP Matrix & Alignment
+% =========================================================================
+
+\noindent{\large\bfseries\color{themeblue} 12. Minimum Edit Distance: Mathematical Formulation}\par\vspace{1pt}
+The \textbf{Minimum Edit Distance} between two strings $X$ (length $n$) and $Y$ (length $m$) is the minimum number of editing operations (Insertions, Deletions, Substitutions) required to transform $X$ into $Y$.
+
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{Core NLP Applications:} Spelling correction, speech recognition Word Error Rate (WER), machine translation evaluation (Translation Edit Rate / TER), biological sequence alignment (DNA/protein nucleotides), and named entity coreference.
+    \item \textbf{Cost Models:}
+    \begin{itemize}[leftmargin=10pt, itemsep=0.5pt]
+        \item \textbf{Levenshtein Distance (1966):} $c_{\text{ins}} = 1$, $c_{\text{del}} = 1$, $c_{\text{sub}} = 2$ if $X_i \ne Y_j$ (0 if $X_i = Y_j$). (A substitution is 1 deletion + 1 insertion).
+        \item \textbf{Unit Cost (Needleman-Wunsch):} $c_{\text{ins}} = 1$, $c_{\text{del}} = 1$, $c_{\text{sub}} = 1$ if $X_i \ne Y_j$ (0 if $X_i = Y_j$).
+    \end{itemize}
+\end{itemize}
+
+\vspace{-2pt}
+\begin{theoremprompt}[title={\bfseries\sffamily Dynamic Programming Recurrence for Minimum Edit Distance}]
+\footnotesize
+Let $D(i, j)$ denote the minimum edit distance between prefixes $X[1..i]$ and $Y[1..j]$.
+\begin{align*}
+\textbf{Initialization (Base Cases):} \quad & D(i, 0) = i \quad (1 \le i \le n), \qquad D(0, j) = j \quad (1 \le j \le m), \qquad D(0, 0) = 0 \\
+\textbf{Recurrence Relation:} \quad & D(i, j) = \min \begin{cases}
+D(i-1, j) + 1 & \text{\textbf{Deletion} from } X \quad (\text{pointer: DOWN } \downarrow) \\
+D(i, j-1) + 1 & \text{\textbf{Insertion} into } X \quad (\text{pointer: LEFT } \leftarrow) \\
+D(i-1, j-1) + \begin{cases} 2 & \text{if } X_i \ne Y_j \\ 0 & \text{if } X_i = Y_j \end{cases} & \text{\textbf{Substitution / Match}} \quad (\text{pointer: DIAG } \swarrow)
+\end{cases}
+\end{align*}
+\textbf{Termination:} The top-right entry $D(n, m)$ (in bottom-up coordinate layout) contains the exact minimum edit distance.
+\end{theoremprompt}
+
+\vspace{-1pt}
+\noindent{\large\bfseries\color{themeblue} 13. Full DP Matrix Walkthrough: \textit{INTENTION} $\longrightarrow$ \textit{EXECUTION}}\par\vspace{1pt}
+Transforming source $X = \text{\rx{INTENTION}}$ ($n=9$) into target $Y = \text{\rx{EXECUTION}}$ ($m=9$) under Levenshtein costs ($c_{\text{sub}}=2$):
+
+\vspace{1pt}
+\noindent\begin{center}
+\renewcommand{\arraystretch}{1.06}
+\scriptsize
+\setlength{\tabcolsep}{2.2pt}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\rowcolor{lightbg}
+$D(i,j)$ & \textbf{\#} & \textbf{E} & \textbf{X} & \textbf{E} & \textbf{C} & \textbf{U} & \textbf{T} & \textbf{I} & \textbf{O} & \textbf{N} \\ \hline
+\textbf{N} & 9 & $\downarrow 8$ & ${\swarrow}{\leftarrow}{\downarrow} 9$ & ${\swarrow}{\leftarrow}{\downarrow} 10$ & ${\swarrow}{\leftarrow}{\downarrow} 11$ & ${\swarrow}{\leftarrow}{\downarrow} 12$ & $\downarrow 11$ & $\downarrow 10$ & $\downarrow 9$ & \cellcolor{pathcolor}\textbf{$\swarrow 8$} \\ \hline
+\textbf{O} & 8 & $\downarrow 7$ & ${\swarrow}{\leftarrow}{\downarrow} 8$ & ${\swarrow}{\leftarrow}{\downarrow} 9$ & ${\swarrow}{\leftarrow}{\downarrow} 10$ & ${\swarrow}{\leftarrow}{\downarrow} 11$ & $\downarrow 10$ & $\downarrow 9$ & \cellcolor{pathcolor}\textbf{$\swarrow 8$} & $\leftarrow 9$ \\ \hline
+\textbf{I} & 7 & $\downarrow 6$ & ${\swarrow}{\leftarrow}{\downarrow} 7$ & ${\swarrow}{\leftarrow}{\downarrow} 8$ & ${\swarrow}{\leftarrow}{\downarrow} 9$ & ${\swarrow}{\leftarrow}{\downarrow} 10$ & $\downarrow 9$ & \cellcolor{pathcolor}\textbf{$\swarrow 8$} & $\leftarrow 9$ & $\leftarrow 10$ \\ \hline
+\textbf{T} & 6 & $\downarrow 5$ & ${\swarrow}{\leftarrow}{\downarrow} 6$ & ${\swarrow}{\leftarrow}{\downarrow} 7$ & ${\swarrow}{\leftarrow}{\downarrow} 8$ & ${\swarrow}{\leftarrow}{\downarrow} 9$ & \cellcolor{pathcolor}\textbf{$\swarrow 8$} & $\leftarrow 9$ & $\leftarrow 10$ & ${\leftarrow}{\downarrow} 11$ \\ \hline
+\textbf{N} & 5 & $\downarrow 4$ & ${\swarrow}{\leftarrow}{\downarrow} 5$ & ${\swarrow}{\leftarrow}{\downarrow} 6$ & ${\swarrow}{\leftarrow}{\downarrow} 7$ & \cellcolor{pathcolor}\textbf{${\swarrow}{\leftarrow}{\downarrow} 8$} & ${\swarrow}{\leftarrow}{\downarrow} 9$ & ${\swarrow}{\leftarrow}{\downarrow} 10$ & ${\swarrow}{\leftarrow}{\downarrow} 11$ & ${\swarrow}{\downarrow} 10$ \\ \hline
+\textbf{E} & 4 & $\swarrow 3$ & $\leftarrow 4$ & \cellcolor{pathcolor}\textbf{${\swarrow}{\leftarrow} 5$} & \cellcolor{pathcolor}\textbf{$\leftarrow 6$} & $\leftarrow 7$ & ${\leftarrow}{\downarrow} 8$ & ${\swarrow}{\leftarrow}{\downarrow} 9$ & ${\swarrow}{\leftarrow}{\downarrow} 10$ & $\downarrow 9$ \\ \hline
+\textbf{T} & 3 & ${\swarrow}{\leftarrow}{\downarrow} 4$ & \cellcolor{pathcolor}\textbf{${\swarrow}{\leftarrow} 5$} & ${\swarrow}{\leftarrow}{\downarrow} 6$ & ${\swarrow}{\leftarrow}{\downarrow} 7$ & ${\swarrow}{\leftarrow}{\downarrow} 8$ & $\swarrow 7$ & ${\leftarrow}{\downarrow} 8$ & ${\swarrow}{\leftarrow}{\downarrow} 9$ & $\downarrow 8$ \\ \hline
+\textbf{N} & 2 & \cellcolor{pathcolor}\textbf{${\swarrow}{\leftarrow}{\downarrow} 3$} & ${\swarrow}{\leftarrow}{\downarrow} 4$ & ${\swarrow}{\leftarrow}{\downarrow} 5$ & ${\swarrow}{\leftarrow}{\downarrow} 6$ & ${\swarrow}{\leftarrow}{\downarrow} 7$ & ${\swarrow}{\leftarrow}{\downarrow} 8$ & $\downarrow 7$ & ${\swarrow}{\leftarrow}{\downarrow} 8$ & $\swarrow 7$ \\ \hline
+\textbf{I} & \cellcolor{pathcolor}\textbf{1} & ${\swarrow}{\leftarrow}{\downarrow} 2$ & ${\swarrow}{\leftarrow}{\downarrow} 3$ & ${\swarrow}{\leftarrow}{\downarrow} 4$ & ${\swarrow}{\leftarrow}{\downarrow} 5$ & ${\swarrow}{\leftarrow}{\downarrow} 6$ & ${\swarrow}{\leftarrow}{\downarrow} 7$ & $\swarrow 6$ & $\leftarrow 7$ & $\leftarrow 8$ \\ \hline
+\textbf{\#} & \cellcolor{pathcolor}\textbf{0} & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 \\ \hline
+ & \textbf{\#} & \textbf{E} & \textbf{X} & \textbf{E} & \textbf{C} & \textbf{U} & \textbf{T} & \textbf{I} & \textbf{O} & \textbf{N} \\ \hline
+\end{tabular}
+\end{center}
+\vspace{-4pt}
+\noindent{\scriptsize\textbf{Backtrace Legend:} Shaded cells denote optimal backtrace path from $D(9,9)=8$ (top-right) to $D(0,0)=0$ (bottom-left). \\ Pointers: $\swarrow$ = Substitution/Match ($D(i-1,j-1)$), $\leftarrow$ = Insertion ($D(i,j-1)$), $\downarrow$ = Deletion ($D(i-1,j)$).}
+
+\vspace{-1pt}
+\begin{examplebox}
+\footnotesize
+\textbf{Backtrace Alignment \& Edit Sequence Derivation:}
+\newline Starting at $D(9,9)=8$ and following backtrace pointers to $D(0,0)=0$ yields the optimal character alignment:
+\begin{center}
+\renewcommand{\arraystretch}{1.08}
+\begin{tabular}{rcccccccccc}
+\toprule
+\textbf{Source $X$:} & \rx{I} & \rx{N} & \rx{T} & \rx{E} & \rx{--} & \rx{N} & \rx{T} & \rx{I} & \rx{O} & \rx{N} \\
+\textbf{Target $Y$:} & \rx{--} & \rx{E} & \rx{X} & \rx{E} & \rx{C} & \rx{U} & \rx{T} & \rx{I} & \rx{O} & \rx{N} \\
+\midrule
+\textbf{Operation:} & \textcolor{accentred}{\textbf{del}} & \textcolor{themeblue}{\textbf{sub}} & \textcolor{themeblue}{\textbf{sub}} & \textcolor{accentgreen}{\textbf{match}} & \textcolor{accentgreen}{\textbf{ins}} & \textcolor{themeblue}{\textbf{sub}} & \textcolor{accentgreen}{\textbf{match}} & \textcolor{accentgreen}{\textbf{match}} & \textcolor{accentgreen}{\textbf{match}} & \textcolor{accentgreen}{\textbf{match}} \\
+\textbf{Levenshtein Cost:} & 1 & 2 & 2 & 0 & 1 & 2 & 0 & 0 & 0 & 0 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\vspace{-1pt}
+\textbf{Summary Cost:} $\text{Levenshtein Distance} = 1 + 2 + 2 + 0 + 1 + 2 + 0 + 0 + 0 + 0 = \mathbf{8}$. \quad (\textit{Under unit substitution cost, Distance} = $\mathbf{5}$).
+\end{examplebox}
+
+\vspace{-2pt}
+\noindent{\large\bfseries\color{themeblue} 14. Computational Complexity \& Weighted Edit Distance}\par\vspace{1pt}
+\begin{itemize}[leftmargin=12pt, itemsep=1pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{Asymptotic Complexity:}
+    \begin{itemize}[leftmargin=10pt, itemsep=0.5pt]
+        \item \textbf{Time Complexity:} $\mathcal{O}(n \times m)$ --- every cell in the $n \times m$ table takes constant $\mathcal{O}(1)$ operations.
+        \item \textbf{Space Complexity:} $\mathcal{O}(n \times m)$ to store the table and backtrace pointers ($\mathcal{O}(\min(n, m))$ if only distance is needed).
+        \item \textbf{Backtrace Time:} $\mathcal{O}(n + m)$ path length from $(n, m)$ to $(0, 0)$.
+    \end{itemize}
+    \item \textbf{Weighted Minimum Edit Distance (Non-Uniform Operation Costs):}
+    \newline In practical NLP, edit operations are not equally probable. In spell correction, adjacent keyboard letters (e.g., mistyping \textit{`e'} for \textit{`r'}) are far more common than distant keys. In biology, specific nucleotide transitions/transversions have distinct mutation rates:
+    \[
+    D(i, j) = \min \begin{cases}
+    D(i-1, j) + \text{del}[X_i] \\
+    D(i, j-1) + \text{ins}[Y_j] \\
+    D(i-1, j-1) + \text{sub}[X_i, Y_j]
+    \end{cases}
+    \qquad
+    \begin{aligned}
+    & \text{Base Cases:} \\
+    & D(i, 0) = D(i-1, 0) + \text{del}[X_i] \\
+    & D(0, j) = D(0, j-1) + \text{ins}[Y_j]
+    \end{aligned}
+    \]
+    Cost values $\text{del}$, $\text{ins}$, and $\text{sub}$ are derived empirically from confusion matrices of typing or phonetic error probabilities.
+\end{itemize}
+
+\end{document}

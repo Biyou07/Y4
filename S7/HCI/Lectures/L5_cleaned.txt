@@ -1,0 +1,643 @@
+--- Slide 1 ---
+HUMAN-COMPUTER
+INTERACTION (HCI)
+Prof. KamelEddine Heraguemi
+Dr. Hayet Saadi
+
+--- Slide 2 ---
+Unit III:
+Beautiful
+Things I’ve Got
+in HCI🎵
+–
+ENSIA HCI
+Parody 🎵
+Ideation, Prototyping, &
+Interaction Design
+WWW.ILoveENSIA.COM
+
+--- Slide 3 ---
+Lecture 5:
+Personas, Scenario
+Archetype,
+Empathy, Goals,
+Pain Points, User
+Needs,
+Requirements,
+Ideation,
+Stereotype,
+Research, UCD,
+Bias, Design For One
+
+--- Slide 4 ---
+Learning Goals:
+Archetype,
+Empathy, Goals,
+Pain Points, User
+Needs,
+Requirements,
+Ideation,
+Stereotype,
+Research, UCD,
+Bias, Design For One
+1.
+Build a research-based
+persona and a goal-focused
+scenario from user research
+data, and explain how they fit
+into the UCD cycle.
+2.
+Translate a persona and
+scenario into design inputs
+that guide ideation and
+prototyping.
+
+--- Slide 5 ---
+Archetype,
+Empathy, Goals,
+Pain Points, User
+Needs,
+Requirements,
+Ideation,
+Stereotype,
+Research, UCD,
+Bias, Design For One
+1. Open
+Discussion:
+One Screen, Two Users
+
+--- Slide 6 ---
+Beautiful Things I’ve Got in
+HCI🎵
+–
+ENSIA HCI Parody 🎵
+The Screen
+
+--- Slide 7 ---
+We have this UI of the
+bill-payment page with
+small text, English labels,
+and a 6-digit code to enter
+in 30 seconds.
+
+--- Slide 8 ---
+Beautiful Things I’ve Got in
+HCI🎵
+–
+ENSIA HCI Parody 🎵
+The Users
+
+--- Slide 9 ---
+Amine, 21, ENSIA student
+●
+●
+●
+●
+Phone: Samsung Galaxy S23, 6.1-6.7"
+screen, recent Android
+Connection: 5G Operator
+Habits: installs new apps easily, uses
+BaridiMob and Yassir daily, tolerates
+small text and quick flows
+Uses Arabic and English
+
+--- Slide 10 ---
+Samira, 62, a Doctor
+●
+●
+●
+●
+●
+Phone: Samsung Galaxy A04, a low-end
+phone with a 6.5" screen and an older
+Android version
+Connection: 3G/4G Operator, unstable
+Habits: mostly calls and WhatsApp, reading
+glasses needed, asks her son Amine for help,
+afraid to tap “Confirm” on a payment App
+Context: the post office queue is the
+alternative
+Uses Arabic and French
+
+--- Slide 11 ---
+Who is this screen
+designed for?
+Amine? Samira?
+
+--- Slide 12 ---
+Who decided that,
+and based on what?
+
+--- Slide 13 ---
+Conclusion:
+Without a defined
+user, the default
+user is the designer
+
+--- Slide 14 ---
+If we cannot
+redesign the
+payment system
+completely, what
+evidence would we
+need before
+deciding which
+interface changes
+to make?
+
+--- Slide 15 ---
+2. From Users to
+Design:
+How UCD,
+Personas, and
+Scenarios Connect?
+
+--- Slide 16 ---
+●
+●
+●
+●
+UCD puts users at the center of every
+phase, and the cycle repeats until
+requirements are met (Lecture 2).
+Research: observe and interview users;
+understand the context of use.
+Synthesis: turn raw data into personas
+(who), scenarios (what/why) and journey
+maps (when, how they feel).
+Ideation → Prototyping → Evaluation:
+design, build, test with users, then loop
+back (For the next lectures).
+Insights
+from the
+previous
+illustration
+
+--- Slide 19 ---
+Archetype,
+Empathy, Goals,
+Pain Points, User
+Needs,
+Requirements,
+Ideation,
+Stereotype,
+Research, UCD,
+Bias, Design For One
+
+--- Slide 20 ---
+3. Persona
+in UCD
+A persona is the
+customer your
+business can
+finally talk to
+before spending
+money on the
+product.
+
+--- Slide 21 ---
+●
+3.1. Definition
+and Purpose
+●
+●
+A
+persona
+is
+a
+fictional
+yet
+research-grounded archetype that
+represents a cluster of users sharing
+similar goals, behaviors, and contexts
+of use
+It is neither a statistical average, nor a
+real individual, nor a market segment.
+Functions: fostering empathy, creating
+a shared understanding within the
+design team, and supporting the
+justification of design decisions.
+
+--- Slide 22 ---
+3.1. Definition
+and Purpose
+●
+Design for one: satisfying one specific
+persona
+fully
+is
+better
+than
+half-satisfying everyone (after Cooper,
+2004)
+
+--- Slide 23 ---
+3.2. Anatomy of a
+Persona
+●
+●
+●
+●
+●
+●
+●
+Identity: name, photograph, age, brief
+biography
+Goals: the outcomes the user seeks to
+achieve
+Tasks: the activities performed with the
+system
+Pain points: frustrations and barriers
+Technological profile: devices, skills, usage
+frequency
+Context of use: physical, social, linguistic,
+and network conditions
+Representative quote: a synthesis of the
+persona’s attitude
+
+--- Slide 25 ---
+3.3. Typology of
+Personas
+
+--- Slide 26 ---
+1. Proto-persona
+Constructed
+from
+the
+team’s
+assumptions; efficient but requires
+empirical validation.
+
+--- Slide 28 ---
+2. Research-based persona
+Derived from empirical data (Real Data:
+Interviews, Observation, Analytics).
+
+--- Slide 30 ---
+3. Primary and secondary personas
+● The primary persona determines the core
+design;
+● Secondary personas introduce additional
+needs that do not conflict with the primary.
+
+--- Slide 32 ---
+4. Negative persona
+● An archetype of a user whose needs the product
+deliberately are not addressed, or whose behavior
+the design must prevent (e.g., a malicious actor).
+●
+It helps the team set clear boundaries on who the
+system serves and avoid adding features that do
+not benefit the primary personas.
+
+--- Slide 34 ---
+Example:
+Typology of
+Personas
+
+--- Slide 36 ---
+Beautiful Things I’ve Got in
+HCI🎵
+–
+ENSIA HCI Parody 🎵
+
+--- Slide 37 ---
+Personas are
+not invented
+but
+constructed:
+Beautiful
+Things I’ve
+Got in HCI🎵
+–
+ENSIA HCI
+Parody 🎵
+raw user data is
+synthesized into
+patterns, and
+patterns into
+archetypes
+3.4. From
+data to
+persona
+
+--- Slide 38 ---
+Sample-size rule
+
+--- Slide 39 ---
+Personas are
+not invented
+but
+constructed:
+Beautiful
+Things I’ve
+Got in HCI🎵
+–
+ENSIA HCI
+Parody 🎵
+raw user data is
+synthesized into
+patterns, and
+patterns into
+archetypes
+Bill Payment
+App
+Example
+
+--- Slide 41 ---
+A scenario turns
+a persona into a
+story of use,
+describing the
+Beautiful
+Things I’ve
+Got in HCI🎵
+–
+ENSIA HCI
+Parody 🎵
+user’s goal and
+context rather
+than the
+interface.
+4. Scenario
+
+--- Slide 42 ---
+4.1. Definition
+and structure
+
+--- Slide 43 ---
+●
+A scenario is a narrative describing
+how a persona pursues a goal in a
+specific context.
+●
+It has five elements: the persona
+(who), the context (where and when),
+the goal (why), the sequence of
+actions, and the outcome. Where the
+persona
+describes
+the
+user,
+scenario puts that user into action.
+the
+
+--- Slide 44 ---
+4.2. Worked
+example
+
+--- Slide 45 ---
+Samira, 62 years old, a Doctor
+She receives her electricity bill in the evening and wants
+to pay it from home to avoid the post office queue.
+Usually her son Amine, who lives in another city, helps
+her by phone, but this time she wants to learn to do it
+herself. She hesitates before confirming because she
+fears an irreversible error, and her connection drops
+during the payment. She needs to know whether the
+payment succeeded and to keep a receipt.
+
+--- Slide 46 ---
+Requirements Derived from the
+Scenario:
+●
+●
+●
+●
+A guided flow that supports learning
+without assistance.
+An explicit confirmation step before
+payment.
+A visible payment status with recovery
+after connection loss.
+A downloadable receipt.
+
+--- Slide 47 ---
+Reflection
+Question
+Which interface elements would
+translate
+each
+of
+these
+requirements into the UI, and how
+would they improve Samira’s
+experience?
+
+--- Slide 50 ---
+5. Journey
+Map
+
+--- Slide 51 ---
+5.1. Definition
+A journey map is a visualization of
+the process a persona goes
+through to accomplish a goal,
+combining actions with thoughts
+and emotions over time
+
+--- Slide 53 ---
+5.2. Example of Samira
+paying the bill using the
+app
+
+--- Slide 54 ---
+Doctor
+
+--- Slide 56 ---
+6. AI,
+personas,
+and
+scenarios
+
+--- Slide 57 ---
+Reflection
+1. The prompt “Create a persona
+of an Algerian pensioner who
+pays bills.”
+2. The AI output: clean, detailed,
+with a photo
+
+--- Slide 58 ---
+1. Would you
+persona?
+Reflection
+design
+for
+this
+2. Does it feel like a real person or
+like an average?
+
+--- Slide 59 ---
+We just built in 10 seconds what
+took us 12 interviews.
+What did we skip?
+Reflection
+
+--- Slide 60 ---
+Check
+the lin
+k
+
+--- Slide 62 ---
+What Matters
+for HCI
+Practice?
+
+--- Slide 63 ---
+What Matters
+for HCI
+Practice?
+
+--- Slide 64 ---
+The Real Meaning:
+Assistance, Not
+Replacement
+
+--- Slide 66 ---
+Conclusion of
+the study
+GenAI can support persona
+creation, but empirical evidence
+and critical human evaluation are
+necessary before personas can
+represent real users or guide HCI
+design.
+
+--- Slide 67 ---
+Check t
+he link
+
+--- Slide 68 ---
+The Study of
+How
+Researchers
+Prompt LLMs to
+Create
+Personas
+
+--- Slide 69 ---
+What Do the
+Prompts Ask
+AI to Do?
+
+--- Slide 70 ---
+What Personas
+Do Prompts
+Produce?
+
+--- Slide 71 ---
+Conclusion of
+the study
+Prompting shapes the persona
+that AI produces, but prompt
+structure
+alone
+does
+not
+guarantee a valid representation
+of users.
+
+--- Slide 73 ---
+Beautiful Things I’ve Got in
+HCI🎵
+–
+ENSIA HCI Parody 🎵
+
+--- Slide 74 ---
+One Ride, Two Drivers
+Closing
+Section
+
+--- Slide 75 ---
+One Ride, Two Drivers
+Closing
+Section
+Yassir and Heetch connect passengers
+and drivers, and each ride involves two
+users with different needs. Many of you
+ride with family members, and you meet
+drivers of different ages. This changes who
+the user is and how the interaction unfolds.
+
+--- Slide 76 ---
+Task in pairs
+Design a persona and a scenario for the drivers in a ride
+with a passenger:
+●
+●
+Closing
+Section
+Older driver (e.g., 55+, long driving experience, less
+comfortable with smartphone interfaces).
+Younger driver (e.g., 20-25, comfortable with apps,
+rides as a side job or while studying).
+
+--- Slide 77 ---
+1.
+2.
+Closing
+Section
+3.
+Hints
+Persona: name, age, goals, pain points, tech skills,
+context
+(language,
+connection,
+vehicle,
+time
+pressure). Use your own ride experiences as data.
+Scenario: one ride in which the driver’s profile creates
+a challenge for the interaction. Write the goal and
+context, not the interface. Suggested situations: the
+passenger and driver need to find each other, a route
+changes, a payment, a cancellation, or a network
+problem. The problems you used to face.
+Design implication: identify one requirement and one
+UI element that would improve the experience for this
+driver.
+
+--- Slide 78 ---
+What is the one thing you
+would tell a designer who
+Closing
+Section
+skips the persona?
+
+--- Slide 79 ---
+1.
+2.
+3.
+4.
+REFERENCES
+5.
+6.
+ISO 9241-210:2019, Human-centred design for interactive systems.
+https://www.iso.org/standard/77520.html
+Cooper, A. (2004). The Inmates Are Running the Asylum (Ch. 9,
+“Design for Just One Person,”). Sams.
+Harley, A. Personas Make Users Memorable for Product Team
+Members. Nielsen Norman Group.
+https://www.nngroup.com/articles/persona/
+Gibbons, S. Journey Mapping 101. Nielsen Norman Group.
+https://www.nngroup.com/articles/journey-mapping-ux-practitio
+ners/
+Amin, D., Salminen, J., Ahmed, F., Tervola, S. M. H., Sethi, S., &
+Jansen, B. J. Creating and Evaluating Personas Using Generative
+AI: A Scoping Review of 81 Articles. arXiv:2504.04927.
+https://arxiv.org/abs/2504.04927
+Salminen, J., Amin, D., & Jansen, B. J. (2025). Using AI for User
+Representation: An Analysis of 83 Persona Prompts. 22nd ACS/IEEE
+International Conference on Computer Systems and Applications
+(AICCSA 2025). arXiv:2508.13047. https://arxiv.org/abs/2508.13047
+
+--- Slide 80 ---
+Beautiful
+Things I’ve Got
+in HCI🎵
+–
+ENSIA HCI
+Parody 🎵
+THANK YOU
+WWW.ILoveENSIA.COM
+

@@ -1,0 +1,379 @@
+\documentclass[8.5pt,a4paper,twocolumn]{article}
+\usepackage[margin=0.9cm,top=1.05cm,bottom=1.05cm,columnsep=13pt]{geometry}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{microtype}
+\usepackage{fancyhdr}
+
+% ENSIA DL Signature Palette
+\definecolor{themeblue}{HTML}{2B5A87}   % Primary theme blue
+\definecolor{lightbg}{HTML}{E8EEF4}     % Light background fill
+\definecolor{accentred}{HTML}{C8453A}   % Accent red for [MEMORIZE]
+\definecolor{accentgreen}{HTML}{2E7D32} % Accent green for solutions
+\definecolor{darkgray}{HTML}{333333}    % Dark neutral
+\definecolor{lightgray}{HTML}{D0D8E0}   % Dividers
+\definecolor{boxbg}{HTML}{F8FAFC}       % Soft background
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1.2pt}
+
+\titlespacing*{\section}{0pt}{2.5pt}{1.5pt}
+\titlespacing*{\subsection}{0pt}{2pt}{1pt}
+\titleformat{\section}{\small\bfseries\color{themeblue}}{}{0pt}{}[\vspace{-2pt}\textcolor{themeblue}{\rule{\linewidth}{0.5pt}}]
+\titleformat{\subsection}{\footnotesize\bfseries\color{themeblue}}{}{0pt}{}
+
+\newcommand{\tagmem}{\colorbox{accentred}{\textcolor{white}{\bfseries\fontsize{5.5pt}{6.5pt}\selectfont MEMORIZE}}\ }
+\newcommand{\tagund}{\colorbox{themeblue}{\textcolor{white}{\bfseries\fontsize{5.5pt}{6.5pt}\selectfont UNDERSTAND}}\ }
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyhead[L]{\scriptsize\bfseries\color{themeblue} ENSIA 4th Year (S7) --- Human-Computer Interaction (HCI)}
+\fancyhead[R]{\scriptsize\color{darkgray} Midterm Exam Complete Revision Guide}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{themeblue}\leaders\hrule height \headrulewidth\hfill}}
+\renewcommand{\footrule}{\hbox to\headwidth{\color{lightgray}\leaders\hrule height \footrulewidth\hfill}}
+\fancyfoot[L]{\tiny\color{darkgray} Lecturers: Prof. Heraguemi, Dr. Saadi, Dr. Djeddi $\vert$ S7 2026/2027}
+\fancyfoot[R]{\scriptsize\bfseries\color{themeblue} Page \thepage\ of 4}
+
+\newtcolorbox{miniplaybook}[1][]{
+    colframe=accentred,
+    colback=white,
+    arc=1mm,
+    boxrule=0.5pt,
+    left=3.5pt, right=3.5pt, top=2pt, bottom=2pt,
+    #1
+}
+
+\newtcolorbox{crambox}[1][]{
+    colframe=themeblue,
+    colback=lightbg,
+    arc=1mm,
+    boxrule=0.5pt,
+    left=3.5pt, right=3.5pt, top=2pt, bottom=2pt,
+    #1
+}
+
+\begin{document}
+
+\twocolumn[
+\begin{center}
+    \vspace{-10pt}
+    {\Large\bfseries\color{themeblue} HUMAN-COMPUTER INTERACTION (HCI): MIDTERM REVISION GUIDE}\par\vspace{1.5pt}
+    {\footnotesize\bfseries High-Yield Exam Synthesis: Lectures 1--6, Video Study Guides \& Past Midterm Exam Keys (2024--2026)}\par\vspace{1pt}
+    {\tiny\color{darkgray} National School of Artificial Intelligence (ENSIA) \quad$\vert$\quad Intelligent Systems Engineering Department \quad$\vert$\quad Semester 7}\par
+\end{center}
+\vspace{-8pt}
+\begin{crambox}
+\scriptsize
+\textbf{EXAM BLUEPRINT \& SCORING STRATEGY (Part I: 3.5--5 Pts Theory | Part II: 5--6.5 Pts Application):}\\
+\textbf{Part I (Theory \& MCQs):} Verbatim 1-sentence definitions (HCI, User Research, Visibility, TSR); real-app heuristic identification (Amazon order confirmation vs. MS Office sync); Spotify heart matching; 6 Gestalt laws; 4 Cognitive principles; 10 Nielsen heuristics; 8 Shneiderman rules; mobile grip ratios; SMASH 12 framework.\\
+\textbf{Part II (Application \& Redesign):} Duolingo Old vs. New table; spotting 4 website flaws; strict UI vs. UX classification; 2 violated design rules; proposing 5 persona-driven redesign features (must systematically address all explicit persona needs).
+\end{crambox}
+\vspace{2pt}
+]
+
+% =========================================================================
+% PAGE 1: Foundations, Human Factors, Experience Layers & Timeline
+% =========================================================================
+
+\section*{1. Foundations of HCI \& Human Factors}
+\begin{itemize}[leftmargin=7pt, itemsep=1pt, topsep=0.5pt]
+    \item \tagmem \textbf{HCI Definition:} Research field exploring how people interact with computer systems, and how to design systems that are \textbf{useful, usable, accessible, and enjoyable}.
+    \item \tagmem \textbf{Origin:} Stuart K. Card, Allen Newell, and Thomas P. Moran (\textbf{1983}), \textit{The Psychology of Human-Computer Interaction}.
+    \item \tagmem \textbf{Shneiderman's Paradigm Shift (2002, \textit{Leonardo's Laptop}):}
+    \begin{itemize}[leftmargin=6pt, itemsep=0.5pt]
+        \item \textit{Old (Machine-Centered):} ``What can computers do?'' $\rightarrow$ Humans adapt to machine; success = raw compute power \& system features.
+        \item \textit{New (Human-Centered):} ``What can humans do with computers?'' $\rightarrow$ Success = what technology enables people to accomplish or create.
+    \end{itemize}
+    \item \tagund \textbf{Primary Objective:} HCI treats the \textbf{human}, not computer, as starting point. An interface fails if it forces users into guessing.
+    \item \tagmem \textbf{Human Factors Definition:} Scientific study of how humans interact with systems, focused on human \textbf{capabilities, limitations, and characteristics} to design safer, efficient, comfortable systems.
+    \item \tagmem \textbf{3 Human Factors Dimensions:} (1) \textbf{Physical} (ergonomics, strain, posture, reach); (2) \textbf{Cognitive} (memory limits, attention, workload, pressure); (3) \textbf{Perceptual} (vision, hearing, reaction time).
+    \item \tagmem \textbf{Norman Doors (Don Norman, 2013):} ``If you push a pull door, you didn't fail. The door failed to tell you how to use it.'' Interface test: \textit{Does the design tell the user what to do, or leave them guessing?}
+\end{itemize}
+
+\section*{2. Experience Layers: UI vs. UX vs. CX}
+\begin{itemize}[leftmargin=7pt, itemsep=1pt, topsep=0.5pt]
+    \item \tagmem \textbf{Concentric Hierarchy:} $\mathbf{UI \subset UX \subset CX}$.
+    \begin{itemize}[leftmargin=6pt, itemsep=0.5pt]
+        \item \textbf{UI (Surface):} Visual/interactive surface directly seen/touched: layout, color, fonts, icons, buttons, motion, immediate feedback.
+        \item \textbf{UX (Journey):} Full journey of using product: navigation, search/filters, flow, responsiveness, accessibility, info architecture.
+        \item \textbf{CX (Brand Story):} Entire relationship with brand: marketing, sales, customer service/support, non-digital touchpoints, trust.
+    \end{itemize}
+    \item \tagmem \textbf{Part II Classification Rule (Critical for Exam):}
+    \begin{itemize}[leftmargin=6pt, itemsep=0.5pt]
+        \item \textit{UI Issues:} Clutter, minimal styling, low contrast, busy background, inconsistent fonts, outdated look, missing imagery.
+        \item \textit{UX Issues:} Confusing navigation, weak hierarchy, missing search/filters, mobile/responsive breakdown, checkout friction.
+        \item \textit{Double Category:} \textbf{Cluttered text} and \textbf{poor readability} count as \textbf{BOTH UI and UX}.
+    \end{itemize}
+\end{itemize}
+
+\section*{3. Usability \& Timeless Design}
+\begin{itemize}[leftmargin=7pt, itemsep=1pt, topsep=0.5pt]
+    \item \tagmem \textbf{Usability (ISO 9241):} Extent to which product enables users to achieve goals with \textbf{Effectiveness} (accuracy), \textbf{Efficiency} (speed), and \textbf{Satisfaction} (enjoyment). Measured by \textbf{human performance}, not specs. When price/features are equal, usability is the market differentiator.
+    \item \tagmem \textbf{Fashion vs. Timeless Design:} Fashion = stylistic trend valued for novelty without functional gain. Timeless Design = \textbf{BIC Cristal pen (1955)} --- form already optimizes function, never needed a redesign.
+\end{itemize}
+
+\section*{4. Evolution Timeline of HCI}
+{\scriptsize
+\begin{tabularx}{\linewidth}{@{}llXl@{}}
+\toprule
+\textbf{Era} & \textbf{Level} & \textbf{Key Interaction Mode} & \textbf{Landmark} \\
+\midrule
+\textbf{1950s} & Hardware & Switch panels, plugboards & ENIAC (1946) \\
+\textbf{1960s--70s} & Program & Punch cards, printer output & FORTRAN \\
+\textbf{1970s--80s} & Terminal & Command-line interfaces (CLI) & IBM 3270 \\
+\textbf{1980s--90s} & GUI & Windows, icons, mouse, direct manip & Mac (1984) \\
+\textbf{2000s} & Network & Browsers, hyperlinks, groupware & WWW (1989) \\
+\textbf{2010s} & Mobile & Touchscreens, mobile OS, wearables & iPhone (2007) \\
+\textbf{2020s} & GenAI/XR & Conversational LLMs, spatial XR & ChatGPT, Vision Pro \\
+\textbf{2025+} & Agentic & Proactive agents across devices & Anthropic MCP \\
+\bottomrule
+\end{tabularx}
+}
+
+\section*{5. 7 Emerging Directions in HCI}
+\begin{itemize}[leftmargin=7pt, itemsep=0.5pt, topsep=0.5pt]
+    \item \scriptsize 1. UX \& Usability $\vert$ 2. Human-Centered Contexts (health/edu) $\vert$ 3. Emerging Tech (AR/VR/wearables) $\vert$ 4. AI \& HCI $\vert$ 5. Society \& Ethics (privacy) $\vert$ 6. Visualization \& Computation $\vert$ 7. Research Foundations (user studies).
+\end{itemize}
+
+\newpage
+% =========================================================================
+% PAGE 2: User Research, Norman's 4 Rules, UCD Cycle & Usability Metrics
+% =========================================================================
+
+\section*{6. Developer vs. User Disconnect}
+\begin{itemize}[leftmargin=7pt, itemsep=1pt, topsep=0.5pt]
+    \item \tagund \textbf{Perspective Disconnect:} Developers live in back-end (DB, query syntax, error code \texttt{0x80070005}). Users only meet front-end (screen, buttons, labels). Users don't care about the back-end.
+    \item \tagund \textit{Expedia PDF:} Users saw blue underlined text as clickable links and blamed themselves; developers saw static PDF. \textit{Pixel Art:} Smooth on CRT, blocky on LCD $\rightarrow$ \textbf{test on user's real hardware}.
+    \item \tagmem \textbf{6 Developer Misconceptions vs. Realities:}
+    \begin{enumerate}[leftmargin=8pt, itemsep=0.5pt]
+        \item \textit{``If I can use it, everyone can.''} $\rightarrow$ Devs know backend; users don't.
+        \item \textit{``If non-tech staff can use it, anyone can.''} $\rightarrow$ Colleagues share vocabulary.
+        \item \textit{``Good design is common sense.''} $\rightarrow$ Common sense is bias; design is evidence-based.
+        \item \textit{``Meeting style guides = usable.''} $\rightarrow$ Only user testing proves usability.
+        \item \textit{``Users understand what I meant.''} $\rightarrow$ Users only see what screen communicates.
+        \item \textit{``Users will adapt.''} $\rightarrow$ Users leave or fail (Win 8 removed Start $\rightarrow$ restored in 8.1).
+    \end{enumerate}
+\end{itemize}
+
+\section*{7. Norman's 4 Rules (Mnemonic: C-V-F A\&C)}
+\begin{itemize}[leftmargin=7pt, itemsep=1pt, topsep=0.5pt]
+    \item \tagmem \textbf{1. Consistency:} Similar elements/actions behave similarly across system. Users never relearn. (\textit{Success:} \texttt{Ctrl+C}/\texttt{Ctrl+V}; \textit{Failure:} conflicting USB cable standards: USB-C vs. Micro-B vs. Lightning).
+    \item \tagmem \textbf{2. Visibility:} System state and possible actions perceptible at right time. Answers: \textit{Where am I? What can I do? What is happening?} (\textit{Success:} Bold icon highlighted when active; \textit{Failure:} ambiguous mute button).
+    \item \tagmem \textbf{3. Feedback:} Immediate confirmation proportional to action's importance. (\textit{Success:} 46\% upload bar; \textit{Failure:} unresponsive submit button clicked 3 times causing \textbf{3 duplicate DB orders}; silent crosswalk button).
+    \item \tagmem \textbf{4. Affordance \& Constraints:}
+    \begin{itemize}[leftmargin=6pt, itemsep=0.5pt]
+        \item \textit{Affordance:} Action invited by object (flat plate affords pushing; handle affords pulling). Lying signifier: Southwest calendar grayed out valid available dates identically to past dates.
+        \item \textit{Constraint:} Restricts actions to prevent errors. Failure: Excel auto-converted gene names (\texttt{SEPT2} $\rightarrow$ \texttt{2-Sep}), corrupting \textbf{20\% of genetics papers}.
+    \end{itemize}
+\end{itemize}
+
+\section*{8. User-Centered Design (UCD) \& ISO 9241}
+\begin{itemize}[leftmargin=7pt, itemsep=1pt, topsep=0.5pt]
+    \item \tagmem \textbf{User Research Definition (Exam Verbatim):} \textit{``Studying users and their perspectives (behaviors, needs, and motivations) to inform design decisions and create products that are usable, meaningful, and provide an intuitive UX.''} Methods: observations, interviews, surveys.
+    \item \tagmem \textbf{ISO 9241-210:2019 (5 Iterative Stages):}\\
+    \textit{Context of Use} $\longrightarrow$ \textit{User Requirements} $\longrightarrow$ \textit{Design Solutions}\\
+    $\longrightarrow$ \textit{Evaluation \& Testing} $\longrightarrow$ \textit{Iterate \& Refine}
+    \item \tagmem \textbf{3 User Types (Hospital Cardiac Ward Monitor):}
+    \begin{itemize}[leftmargin=6pt, itemsep=0.5pt]
+        \item \textbf{Primary User:} Direct operator achieving own goal (\textbf{Nurse}: sets thresholds, reads vitals, silences alarms).
+        \item \textbf{Secondary User:} Occasional proxy operator without deep training (\textbf{Visiting Family}: silences distressing buzzer).
+        \item \textbf{Indirect User:} Affected by system without operating it (\textbf{Patient}: wears sensors, lives depend on nurse's interaction).
+    \end{itemize}
+\end{itemize}
+
+\section*{9. Usability Metrics \& Case Studies}
+\begin{itemize}[leftmargin=7pt, itemsep=1pt, topsep=0.5pt]
+    \item \tagmem \textbf{Task Success Rate (TSR) Formula:}
+    \[\mathbf{TSR = \left(\frac{\text{Successfully Completed Tasks}}{\text{Total Attempts}}\right) \times 100\%}\]
+    \textit{Exam Example:} $18 / 20 \text{ successes} \times 100\% = \mathbf{90\%}$.
+    \item \tagmem \textbf{Time on Task:} Duration to complete task; benchmarked vs. expert (e.g. user 120s vs. expert 60s).
+    \item \tagmem \textbf{System Usability Scale (SUS):} 10-item Likert survey scored \textbf{0 to 100} (benchmark $\sim 68$).
+    \item \tagmem \textbf{\$300 Million Button (Jared Spool, 2009):}
+    \begin{itemize}[leftmargin=6pt, itemsep=0.5pt]
+        \item \textit{Problem:} Mandatory login/register before checkout. 45\% held multiple accounts; \textbf{160,000 password resets/day}.
+        \item \textit{Solution:} Replaced ``Register'' with \textbf{``Continue''} (guest checkout).
+        \item \textit{Result:} \textbf{+45\% purchases}, \textbf{+\$15M month 1}, \textbf{+\$300M year 1}.
+    \end{itemize}
+    \item \tagmem \textbf{AI in UCD Study (Niforatos et al., 2024):} 8 UX designers, 32 users. AI changes process speed, but does not guarantee superior UX. \textbf{``AI generates interfaces, but humans decide whether they are good.''}
+\end{itemize}
+
+\newpage
+% =========================================================================
+% PAGE 3: Evaluation, Gestalt, Cognitive Principles & Heuristics
+% =========================================================================
+
+\section*{10. Hawaii Missile False Alarm (2018) Diagnostic}
+\begin{itemize}[leftmargin=7pt, itemsep=1pt, topsep=0.5pt]
+    \item \tagund \textbf{38 Minutes of Panic (Causes \& Broken Rules):}
+    \begin{itemize}[leftmargin=6pt, itemsep=0.5pt]
+        \item \textit{Cause 1:} Identical adjacent options (\texttt{TEST} vs. \texttt{LIVE}) $\rightarrow$ Breaks \textbf{Error Prevention, Gestalt Similarity \& Proximity}.
+        \item \textit{Cause 2:} Labels hid catastrophic consequence $\rightarrow$ Breaks \textbf{Match Real World \& Mental Models}.
+        \item \textit{Cause 3:} Generic ``Are you sure?'' prompt $\rightarrow$ Breaks \textbf{Figure-Ground \& Attention}.
+        \item \textit{Cause 4:} Memorizing drill syntax $\rightarrow$ Breaks \textbf{Recognition vs. Recall}.
+    \end{itemize}
+    \item \tagund \textbf{Redesign Fixes:} Distinct sections (gray Drill vs. red Live), explicit consequence text, persistent state banner, distinct 2-step button. Heuristic evaluation catches fatal flaws early with few evaluators and 0 users at risk.
+\end{itemize}
+
+\section*{11. Design Rules Hierarchy \& Evaluation Types}
+\begin{itemize}[leftmargin=7pt, itemsep=1pt, topsep=0.5pt]
+    \item \tagmem \textbf{Hierarchy:} \textbf{Principles} (fundamental truths, Gestalt) $\rightarrow$ \textbf{Guidelines} (recommendations, Nielsen, HIG) $\rightarrow$ \textbf{Standards} (enforceable, ISO 9241, WCAG 2.1 AAA).
+    \item \tagmem \textbf{Formative vs. Summative Evaluation:}
+    \begin{itemize}[leftmargin=6pt, itemsep=0.5pt]
+        \item \textit{Formative:} During design. ``What is broken and how to fix?'' Qualitative bug list.
+        \item \textit{Summative:} Milestones/release. ``Meets benchmark?'' Quantitative metrics (TSR, time, SUS); Go/No-Go verdict.
+    \end{itemize}
+    \item \tagmem \textbf{Expert-Based (Inspection) vs. User-Based (Empirical):}
+    \begin{itemize}[leftmargin=6pt, itemsep=0.5pt]
+        \item \textit{Expert-Based:} Heuristic evaluation / walkthroughs \textit{without real users}. Fast, cheap, early. Risk: expert bias, false positives.
+        \item \textit{User-Based:} Testing with \textit{real target users}. Credible, real behavior. Costly, recruitment required.
+    \end{itemize}
+\end{itemize}
+
+\section*{12. Gestalt \& Cognitive Principles}
+\begin{itemize}[leftmargin=7pt, itemsep=1pt, topsep=0.5pt]
+    \item \tagmem \textbf{Gestalt Laws (Perception --- What Users See):} \textit{``The whole is different from the sum of its parts''} (Wertheimer, Koffka, Köhler).
+    \begin{enumerate}[leftmargin=8pt, itemsep=0.5pt]
+        \item \textbf{Proximity:} Close elements perceived as related group; far = different.
+        \item \textbf{Similarity:} Shared color/shape/size grouped even if far apart.
+        \item \textbf{Closure:} Mind automatically fills missing boundaries of incomplete shapes.
+        \item \textbf{Continuity:} Eye follows lines and alignment curves across objects.
+        \item \textbf{Figure-Ground:} Focus separated from background canvas.
+        \item \textbf{Prägnanz (Conciseness):} Mind simplifies complex visual shapes to simplest clean form (Olympic rings = 5 circles, not 9 shapes).
+    \end{enumerate}
+    \item \tagmem \textbf{Cognitive Principles (What Users Think):}
+    \begin{itemize}[leftmargin=6pt, itemsep=0.5pt]
+        \item \textbf{Mental Models:} Expectation (\textit{Trash = delete, Floppy = save}).
+        \item \textbf{Attention:} Focus via hierarchy/whitespace (\textit{What to look at first?}).
+        \item \textbf{Memory:} Recognition over recall (\textit{Toolbar icons over typed syntax}).
+        \item \textbf{Cognitive Load:} Mental processing overhead reduced by chunking.
+    \end{itemize}
+\end{itemize}
+
+\section*{13. Jakob Nielsen's 10 Heuristics (1994)}
+\begin{enumerate}[leftmargin=8pt, itemsep=1pt, topsep=0.5pt]
+    \item \tagmem \textbf{Visibility of System Status:} Inform users via timely feedback.  
+    \textit{Exam: Amazon confirmation = \textbf{YES}; MS Office silent sync = \textbf{NO}.}
+    \item \tagmem \textbf{Match Between System \& Real World:} Speak user language, real conventions. (\textit{iOS Compass app mimics physical compass}).
+    \item \tagmem \textbf{User Control \& Freedom:} Emergency exits; undo/redo. (\textit{Gmail recover deleted email from Trash}).
+    \item \tagmem \textbf{Consistency \& Standards:} Obey platform conventions. (\textit{Spotify Heart icon for Liked songs}).
+    \item \tagmem \textbf{Error Prevention:} Eliminate error-prone conditions or confirm. (\textit{Ryanair disables un-flyable countries}).
+    \item \tagmem \textbf{Recognition Rather Than Recall:} Make options visible. (\textit{Word toolbar formatting B/I/U icons}).
+    \item \tagmem \textbf{Flexibility \& Efficiency of Use:} Accelerators for experts. (\textit{Amazon multi-criteria search filters}).
+    \item \tagmem \textbf{Aesthetic \& Minimalist Design:} Omit rarely used clutter. (\textit{YouTube player hides controls during playback}).
+    \item \tagmem \textbf{Error Recognition \& Recovery:} Plain language, exact cause, fix. (\textit{IKEA ``Password $\ge 8$ chars'' vs. ``Invalid password''}).
+    \item \tagmem \textbf{Help \& Documentation:} Searchable, concrete steps. (\textit{Airbnb categorized help center}).
+\end{enumerate}
+
+\section*{14. Shneiderman's 8 Golden Rules (1987)}
+\begin{itemize}[leftmargin=7pt, itemsep=0.5pt, topsep=0.5pt]
+    \item \tagmem (1) Consistency; (2) Frequent shortcuts (\texttt{Ctrl+S}); (3) Informative feedback; (4) Dialog closure (checkout ends with ``Payment Completed''); (5) Simple error handling; (6) Easy reversal (\texttt{Ctrl+Z}); (7) Internal locus of control; (8) Reduce short-term memory load.
+\end{itemize}
+
+\section*{15. Mobile Usability \& SMASH Heuristics}
+\begin{itemize}[leftmargin=7pt, itemsep=1pt, topsep=0.5pt]
+    \item \tagmem \textbf{Touch Targets:} Apple iOS HIG: $\mathbf{44\times 44\text{ pt}}$. Android Material: $\mathbf{48\times 48\text{ dp}}$ ($\sim 8\text{ dp}$ spacing).
+    \item \tagmem \textbf{Hoober (2013) Phone Grips:} \textbf{49\% One-Handed} $\vert$ \textbf{36\% Cradled} $\vert$ \textbf{15\% Two-Handed}. Thumb zones: Natural (bottom), Stretch (mid), Hard (top).
+    \item \tagmem \textbf{SMASH 12 (Inostroza et al., 2016):} Keep 9 Nielsen + Split Flexibility into SMASH 7 (Customization/shortcuts) \& SMASH 8 (Efficiency/performance) + Add \textbf{SMASH 12: Physical interaction and ergonomics (controls match natural posture and dominant thumb reach)}.
+    \item \tagmem \textbf{Two Lists of 4:} Feedback (Sound, Lights, Graphic icons, Vibration) $\vert$ Interaction (Touch, Proximity sensor, Accelerometer, GPS).
+\end{itemize}
+
+\newpage
+% =========================================================================
+% PAGE 4: Personas, Scenarios, Prototyping & Midterm Application Playbook
+% =========================================================================
+
+\section*{16. Personas, Scenarios \& Journey Maps}
+\begin{itemize}[leftmargin=7pt, itemsep=1pt, topsep=0.5pt]
+    \item \tagmem \textbf{Persona Definition (Cooper, 2004):} Fictional yet research-grounded archetype representing a cluster of users with shared goals, behaviors, and contexts. \textbf{NOT} a statistical average, real individual, or market segment. \textbf{``Design for One'':} Satisfying 1 persona fully beats half-satisfying everyone.
+    \item \tagmem \textbf{7 Anatomy Elements:} (1) Identity; (2) Goals; (3) Tasks; (4) Pain Points; (5) Tech Profile; (6) Context of Use; (7) Representative Quote.
+    \item \tagmem \textbf{5 Typologies:} Proto-persona (assumptions); Research-based (empirical data); Primary (drives core UI); Secondary (complementary); Negative (excluded, e.g. fraudster).
+    \item \tagmem \textbf{5 Creation Steps:} Raw data $\to$ 100--150 atomic notes $\to$ Affinity diagram (4--6 themes) $\to$ Behavioral variables $\to$ Validate with 3--5 users.
+    \item \tagmem \textbf{Core Formula:} \textbf{Persona} = Character (Who) $\vert$ \textbf{Scenario} = Plot (Goal + Context) $\vert$ \textbf{Journey Map} = Timeline (Emotions).
+    \item \tagmem \textbf{Scenario (5 Elements):} Narrative of persona pursuing goal in context. \textbf{Describes goal and context, NEVER UI layout!} (1) Persona, (2) Context, (3) Goal, (4) Action sequence, (5) Outcome.
+    \item \tagmem \textbf{Journey Map (5 Parts):} (1) Actor/scenario, (2) Stages, (3) Actions/thoughts/emotions (\textbf{pinpoints emotional lowest point}), (4) Touchpoints, (5) Opportunities.
+    \item \tagmem \textbf{GenAI Personas (Amin 2026, Salminen 2025):} 86.4\% GPT, 50.6\% real data. Circularity risk. Rule: \textbf{``AI drafts, real data validates.''}
+\end{itemize}
+
+\section*{17. Prototyping Fidelity \& Stakeholders}
+\begin{itemize}[leftmargin=7pt, itemsep=1pt, topsep=0.5pt]
+    \item \tagmem \textbf{Prototype Definition:} Early sample/model to test concepts before coding. Prototyping before coding enables a fast iterative cycle.
+    \item \tagmem \textbf{5 Reasons to Prototype:} 1. Exposes usability flaws early; 2. User feedback; 3. Communicates ideas; 4. Validates choices; 5. Cuts rework.
+    \item \tagmem \textbf{5 Evaluation Methods:} (1) User Interviews; (2) Focus Groups; (3) \textbf{Think-Aloud Protocol} (verbalize thoughts live); (4) Contextual Inquiry; (5) Remote Testing.
+    \item \tagmem \textbf{Fidelity Levels Comparison:}
+    \begin{itemize}[leftmargin=6pt, itemsep=0.5pt]
+        \item \textit{Low-Fi (Sketches, paper):} Brainstorming, fast, cheap. Cons: non-interactive, unpersuasive to executives.
+        \item \textit{Mid-Fi (Wireframes, Figma mockups):} Tests flows, navigation, structure (\textit{Amar Darek app: 5 users, 1 afternoon $\to$ Mid-Fi wireframe}).
+        \item \textit{High-Fi (Coded Flutter/HTML, polished Figma):} Realistic look/feel, investors, edge cases. Cons: costly, \textbf{users critique fonts/colors instead of flow}, users avoid criticizing finished-looking UIs.
+    \end{itemize}
+    \item \tagmem \textbf{Golden Selection Rule:} Never ask \textit{``Which prototype is best?''} Ask: \textbf{``What do you need to learn from the user in the cheapest way?''}
+    \item \tagmem \textbf{Stakeholders (Freeman, 1984):} Internal (Investors $\to$ High-Fi; PMs $\to$ Mid-Fi; Devs $\to$ Mid/High-Fi; Marketing $\to$ High-Fi) vs. External (Users $\to$ Mid-Fi early; Partners/Legal $\to$ Mid/High-Fi with real wording).
+    \item \tagmem \textbf{Vibe Coding (Li et al., 2025):} AI tools accelerate ideation, but prompts create cumulative bugs, screenshot-to-code misses interactions, and designs converge on bland patterns. Designers remain accountable.
+\end{itemize}
+
+\section*{18. MIDTERM EXAM MASTER PLAYBOOK}
+
+\begin{miniplaybook}
+\scriptsize
+\textbf{PLAYBOOK 1: Old vs. New UI Evolution Table (Duolingo Style):}
+\begin{itemize}[leftmargin=8pt, itemsep=0.5pt]
+    \item \textbf{Layout \& Organization:} \textit{Cluttered} $\longrightarrow$ \textit{Clean, Organized, Card-based}
+    \item \textbf{Visual Design (Styling):} \textit{Simple, Flat} $\longrightarrow$ \textit{Captivating, Engaging Illustrations}
+    \item \textbf{Icons \& Typography:} \textit{Small, Inconsistent} $\longrightarrow$ \textit{Larger, Distinct, Accessible}
+    \item \textbf{Progress Tracking:} \textit{Basic, Completion} $\longrightarrow$ \textit{Detailed Visual Progress Bar}
+\end{itemize}
+
+\vspace{1pt}
+\textbf{PLAYBOOK 2: Spotting 4 Issues on Weak Websites (PNWX / Yale Style):}
+Student MUST cite 4: (1) Visual clutter \& text overload; (2) Confusing navigation (no persistent navbar); (3) Low contrast text \& busy background; (4) Inconsistent fonts \& styling; (5) Lack of search bar \& product filters; (6) Broken mobile responsiveness; (7) Lack of imagery / poor product specs.
+
+\vspace{1pt}
+\textbf{PLAYBOOK 3: Strict Classification into UI vs. UX:}
+\begin{itemize}[leftmargin=8pt, itemsep=0.5pt]
+    \item \textbf{UI Problems (Visual / Surface):} Clutter, minimal styling, low contrast, busy backgrounds, inconsistent fonts/buttons, outdated aesthetic.
+    \item \textbf{UX Problems (Journey / Flow):} Confusing navigation, weak hierarchy, missing search or filters, broken mobile responsiveness, flow friction.
+\end{itemize}
+
+\vspace{1pt}
+\textbf{PLAYBOOK 4: Violated Design Rules (Yale Case Study):}
+\begin{itemize}[leftmargin=8pt, itemsep=0.5pt]
+    \item \textbf{1. Consistency Violated:} Fonts, colors, button styles, and layouts vary drastically between components; users cannot predict interaction patterns.
+    \item \textbf{2. Affordance \& Constraints Violated:} Clickable links look like static text; static headers look clickable (lying signifiers).
+\end{itemize}
+
+\vspace{1pt}
+\textbf{PLAYBOOK 5: Proposing 5 Redesign Features Based on Persona:}
+\textbf{GOLDEN RULE:} Every explicit persona detail MUST map to a redesign feature:
+\begin{enumerate}[leftmargin=10pt, itemsep=0.5pt]
+    \item \textit{Uses smartphone / mobile context:} $\rightarrow$ \textbf{Mobile Optimization / App:} Responsive layout; touch targets $\ge 44\times 44\text{ pt}$ in thumb reach.
+    \item \textit{Time pressure / cluttered menus:} $\rightarrow$ \textbf{Simplified Navigation Structure:} Fixed top navigation bar with logical categories (Supplies, Equipment).
+    \item \textit{Researches specs, prices, warranty:} $\rightarrow$ \textbf{Product Detail Pages:} High-res photos, itemized specs, transparent pricing.
+    \item \textit{Needs fast item lookup:} $\rightarrow$ \textbf{Prominent Search Bar with Filters:} Search bar with auto-complete and multi-criteria filters.
+    \item \textit{Fears errors / seeks reassurance:} $\rightarrow$ \textbf{Accessible Customer Support:} Help Center with live chat, searchable FAQs, contact info.
+\end{enumerate}
+\end{miniplaybook}
+
+\vspace{1pt}
+\begin{crambox}
+\tiny
+\textbf{LAST-MINUTE CRAM CARD:} 
+$\text{TSR} = \frac{\text{Successes}}{\text{Attempts}} \times 100\%$ $\vert$ 
+Hoober Grips: $49\%$ 1-Hand, $36\%$ Cradled, $15\%$ 2-Hand $\vert$ 
+Touch Targets: iOS $44\times 44\text{ pt}$, Android $48\times 48\text{ dp}$ $\vert$ 
+\$300M Button: Jared Spool (2009), ``Register'' $\to$ ``Continue'', $+45\%$ sales $\vert$ 
+Excel Gene Bug: $20\%$ genetics papers corrupted $\vert$ 
+Norman Doors: ``Design failed, not you'' $\vert$ 
+Persona: ``Design for One'' (Cooper) $\vert$ 
+AI Rule: ``AI drafts, real data validates'' $\vert$ 
+Prototype Rule: ``Learn cheapest and fastest''.
+\end{crambox}
+
+\end{document}

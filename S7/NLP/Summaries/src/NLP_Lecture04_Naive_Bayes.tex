@@ -1,0 +1,443 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[margin=1.0cm,top=1.05cm,bottom=1.05cm]{geometry}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{colortbl}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage{fancyhdr}
+\usepackage{needspace}
+\usepackage{hyperref}
+
+% =========================================================================
+% Canonical ENSIA / DL Color Palette
+% =========================================================================
+\definecolor{themeblue}{HTML}{2B5A87}   % Primary headings, borders
+\definecolor{lightbg}{HTML}{E8EEF4}     % Background fills for overview & headers
+\definecolor{accentred}{HTML}{C8453A}   % Warnings, theorems, errors
+\definecolor{accentgreen}{HTML}{2E7D32} % Optimality, valid matches, definitions
+\definecolor{darkgray}{HTML}{333333}    % Metadata, body accents
+\definecolor{lightgray}{HTML}{D0D8E0}   % Table borders, soft dividers
+\definecolor{codebg}{HTML}{F6F8FA}      % Background for code/callout boxes
+\definecolor{pathcolor}{HTML}{D0DFEE}   % Shading for highlights
+\definecolor{inlinecode}{HTML}{1A365D}  % Inline code color
+
+\newcommand{\rx}[1]{\texttt{\bfseries\color{inlinecode}#1}}
+\newcommand{\cmark}{\textcolor{accentgreen}{\textbf{\checkmark}}}
+\newcommand{\xmark}{\textcolor{accentred}{\textbf{\texttimes}}}
+
+% Display math spacing compaction
+\setlength{\abovedisplayskip}{3pt}
+\setlength{\belowdisplayskip}{3pt}
+\setlength{\abovedisplayshortskip}{2pt}
+\setlength{\belowdisplayshortskip}{2pt}
+
+% =========================================================================
+% Running Header & Footer Setup
+% =========================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyhead[L]{\footnotesize\bfseries\color{themeblue} Natural Language Processing --- Lecture 4: Naïve Bayes \& Text Classification}
+\fancyhead[R]{\footnotesize\color{darkgray} ENSIA 2026--2027}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{themeblue}\leaders\hrule height \headrulewidth\hfill}}
+\renewcommand{\footrule}{\hbox to\headwidth{\color{lightgray}\leaders\hrule height \footrulewidth\hfill}}
+\fancyfoot[L]{\footnotesize\color{darkgray} Instructor: Prof. Ahmed Guessoum}
+\fancyfoot[R]{\footnotesize\color{themeblue}\bfseries Page \thepage\ of 4}
+
+% =========================================================================
+% Custom Box Environments
+% =========================================================================
+\newtcolorbox{overviewbox}[1][]{
+    colframe=themeblue, colback=lightbg, coltitle=white,
+    fonttitle=\bfseries\sffamily\small,
+    arc=1.2mm, boxrule=0.5pt,
+    left=6pt, right=6pt, top=2.5pt, bottom=2.5pt,
+    title={Lecture Scope: Text Classification, Naïve Bayes, Sentiment Analysis \& Evaluation},
+    #1
+}
+
+\newtcolorbox{examplebox}[1][]{
+    colframe=themeblue!75!black, colback=codebg,
+    arc=1.2mm, boxrule=0.5pt,
+    left=6pt, right=6pt, top=2pt, bottom=2pt,
+    #1
+}
+
+\newtcolorbox{theoremprompt}[1][]{
+    colframe=accentred, colback=white, coltitle=white,
+    fonttitle=\bfseries\sffamily\small,
+    arc=1.2mm, boxrule=0.5pt,
+    left=6pt, right=6pt, top=2.5pt, bottom=2.5pt,
+    #1
+}
+
+\newtcolorbox{insightbox}[1][]{
+    colframe=accentgreen, colback=white, coltitle=white,
+    fonttitle=\bfseries\sffamily\small,
+    arc=1.2mm, boxrule=0.5pt,
+    left=6pt, right=6pt, top=2pt, bottom=2pt,
+    #1
+}
+
+\begin{document}
+
+% =========================================================================
+% PAGE 1: Foundations of Text Classification & The Naïve Bayes Decision Rule
+% =========================================================================
+\begin{center}
+    \vspace{-4pt}
+    {\LARGE\bfseries\color{themeblue} Natural Language Processing: Naïve Bayes \& Classification}\\[1.5pt]
+    {\normalsize\bfseries Text Categorization, MAP Decision Theory, Sentiment Analysis, Negation \& Evaluation Metrics}\\[1.5pt]
+    {\footnotesize\color{darkgray} ENSIA 2026--2027 \quad$\vert$\quad Instructor: Prof. Ahmed Guessoum \quad$\vert$\quad Lecture 4 Practical Exam Summary}
+\end{center}
+
+\vspace{-7pt}
+
+\begin{overviewbox}\vspace{-1pt}
+\footnotesize
+\textbf{Text Classification} is the foundational task of assigning predefined categorical labels to unstructured textual documents. This high-yield exam summary concentrates strictly on core mathematical principles and practical implementations: Bayesian decision theory, Maximum A Posteriori (MAP) classification, the two defining Naïve Bayes independence assumptions (Bag-of-Words and conditional feature independence), log-space linear decision boundaries, parameter estimation with Laplace smoothing, the Out-Of-Vocabulary discard rule, complete step-by-step sentiment classification walkthroughs, Binary Multinomial Naïve Bayes, the \rx{NOT\_} prefix negation handling algorithm (from Lab 4), generative unigram language model equivalence, and rigorous multi-class evaluation metrics (Confusion Matrix, Precision, Recall, $F_1$-measure harmonic mean derivation, Macro vs. Micro averaging).
+\vspace{-1pt}\end{overviewbox}
+
+\vspace{-3pt}
+
+\noindent{\large\bfseries\color{themeblue} 1. Formal Task Formulation of Text Classification}\par\vspace{1pt}
+Text classification maps an unstructured natural language document into one or more discrete classes:
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{Input Document $d \in \mathcal{D}$:} Sequence of words $(w_1, w_2, \dots, w_n)$ from vocabulary $V$.
+    \item \textbf{Fixed Class Set $\mathcal{C}$:} Discrete target classes $\mathcal{C} = \{c_1, c_2, \dots, c_J\}$.
+    \item \textbf{Regimes:} \textbf{Binary ($J=2$)} (Spam vs. Ham, Sentiment $\{\text{pos}, \text{neg}\}$) or \textbf{Multi-Class ($J>2$)} (Topic categorization, Language ID).
+\end{itemize}
+
+\vspace{-2pt}
+
+\noindent{\large\bfseries\color{themeblue} 2. Bayesian Decision Theory \& The MAP Decision Rule}\par\vspace{1pt}
+Given document $d$, we seek the class $c \in \mathcal{C}$ that maximizes the posterior probability $P(c \mid d)$:
+\[
+c_{\text{MAP}} = \arg\max_{c \in \mathcal{C}} P(c \mid d)
+\]
+Applying \textbf{Bayes' Rule} to invert the conditional dependency:
+\[
+P(c \mid d) = \frac{P(d \mid c) P(c)}{P(d)} \quad \Longrightarrow \quad c_{\text{MAP}} = \arg\max_{c \in \mathcal{C}} \frac{P(d \mid c) P(c)}{P(d)}
+\]
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{Dropping Marginal $P(d)$:} Denominator $P(d) = \sum_{c'} P(d \mid c') P(c') > 0$ is constant across all candidate classes $c$. Dropping it preserves $\arg\max$: $c_{\text{MAP}} = \arg\max_{c \in \mathcal{C}} P(d \mid c) P(c)$.
+    \item \textbf{Generative Nature:} Models joint probability $P(d, c) = P(d \mid c)P(c)$ (how classes generate words), unlike discriminative models parameterizing boundary $P(c \mid d)$.
+\end{itemize}
+
+\vspace{-2pt}
+
+\noindent{\large\bfseries\color{themeblue} 3. The Two Core Naïve Bayes Independence Assumptions}\par\vspace{1pt}
+Directly estimating $P(d \mid c) = P(w_1, w_2, \dots, w_n \mid c)$ is intractable because the number of possible documents $|V|^n$ dwarfs any training corpus. Naïve Bayes introduces two bold simplifying assumptions:
+
+\vspace{1pt}
+\noindent{\footnotesize
+\renewcommand{\arraystretch}{1.03}\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{2.8cm} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}p{4.2cm}}
+\toprule
+\rowcolor{lightbg}
+\textbf{Core Assumption} & \textbf{Mathematical Definition \& Formulation} & \textbf{Linguistic Meaning \& Impact} \\
+\midrule
+\textbf{1. Bag-of-Words (Position Independence)} & $P(d \mid c) = P(w_1, w_2, \dots, w_n \mid c)$ \newline Word position is irrelevant; only occurrence matters. & Syntactic word order and sentence grammar are discarded. A document is treated as an unordered multiset of tokens. \\
+\midrule
+\textbf{2. Conditional Feature Independence (``Naïve'')} & $P(w_1, w_2, \dots, w_n \mid c) = \prod_{i=1}^n P(w_i \mid c)$ \newline Words are conditionally independent given class $c$. & Conditioned on the topic, the occurrence of one word gives zero information about another word (e.g., \textit{``Hong''} and \textit{``Kong''} are treated as independent). \\
+\bottomrule
+\end{tabularx}}
+
+\vspace{2pt}
+Combining both assumptions yields the canonical \textbf{Multinomial Naïve Bayes Decision Rule}:
+\[
+c_{\text{NB}} = \arg\max_{c \in \mathcal{C}} P(c) \prod_{i=1}^n P(w_i \mid c)
+\]
+
+\vspace{-2pt}
+
+\noindent{\large\bfseries\color{themeblue} 4. Log-Space Computation \& Linear Classifier Property}\par\vspace{1pt}
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{Log-Space Underflow Prevention:} Multiplying probabilities $p \ll 1$ underflows. Logarithm is strictly monotonic ($\log a > \log b \iff a > b$), preserving the $\arg\max$:
+    \[
+    c_{\text{NB}} = \arg\max_{c \in \mathcal{C}} \left[ \log P(c) + \sum_{i=1}^n \log P(w_i \mid c) \right]
+    \]
+    \item \textbf{Linear Classifier Property:} In log-space, the score is linear in word counts $f_k$: $\log P(c \mid d) \propto \log P(c) + \sum_{k} f_k \log P(w_k \mid c) = \mathbf{w}^T \mathbf{x} + b$, where weights $w_k = \log P(w_k \mid c)$ and bias $b = \log P(c)$. Naïve Bayes defines a \textbf{linear decision boundary}.
+\end{itemize}
+
+\newpage
+
+% =========================================================================
+% PAGE 2: Parameter Estimation, Laplace Smoothing & The Worked Exam Example
+% =========================================================================
+
+\noindent{\large\bfseries\color{themeblue} 5. Maximum Likelihood Parameter Estimation (MLE)}\par\vspace{1pt}
+Parameters are estimated directly from training frequencies:
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{Prior Probability $\hat{P}(c)$:} Fraction of training documents in class $c$: $\hat{P}(c) = \frac{N_c}{N_{\text{total}}}$.
+    \item \textbf{Class Mega-Document:} Concatenate all training docs of class $c_j$ into a single text $\text{Text}_j$.
+    \item \textbf{Raw Likelihood:} Fraction of words in class $c$'s mega-doc matching $w_i$: $\hat{P}_{\text{MLE}}(w_i \mid c) = \frac{\text{count}(w_i, c)}{\sum_{w \in V} \text{count}(w, c)} = \frac{\text{count}(w_i, c)}{N_c}$, where $V$ is the union vocabulary across \textbf{all} classes, and $N_c = \sum_{w \in V} \text{count}(w, c)$.
+\end{itemize}
+
+\vspace{-2pt}
+
+\noindent{\large\bfseries\color{themeblue} 6. The Zero-Probability Crisis \& Laplace Smoothing}\par\vspace{1pt}
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{Zero-Frequency Breakdown:} If an unseen word has count 0 in class $c$, $\hat{P}(w_i \mid c) = 0$. In product form, this zeroes out the entire posterior ($0 \times \prod \dots = 0$), destroying all evidence.
+    \item \textbf{Laplace (Add-1) Smoothing:} Add pseudo-count 1 to every word in vocabulary $V$:
+    \[
+    \hat{P}_{\text{Laplace}}(w_i \mid c) = \frac{\text{count}(w_i, c) + 1}{\sum_{w \in V} (\text{count}(w, c) + 1)} = \frac{\text{count}(w_i, c) + 1}{N_c + |V|}
+    \]
+    $\sum_{w \in V} \hat{P}_{\text{Laplace}}(w \mid c) = \frac{N_c + |V|}{N_c + |V|} = 1$ (valid distribution). Add-$\alpha$: $\hat{P}(w_i \mid c) = \frac{\text{count}(w_i, c) + \alpha}{N_c + \alpha |V|}$.
+    \item \textbf{Unknown Word (OOV) Discard Rule:} Any test word not in training vocabulary $V$ is \textbf{ignored and dropped} from the test document. (An unknown word model provides no discriminatory signal between classes).
+\end{itemize}
+
+\vspace{-2pt}
+
+\begin{examplebox}
+\footnotesize
+\textbf{Complete Step-by-Step Worked Exam Problem: Sentiment Classification (Slide Walkthrough)}
+\newline \textbf{Training Corpus ($N_{\text{total}} = 5$ documents):}
+\begin{center}
+\renewcommand{\arraystretch}{1.03}
+\begin{tabular}{ccl}
+\toprule
+\rowcolor{lightbg}
+\textbf{Class} & \textbf{Doc ID} & \textbf{Document Content} \\
+\midrule
+$-$ & $d_1$ & \rx{just plain boring} \\
+$-$ & $d_2$ & \rx{entirely predictable and lacks energy} \\
+$-$ & $d_3$ & \rx{no surprises and very few laughs} \\
+\midrule
+$+$ & $d_4$ & \rx{very powerful} \\
+$+$ & $d_5$ & \rx{the most fun film of the summer} \\
+\bottomrule
+\end{tabular}
+\end{center}
+\textbf{Test Document ($d_{\text{test}}$):} \quad \rx{predictable with no fun}
+
+\vspace{1pt}
+\textbf{Step 1: Compute Class Priors from Training Documents ($N_- = 3, N_+ = 2, N_{\text{total}} = 5$):}
+\[
+\hat{P}(-) = \frac{3}{5} = 0.60, \qquad \hat{P}(+) = \frac{2}{5} = 0.40
+\]
+\textbf{Step 2: Vocabulary Extraction \& Total Class Token Counts:}
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt]
+    \item Negative Mega-Doc ($c=-$): \rx{just, plain, boring, entirely, predictable, and, lacks, energy, no, surprises, and, very, few, laughs} $\implies \mathbf{N_- = 14}$.
+    \item Positive Mega-Doc ($c=+$): \rx{very, powerful, the, most, fun, film, of, the, summer} $\implies \mathbf{N_+ = 9}$.
+    \item Union Vocabulary $V$ ($\mathbf{|V| = 20}$): \rx{and}, \rx{boring}, \rx{entirely}, \rx{energy}, \rx{few}, \rx{film}, \rx{fun}, \rx{just}, \rx{lacks}, \rx{laughs}, \rx{most}, \rx{no}, \rx{of}, \rx{plain}, \rx{powerful}, \rx{predictable}, \rx{summer}, \rx{surprises}, \rx{the}, \rx{very}.
+\end{itemize}
+\textbf{Step 3: Test Document Normalization (The OOV Rule):}
+\newline The test word \rx{``with''} does not exist in training vocabulary $V$ ($w \notin V$). By the OOV Discard Rule, \textbf{drop \rx{``with''}}!
+\newline Evaluated test tokens: \rx{[predictable, no, fun]}.
+
+\vspace{1pt}
+\textbf{Step 4: Compute Laplace-Smoothed Likelihoods ($\text{Denominator } N_c + |V|$: Negative $= 14+20 = 34$, Positive $= 9+20 = 29$):}
+\begin{align*}
+P(\text{\rx{predictable}}\mid -) &= \frac{1 + 1}{14 + 20} = \frac{2}{34}, & P(\text{\rx{predictable}}\mid +) &= \frac{0 + 1}{9 + 20} = \frac{1}{29} \\
+P(\text{\rx{no}}\mid -) &= \frac{1 + 1}{14 + 20} = \frac{2}{34}, & P(\text{\rx{no}}\mid +) &= \frac{0 + 1}{9 + 20} = \frac{1}{29} \\
+P(\text{\rx{fun}}\mid -) &= \frac{0 + 1}{14 + 20} = \frac{1}{34}, & P(\text{\rx{fun}}\mid +) &= \frac{1 + 1}{9 + 20} = \frac{2}{29}
+\end{align*}
+\textbf{Step 5: Score Both Classes via Posterior Likelihood Product:}
+\[
+P(-) \prod_{i} P(w_i \mid -) = \frac{3}{5} \times \left( \frac{2}{34} \times \frac{2}{34} \times \frac{1}{34} \right) = \frac{3}{5} \times \frac{4}{39{,}304} = \frac{12}{196{,}520} \approx \mathbf{6.1 \times 10^{-5}}
+\]
+\[
+P(+) \prod_{i} P(w_i \mid +) = \frac{2}{5} \times \left( \frac{1}{29} \times \frac{1}{29} \times \frac{2}{29} \right) = \frac{2}{5} \times \frac{2}{24{,}389} = \frac{4}{121{,}945} \approx \mathbf{3.2 \times 10^{-5}}
+\]
+\textbf{Classification Decision:} Since $6.1 \times 10^{-5} > 3.2 \times 10^{-5}$, the classifier predicts \textbf{Negative ($-$)}!
+\end{examplebox}
+
+\newpage
+
+% =========================================================================
+% PAGE 3: Optimizing for Sentiment: Binary NB, Negation & Lexicons
+% =========================================================================
+
+\noindent{\large\bfseries\color{themeblue} 8. Binary Multinomial Naïve Bayes (Binarized NB for Sentiment)}\par\vspace{1pt}
+In topic categorization, word frequency matters (a doc mentioning \textit{``tax''} 10 times is twice as topical). In \textbf{sentiment analysis}, frequency distorts results: saying \textit{``terrible''} 5 times does not mean 5 times more negative; repeated words artificially inflate likelihood:
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{The Within-Document Binarization Rule:} Word counts are clipped to 1 \textbf{within each individual document}:
+    \begin{enumerate}[leftmargin=14pt, itemsep=0.5pt, parsep=0pt]
+        \item For each document $d_j$, remove all duplicate word tokens (retain exactly one instance of each unique word type).
+        \item Concatenate binarized documents into the class mega-document.
+        \item \textbf{Crucial Exam Concept:} In the resulting class mega-document, counts can still be greater than 1! ($C(w, c)$ equals the number of documents in class $c$ containing word $w$).
+        \item At test time, remove all duplicate words from test document $d$ before scoring.
+    \end{enumerate}
+    \item \textbf{Empirical Superiority:} Binary NB consistently outperforms standard Multinomial NB for sentiment classification.
+\end{itemize}
+
+\vspace{-2pt}
+
+\begin{examplebox}
+\footnotesize
+\textbf{Concrete Demonstration: Standard NB Counts vs. Binary NB Counts (Slide 42 Trace)}
+\newline Four original training documents:
+$d_1 (-)$: \rx{it was pathetic the worst part was the boxing scenes} \quad$\vert$\quad
+$d_2 (-)$: \rx{no plot twists or great scenes}
+\newline $d_3 (+)$: \rx{and satire and great plot twists} \quad$\vert$\quad
+$d_4 (+)$: \rx{great scenes great film}
+
+\vspace{1pt}
+\noindent\begin{tabularx}{\textwidth}{l cc cc >{\raggedright\arraybackslash}X}
+\toprule
+\rowcolor{lightbg}
+\textbf{Vocabulary} & \multicolumn{2}{c}{\textbf{Standard Multinomial NB}} & \multicolumn{2}{c}{\textbf{Binary Multinomial NB}} & \textbf{Binarization Mechanics} \\
+\rowcolor{lightbg}
+\textbf{Word} & \textbf{Count ($+$)} & \textbf{Count ($-$)} & \textbf{Count ($+$)} & \textbf{Count ($-$)} & \\
+\midrule
+\rx{great} & 3 & 1 & \textbf{2} & \textbf{1} & Appears twice in $d_4$; clipped to 1 in $d_4$. Total positive count becomes $1(d_3) + 1(d_4) = 2$. \\
+\rx{and} & 2 & 0 & \textbf{1} & \textbf{0} & Appears twice in $d_3$; clipped to 1 in $d_3$. Total count becomes 1. \\
+\rx{the} & 0 & 2 & \textbf{0} & \textbf{1} & Appears twice in $d_1$; clipped to 1 in $d_1$. Total count becomes 1. \\
+\rx{was} & 0 & 2 & \textbf{0} & \textbf{1} & Appears twice in $d_1$; clipped to 1 in $d_1$. Total count becomes 1. \\
+\rx{scenes} & 1 & 2 & \textbf{1} & \textbf{2} & Appears in $d_4 (+)$, and in both $d_1 (-)$ and $d_2 (-)$. Count remains 2 in negative. \\
+\bottomrule
+\end{tabularx}
+\end{examplebox}
+
+\vspace{-2pt}
+
+\noindent{\large\bfseries\color{themeblue} 9. Handling Negation in Sentiment Analysis (Das \& Chen 2001, Pang et al. 2002)}\par\vspace{1pt}
+Negation drastically flips semantic polarity: \textit{``I really like this movie''} ($+$) vs. \textit{``I really don't like this movie''} ($-$).
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{The Core Failure Mode of Standard Bag-of-Words:} A standard bag-of-words model counts \rx{like} as a strong positive cue, causing the negative review \textit{``I don't like it''} to be misclassified as positive.
+    \item \textbf{The Baseline \rx{NOT\_} Prefixing Algorithm (Lab 4 Implementation):}
+    \begin{enumerate}[leftmargin=14pt, itemsep=0.5pt, parsep=0pt]
+        \item Scan the sentence sequentially. Identify logical negation terms: \rx{not}, \rx{n't}, \rx{no}, \rx{never}, \rx{cannot}.
+        \item From the negation token onward, attach the prefix \rx{NOT\_} to every subsequent word until reaching a punctuation mark (\rx{. , ! ? ;}).
+        \item \textbf{Boundary Rule:} Punctuation boundaries signify clause termination and stop the negation influence.
+    \end{enumerate}
+\end{itemize}
+
+\vspace{-2pt}
+
+\begin{insightbox}[title={\bfseries\sffamily Worked Negation Transformation Examples (Lab 4 Test Cases)}]
+\footnotesize
+\begin{itemize}[leftmargin=12pt, itemsep=1pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{Example 1:} \textit{``didn't like this movie, but I''} $\Longrightarrow$ \rx{didn't NOT\_like NOT\_this NOT\_movie, but I} (\rx{NOT\_like} accumulates counts in negative training documents).
+    \item \textbf{Example 2:} \textit{``This movie is not amazing, but it's okay.''} $\Longrightarrow$ \rx{This movie is not NOT\_amazing, but it's okay.}
+    \newline \cmark\ Prevents \rx{amazing} from falsely contributing positive evidence to a negative/mediocre clause.
+    \item \textbf{Example 3 (Double Negative Polarity Reversal):} \textit{``Doesn't let us get bored.''} $\Longrightarrow$ \rx{Doesn't NOT\_let NOT\_us NOT\_get NOT\_bored.}
+    \newline \cmark\ \rx{NOT\_bored} acquires positive sentiment associations during training, preserving nuance.
+\end{itemize}
+\end{insightbox}
+
+\vspace{-2pt}
+
+\noindent{\large\bfseries\color{themeblue} 10. Sentiment Lexicons for Low-Resource Classification}\par\vspace{1pt}
+When labeled domain training corpora are scarce or unavailable:
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{Pre-Annotated Subjectivity Lexicons:} Leverage human-annotated sentiment dictionaries (e.g., MPQA Subjectivity Cues, VADER, SentiWordNet, General Inquirer) that map words to positive or negative polarities.
+    \item \textbf{Lexicon Feature Engineering:} Add count features: $f_1 = \text{Count}(w \in \text{Lexicon}_+)$, $f_2 = \text{Count}(w \in \text{Lexicon}_-)$.
+\end{itemize}
+
+\vspace{-2pt}
+
+\noindent{\large\bfseries\color{themeblue} 11. Generative Equivalence: Naïve Bayes as Unigram Language Models}\par\vspace{1pt}
+A Naïve Bayes text classifier is mathematically equivalent to training $|C|$ distinct \textbf{class-specific unigram language models}:
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt, topsep=0.5pt]
+    \item Each class $c_j$ defines a unigram language model $M_j$ with parameters $P(w \mid c_j)$.
+    \item The likelihood $P(d \mid c_j) = \prod_{i=1}^n P(w_i \mid c_j)$ is the exact probability that document $d$ was generated by language model $M_j$.
+    \item The classifier evaluates: \textit{``Which class's unigram language model (weighted by prior $P(c)$) assigns higher generation probability to $d$?''}
+\end{itemize}
+
+\newpage
+
+% =========================================================================
+% PAGE 4: Comprehensive Classifier Evaluation Metrics
+% =========================================================================
+
+\noindent{\large\bfseries\color{themeblue} 12. The 2$\times$2 Contingency Table (Confusion Matrix)}\par\vspace{1pt}
+Evaluating a binary classifier against ground truth human annotations (Gold Standard Labels):
+
+\vspace{1pt}
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\footnotesize
+\begin{tabular}{|c|c|c|c|}
+\hline
+\rowcolor{lightbg}
+\multicolumn{2}{|c|}{\textbf{Classification Contingency Matrix}} & \multicolumn{2}{c|}{\textbf{Gold Standard Reference Labels}} \\ \cline{3-4}
+\rowcolor{lightbg}
+\multicolumn{2}{|c|}{} & \textbf{Gold Positive ($c = +1$)} & \textbf{Gold Negative ($c = -1$)} \\ \hline
+\textbf{System} & \textbf{Predicted Positive} & \textbf{True Positive (TP)} & \textbf{False Positive (FP)} (Type I Error) \\ \cline{2-4}
+\textbf{Output} & \textbf{Predicted Negative} & \textbf{False Negative (FN)} (Type II Error) & \textbf{True Negative (TN)} \\ \hline
+\end{tabular}
+\end{center}
+
+\vspace{-2pt}
+
+\noindent{\large\bfseries\color{themeblue} 13. Mathematical Definitions: Accuracy, Precision, Recall \& $F_1$-Measure}\par\vspace{1pt}
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{Accuracy:} Fraction of correct classifications over all predictions:
+    \[
+    \text{Accuracy} = \frac{TP + TN}{TP + FP + FN + TN}
+    \]
+    \textbf{The Accuracy Pathology in Imbalanced Corpora:} In spam detection where 99\% of emails are ham (non-spam), a trivial dumb classifier predicting ``Ham'' for every email achieves \textbf{99\% accuracy} while detecting \textbf{0\%} of spam! Accuracy is deceptive under class imbalance.
+    \item \textbf{Precision ($P$):} Fraction of predicted positive instances that are actually positive (measure of \textbf{exactness}):
+    \[
+    \text{Precision} = \frac{TP}{TP + FP}
+    \]
+    \item \textbf{Recall ($R$):} Fraction of actual gold positive instances correctly identified by system (measure of \textbf{completeness / sensitivity}):
+    \[
+    \text{Recall} = \frac{TP}{TP + FN}
+    \]
+\end{itemize}
+
+\vspace{-2pt}
+
+\begin{theoremprompt}[title={\bfseries\sffamily The $F_1$-Measure: Harmonic Mean Derivation \& Proof}]
+\footnotesize
+The $F_1$-score balances Precision and Recall into a single holistic metric via their \textbf{Harmonic Mean}:
+\[
+F_1 = \frac{2}{\frac{1}{P} + \frac{1}{R}} = \frac{2 P R}{P + R} = \frac{2 \cdot TP}{2 \cdot TP + FP + FN}
+\]
+\textbf{Mathematical Proof: Why Harmonic Mean Beats Arithmetic Mean on Exams:}
+\newline Suppose an unbalanced test set has 1,000 documents (10 positive, 990 negative). A degenerate model predicts ``Positive'' for all 1,000 documents:
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt]
+    \item Recall: $R = \frac{10}{10 + 0} = 1.00$ \ (100\%). \qquad Precision: $P = \frac{10}{10 + 990} = 0.01$ \ (1\%).
+    \item \textbf{Arithmetic Mean:} $\frac{P + R}{2} = \frac{1.00 + 0.01}{2} = \mathbf{0.505}$ (Misleadingly awards a 50\% score to a completely broken classifier!).
+    \item \textbf{Harmonic Mean ($F_1$):} $F_1 = \frac{2 \times 1.0 \times 0.01}{1.0 + 0.01} = \frac{0.02}{1.01} \approx \mathbf{0.0198}$ (Severely punishes the extreme imbalance!).
+\end{itemize}
+The harmonic mean is dominated by the minimum value, preventing high recall from masking catastrophic precision.
+\end{theoremprompt}
+
+\vspace{-2pt}
+
+\noindent{\large\bfseries\color{themeblue} 14. Multi-Class Aggregation: Macro-Averaging vs. Micro-Averaging}\par\vspace{1pt}
+When evaluating across $|C| > 2$ classes, we combine individual class performance through two distinct aggregation regimes:
+
+\vspace{1pt}
+\noindent{\footnotesize
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{2.6cm} >{\raggedright\arraybackslash}p{4.0cm} >{\raggedright\arraybackslash}X}
+\toprule
+\rowcolor{lightbg}
+\textbf{Aggregation Method} & \textbf{Mathematical Definition \& Formula} & \textbf{Operational Behavior \& Sensitivity to Class Imbalance} \\
+\midrule
+\textbf{Macro-Averaging} & Computes metric for each class $c_j$ independently, then takes unweighted arithmetic mean: \newline $\text{Macro-}F_1 = \frac{1}{|C|} \sum_{j=1}^{|C|} F_1(c_j)$ & \textbf{Unweighted per class:} Treats all classes equally regardless of frequency. Highly sensitive to performance on small, rare classes (a tiny class with 2 docs has equal weight as a class with $10^5$ docs). \\
+\midrule
+\textbf{Micro-Averaging} & Pools all individual counts ($TP_j, FP_j, FN_j$) globally across all classes, then computes metric: \newline $\text{Micro-}F_1 = \frac{2 \sum TP_j}{2 \sum TP_j + \sum FP_j + \sum FN_j}$ & \textbf{Frequency-weighted per instance:} Every test document contributes equally. Dominated by large, frequent classes; masks poor performance on rare minority classes. \\
+\bottomrule
+\end{tabularx}}
+
+\vspace{2pt}
+
+\noindent{\large\bfseries\color{themeblue} 15. Summary Comparison of Text Classification Architectures}\par\vspace{1pt}
+\noindent{\footnotesize
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{2.8cm} >{\raggedright\arraybackslash}p{3.2cm} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}p{3.6cm}}
+\toprule
+\rowcolor{lightbg}
+\textbf{Model Architecture} & \textbf{Input Representation} & \textbf{Core Engineering Mechanism} & \textbf{Optimal NLP Use Case} \\
+\midrule
+\textbf{Multinomial NB} & Raw term frequencies $f_k$ & Likelihood normalized by total token count $N_c + |V|$. & Topic categorization, author identification. \\
+\midrule
+\textbf{Binary Multinomial NB} & Clipped frequencies $x_k \in \{0, 1\}$ & Binarizes within document; prevents count flooding. & Sentiment analysis, subjective review rating. \\
+\midrule
+\textbf{Negation-Augmented NB} & Transformed tokens with \rx{NOT\_} & Prefixes words between negation token and punctuation. & Sentiment polarity reversal detection. \\
+\midrule
+\textbf{Lexicon-Based Models} & Sentiment dictionary features & Counts pre-annotated positive and negative polarity cues. & Low-resource cold start, no labeled data. \\
+\bottomrule
+\end{tabularx}}
+
+\end{document}

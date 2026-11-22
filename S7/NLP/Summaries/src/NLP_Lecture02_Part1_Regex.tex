@@ -1,0 +1,468 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[margin=1.0cm,top=1.05cm,bottom=1.05cm]{geometry}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{colortbl}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage{fancyhdr}
+\usepackage{needspace}
+\usepackage{hyperref}
+
+% =========================================================================
+% Canonical ENSIA / DL Color Palette
+% =========================================================================
+\definecolor{themeblue}{HTML}{2B5A87}   % Primary headings, borders
+\definecolor{lightbg}{HTML}{E8EEF4}     % Background fills for overview & headers
+\definecolor{accentred}{HTML}{C8453A}   % Rejections, pitfalls, warnings
+\definecolor{accentgreen}{HTML}{2E7D32} % Matches, solutions, optimality
+\definecolor{darkgray}{HTML}{333333}    % Metadata, body accents
+\definecolor{lightgray}{HTML}{D0D8E0}   % Table borders, soft dividers
+\definecolor{codebg}{HTML}{F6F8FA}      % Background for code snippets
+\definecolor{inlinecode}{HTML}{1A365D}  % Regex highlight color
+
+\newcommand{\rx}[1]{\texttt{\bfseries\color{inlinecode}#1}}
+\newcommand{\cmark}{\textcolor{accentgreen}{\textbf{\checkmark}}}
+\newcommand{\xmark}{\textcolor{accentred}{\textbf{\texttimes}}}
+
+% =========================================================================
+% Running Header & Footer Setup
+% =========================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyhead[L]{\footnotesize\bfseries\color{themeblue} Natural Language Processing --- Lecture 2: Regular Expressions (Part 1)}
+\fancyhead[R]{\footnotesize\color{darkgray} ENSIA 2026--2027}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{themeblue}\leaders\hrule height \headrulewidth\hfill}}
+\renewcommand{\footrule}{\hbox to\headwidth{\color{lightgray}\leaders\hrule height \footrulewidth\hfill}}
+\fancyfoot[L]{\footnotesize\color{darkgray} Instructor: Prof. Ahmed Guessoum}
+\fancyfoot[R]{\footnotesize\color{themeblue}\bfseries Page \thepage\ of 4}
+
+% =========================================================================
+% Custom Box Environments
+% =========================================================================
+\newtcolorbox{overviewbox}[1][]{
+    colframe=themeblue, colback=lightbg, coltitle=white,
+    fonttitle=\bfseries\sffamily\small,
+    arc=1.2mm, boxrule=0.5pt,
+    left=6pt, right=6pt, top=3pt, bottom=3pt,
+    title={Lecture Scope: Regular Expressions in Text Processing Pipelines},
+    #1
+}
+
+\newtcolorbox{examplebox}[1][]{
+    colframe=themeblue!75!black, colback=codebg,
+    arc=1.2mm, boxrule=0.5pt,
+    left=6pt, right=6pt, top=3pt, bottom=3pt,
+    #1
+}
+
+\newtcolorbox{theoremprompt}[1][]{
+    colframe=accentred, colback=white, coltitle=white,
+    fonttitle=\bfseries\sffamily\small,
+    arc=1.2mm, boxrule=0.5pt,
+    left=6pt, right=6pt, top=3pt, bottom=3pt,
+    #1
+}
+
+\newtcolorbox{insightbox}[1][]{
+    colframe=accentgreen, colback=white, coltitle=white,
+    fonttitle=\bfseries\sffamily\small,
+    arc=1.2mm, boxrule=0.5pt,
+    left=6pt, right=6pt, top=3pt, bottom=3pt,
+    #1
+}
+
+\begin{document}
+
+% =========================================================================
+% PAGE 1: Foundations, Disjunctions & Character Classes
+% =========================================================================
+\begin{center}
+    \vspace{-4pt}
+    {\LARGE\bfseries\color{themeblue} Natural Language Processing: Regular Expressions}\\[1.5pt]
+    {\normalsize\bfseries Metacharacters, Shorthands, Modular Grouping, Lookaround Assertions \& Pattern Engineering}\\[1.5pt]
+    {\footnotesize\color{darkgray} ENSIA 2026--2027 \quad$\vert$\quad Instructor: Prof. Ahmed Guessoum \quad$\vert$\quad Lecture 2 (Part 1 Summary)}
+\end{center}
+
+\vspace{-7pt}
+
+\begin{overviewbox}
+\footnotesize
+A \textbf{Regular Expression (regex)} is a formal, algebraic language specifying search patterns over character strings. While contemporary NLP employs deep neural models for high-level semantic understanding, regular expressions remain an essential practical pillar. They underpin data preprocessing, corpus normalization, entity extraction, web scraping, and rule-based conversational heuristics. Designing robust regexes requires balancing \textbf{precision} (minimizing false positives) against \textbf{recall} (eliminating false negatives).
+\end{overviewbox}
+
+\vspace{-3pt}
+
+\noindent{\large\bfseries\color{themeblue} 1. Basic Matching \& Literal Semantics}\par\vspace{1pt}
+Regex engines process text sequentially from left to right. By default, regular expressions perform exact, byte-level character matching:
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{Exact Literal Match:} Plain text patterns demand exact character agreement and are \textbf{case-sensitive} by default.
+\end{itemize}
+
+\vspace{-2pt}
+\begin{examplebox}
+\footnotesize
+\textbf{Pattern:} \rx{woodchuck} \qquad\qquad \textbf{Target String:} \textit{``A woodchuck saw Woodchuck.''}
+\begin{itemize}[leftmargin=12pt, itemsep=1pt, parsep=0pt, topsep=1pt]
+    \item[\cmark] \textbf{Match:} The first token \textit{``woodchuck''} matches because all characters and casing match exactly.
+    \item[\xmark] \textbf{Rejection:} The capitalized token \textit{``Woodchuck''} is rejected because uppercase \rx{W} $\neq$ lowercase \rx{w}.
+\end{itemize}
+\end{examplebox}
+
+\vspace{-1pt}
+\noindent{\large\bfseries\color{themeblue} 2. Disjunction \& Character Classes (\rx{[...]})}\par\vspace{1pt}
+When alternative characters can appear at a specific string index, square brackets \rx{[...]} define a \textbf{character class} matching any single character from the enclosed set.
+
+\vspace{1pt}
+\noindent{\footnotesize
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{2.8cm} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}p{6.4cm}}
+\toprule
+\rowcolor{lightbg}
+\textbf{Expression Type} & \textbf{Syntax \& Formal Definition} & \textbf{Prominent Example \& Match Verdict} \\
+\midrule
+\textbf{Explicit Disjunction} & \rx{[wW]} matches either lowercase \textit{w} or uppercase \textit{W}. Character order is arbitrary. & \rx{[wW]oodchuck} matches: \newline \cmark\ \textit{``woodchuck''}, \cmark\ \textit{``Woodchuck''} \newline \xmark\ \textit{``WOODCHUCK''} (interior letters are uppercase) \\
+\midrule
+\textbf{Digit Character Set} & \rx{[0123456789]} matches any single decimal digit from 0 through 9. & \rx{Box [0-9]} matches: \newline \cmark\ \textit{``Box 1''}, \textit{``Box 9''} \quad \xmark\ \textit{``Box 10''} (two digits) \\
+\midrule
+\textbf{Lowercase Range} & \rx{[a-z]} matches any lowercase ASCII letter using hyphen \rx{-} range syntax. & \rx{[a-z]eans} matches: \newline \cmark\ \textit{``beans''}, \textit{``jeans''} \quad \xmark\ \textit{``Beans''} \\
+\midrule
+\textbf{Uppercase Range} & \rx{[A-Z]} matches any single uppercase ASCII letter. & \rx{[A-Z]own} matches: \newline \cmark\ \textit{``Down''}, \textit{``Town''} \quad \xmark\ \textit{``down''} \\
+\midrule
+\textbf{Concatenated Ranges} & \rx{[A-Za-z0-9]} matches any alphanumeric character without delimiters. & \rx{ID-[A-Za-z0-9]} matches: \newline \cmark\ \textit{``ID-a''}, \textit{``ID-7''}, \textit{``ID-Z''} \quad \xmark\ \textit{``ID-\$''} \\
+\midrule
+\textbf{Pipe Operator (\rx{|})} & Alternatives across multi-character strings. Has the \textbf{lowest operator precedence}. & \rx{groundhog|woodchuck} matches: \newline \cmark\ \textit{``groundhog''}, \textit{``woodchuck''} \quad \xmark\ \textit{``groundchuck''} \\
+\bottomrule
+\end{tabularx}}
+
+\vspace{4pt}
+\noindent{\large\bfseries\color{themeblue} 3. Negated Character Classes (\rx{[\^{}...]} \& Syntactic Exceptions)}\par\vspace{1pt}
+The caret symbol \rx{\^{}} inverts a character class, matching any single character \textbf{not} contained within the set.
+
+\begin{itemize}[leftmargin=12pt, itemsep=1pt, parsep=0pt, topsep=1pt]
+    \item \textbf{The Caret Position Rule:} The caret negates \textbf{only} when placed as the \textbf{very first character} immediately following the opening bracket \rx{[}. Placed anywhere else, it is evaluated strictly as a literal caret symbol!
+    \item \textbf{Metacharacter Escaping Inside Brackets:} Special metacharacters (\rx{.}, \rx{*}, \rx{+}, \rx{?}) automatically \textbf{lose their special meaning} inside square brackets and are evaluated as plain literal characters.
+\end{itemize}
+
+\vspace{-1pt}
+\begin{examplebox}
+\footnotesize
+\textbf{Prominent Contrasting Examples for Bracket Negation \& Syntactic Nuances:}
+\begin{itemize}[leftmargin=12pt, itemsep=2pt, parsep=0pt, topsep=1pt]
+    \item \rx{[\^{}A-Z]}: Matches any single character that is \textbf{not} an uppercase letter.
+    \newline Target: \textit{``Oyfn pripetchik''} $\longrightarrow$ \cmark\ Matches \textit{``y''}, \textit{``f''}, punctuation, space. \xmark\ Rejects uppercase \textit{``O''}.
+    \item \rx{[\^{}Ss]}: Matches any character other than uppercase \textit{``S''} or lowercase \textit{``s''}.
+    \newline Target: \textit{``I have no exquisite reason''} $\longrightarrow$ \cmark\ Matches \textit{``I''}, \textit{``h''}, \textit{``a''}, space. \xmark\ Rejects \textit{``s''} in \textit{``exquisite''}.
+    \item \rx{[e\^{}]} (Caret not first): Matches either the letter \textit{``e''} or the literal caret symbol \textit{``\^{}''}.
+    \newline Target: \textit{``Look up \^{} now''} $\longrightarrow$ \cmark\ Matches literal \textit{``\^{}''} and letter \textit{``e''}.
+    \item \rx{[\^{}.]} (Period inside brackets): Matches any character that is \textbf{not} a literal period (dot is not a wildcard here!).
+    \newline Target: \textit{``End.''} $\longrightarrow$ \cmark\ Matches \textit{``E''}, \textit{``n''}, \textit{``d''}. \xmark\ Rejects final literal period \textit{``.''}.
+    \item \rx{[.*+?]}: Matches a literal dot, asterisk, plus, or question mark. Special quantifiers become literals inside brackets.
+\end{itemize}
+\end{examplebox}
+
+\newpage
+
+% =========================================================================
+% PAGE 2: Shorthands, Anchors, Wildcards, Repetition & Greediness
+% =========================================================================
+
+\noindent{\large\bfseries\color{themeblue} 4. Shorthand Character Classes (Convenient Aliases)}\par\vspace{1pt}
+Standard regex implementations provide predefined shorthand aliases for frequent character classes:
+
+\vspace{1pt}
+\noindent{\footnotesize
+\begin{tabularx}{\textwidth}{l >{\raggedright\arraybackslash}p{2.2cm} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}p{4.2cm}}
+\toprule
+\rowcolor{lightbg}
+\textbf{Alias} & \textbf{Equivalent Class} & \textbf{Semantic Definition} & \textbf{Standalone Example \& Target Match} \\
+\midrule
+\rx{\textbackslash d} & \rx{[0-9]} & Any single decimal digit & \rx{\textbackslash d\textbackslash d\textbackslash d} $\longrightarrow$ \cmark\ \textit{``451''} in \textit{``Fahrenheit 451''} \\
+\rx{\textbackslash D} & \rx{[\^{}0-9]} & Any character that is \textbf{not} a decimal digit & \rx{\textbackslash D+} $\longrightarrow$ \cmark\ \textit{``Blue Moon''} in \textit{``Blue Moon 1934''} \\
+\rx{\textbackslash w} & \rx{[a-zA-Z0-9\_]} & Alphanumeric character or underscore (word token) & \rx{\textbackslash w+} $\longrightarrow$ \cmark\ \textit{``Daiyu''}, \cmark\ \textit{``user\_2''} \\
+\rx{\textbackslash W} & \rx{[\^{}\textbackslash w]} & Non-alphanumeric and non-underscore character & \rx{\textbackslash W} $\longrightarrow$ \cmark\ \textit{``!''} in \textit{``Look!''}, \cmark\ space, comma \\
+\rx{\textbackslash s} & \rx{[\textbackslash r\textbackslash t\textbackslash n\textbackslash f\textvisiblespace]} & Any whitespace symbol (space, tab, newline, return) & \rx{Look\textbackslash s+up} $\longrightarrow$ \cmark\ \textit{``Look\textvisiblespace up''}, \cmark\ \textit{``Look\textbackslash t\textbackslash tup''} \\
+\rx{\textbackslash S} & \rx{[\^{}\textbackslash s]} & Any non-whitespace symbol & \rx{\textbackslash S+} $\longrightarrow$ \cmark\ \textit{``NLP''} in \textit{``\textvisiblespace NLP\textvisiblespace ''} \\
+\bottomrule
+\end{tabularx}}
+
+\vspace{4pt}
+\noindent{\large\bfseries\color{themeblue} 5. Anchors \& Boundary Conditions}\par\vspace{1pt}
+Anchors do not consume characters from the text stream; they are \textbf{zero-width assertions} enforcing positional constraints where matching must initiate or terminate.
+
+\vspace{1pt}
+\noindent{\footnotesize
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{2.8cm} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}p{6.6cm}}
+\toprule
+\rowcolor{lightbg}
+\textbf{Anchor Type} & \textbf{Positional Assertion} & \textbf{Prominent Example \& Match Analysis} \\
+\midrule
+\textbf{Caret Anchor (\rx{\^{}})} & Asserts match begins at the \textbf{start of a line or string}. & \rx{\^{}[A-Z]} matches strings starting with an uppercase letter: \newline \cmark\ \textit{``Palo Alto''} \quad \xmark\ \textit{``in Palo Alto''} (not at start) \\
+\midrule
+\textbf{Negated Class at Line Start} & Combination: \rx{\^{}} anchor outside brackets, \rx{\^{}} negation inside. & \rx{\^{}[\^{}A-Za-z]} matches lines starting with a non-alphabetic symbol: \newline \cmark\ \textit{``1st Step''} (starts with \textit{1}) \quad \xmark\ \textit{``First Step''} \\
+\midrule
+\textbf{Dollar Anchor (\rx{\$)}} & Asserts match terminates at the \textbf{end of a line or string}. & \rx{\textbackslash.\$} matches a literal period concluding a line: \newline \cmark\ \textit{``The end.''} \quad \xmark\ \textit{``The end. More text''} \\
+\midrule
+\textbf{Wildcard at Line End} & Wildcard \rx{.} followed by line end anchor \rx{\$}. & \rx{.\$} matches any trailing non-newline character: \newline \cmark\ Matches \textit{``?''} in \textit{``The end?''}, \textit{``!''} in \textit{``The end!''} \\
+\midrule
+\textbf{Word Boundary (\rx{\textbackslash b})} & Zero-width boundary between a word character (\rx{\textbackslash w}) and non-word (\rx{\textbackslash W}). & \rx{\textbackslash bthe\textbackslash b} matches standalone \textit{``the''}: \newline \cmark\ \textit{``the cat''} \quad \xmark\ \textit{``other''}, \textit{``theology''}, \textit{``then''} \\
+\midrule
+\textbf{Non-Word Boundary (\rx{\textbackslash B})} & Asserts the current index is \textbf{not} at a word boundary. & \rx{\textbackslash Bon\textbackslash B} matches \textit{``on''} embedded inside words: \newline \cmark\ \textit{``continue''} \quad \xmark\ Standalone \textit{``on''}, \textit{``only''} \\
+\bottomrule
+\end{tabularx}}
+
+\vspace{4pt}
+\noindent{\large\bfseries\color{themeblue} 6. Wildcards, Optionality \& Repetition Quantifiers}\par\vspace{1pt}
+Quantifiers define how many times the preceding symbol, bracket class, or grouped block must appear.
+
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{Any-Character Wildcard (\rx{.}):} Matches any single character except a newline character (\rx{\textbackslash n}).
+    \item \textbf{Optionality Quantifier (\rx{?}):} Matches \textbf{zero or one} occurrence of the preceding item ($0$ or $1$).
+    \item \textbf{Kleene Star (\rx{*}):} Formally defined by Stephen Cole Kleene, matches \textbf{zero or more} occurrences ($0, 1, 2, \dots$).
+    \item \textbf{Kleene Plus (\rx{+}):} Matches \textbf{one or more} occurrences ($1, 2, 3, \dots$). Equivalent to $aa^*$.
+    \item \textbf{Explicit Range Counters (\rx{\{n,m\}}):} \rx{\{n\}} matches exactly $n$ times; \rx{\{n,m\}} matches from $n$ to $m$ times inclusive.
+\end{itemize}
+
+\vspace{-2pt}
+\begin{examplebox}
+\footnotesize
+\textbf{Prominent Quantifier Demonstrations:}
+\begin{itemize}[leftmargin=12pt, itemsep=1.5pt, parsep=0pt, topsep=1pt]
+    \item \textbf{Wildcard (\rx{beg.n}):} Matches: \cmark\ \textit{``begin''}, \cmark\ \textit{``begun''}, \cmark\ \textit{``beg3n''}, \cmark\ \textit{``beg\textvisiblespace n''}. \xmark\ Rejects: \textit{``begnn''} (missing character) and \textit{``begoon''} (two characters).
+    \item \textbf{Optionality (\rx{woodchucks?}):} Matches: \cmark\ \textit{``woodchuck''} ($s$ occurs 0 times) and \cmark\ \textit{``woodchucks''} ($s$ occurs 1 time).
+    \item \textbf{Kleene Star (\rx{to*}):} Matches: \cmark\ \textit{``t''} (zero \textit{o}'s), \cmark\ \textit{``to''} (one \textit{o}), \cmark\ \textit{``too''} (two \textit{o}'s), \cmark\ \textit{``tooo''}.
+    \item \textbf{Kleene Plus (\rx{to+}):} Matches: \cmark\ \textit{``to''}, \cmark\ \textit{``too''}, \cmark\ \textit{``tooo''}. \xmark\ Rejects: lone \textit{``t''} (requires $\ge 1$ occurrence).
+    \item \textbf{Range Counters (\rx{A\{2,4\}}):} Matches: \cmark\ \textit{``AA''}, \cmark\ \textit{``AAA''}, \cmark\ \textit{``AAAA''}. \xmark\ Rejects: \textit{``A''} (too few).
+\end{itemize}
+\end{examplebox}
+
+\vspace{-2pt}
+\noindent{\large\bfseries\color{themeblue} 7. Quantifier Mechanics: Greedy vs. Lazy Matching}\par\vspace{1pt}
+Understanding quantifier evaluation mechanics is critical for avoiding unintended text consumption:
+
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{Greedy Evaluation (Default):} Standard quantifiers (\rx{*}, \rx{+}, \rx{\{n,m\}}) consume as much text as possible, backtracking only when needed.
+    \item \textbf{Lazy / Reluctant Evaluation (\rx{*?}, \rx{+?}):} Appending \rx{?} instructs the engine to consume the minimal text necessary to satisfy the match.
+\end{itemize}
+
+\vspace{-2pt}
+\begin{examplebox}
+\footnotesize
+\textbf{Side-by-Side Demonstration: Extracting HTML Paragraph Tags}
+\newline Target String: \texttt{<p>First paragraph.</p><p>Second paragraph.</p>}
+\begin{itemize}[leftmargin=12pt, itemsep=2pt, parsep=0pt, topsep=1pt]
+    \item \textbf{Greedy Pattern:} \rx{<p>.*</p>}
+    \newline Output Match: \cmark\ \texttt{<p>First paragraph.</p><p>Second paragraph.</p>}
+    \newline \textit{Diagnostic:} The greedy \rx{.*} consumes past the first \texttt{</p>} all the way to the final \texttt{</p>} in the entire document!
+    \item \textbf{Lazy Pattern:} \rx{<p>.*?</p>}
+    \newline Output Match 1: \cmark\ \texttt{<p>First paragraph.</p>} \qquad Output Match 2: \cmark\ \texttt{<p>Second paragraph.</p>}
+    \newline \textit{Diagnostic:} The lazy \rx{.*?} stops matching immediately at the earliest possible closing \texttt{</p>}.
+\end{itemize}
+\end{examplebox}
+
+\newpage
+
+% =========================================================================
+% PAGE 3: Modular Regex, Capturing Groups & Lookaround Assertions
+% =========================================================================
+
+\noindent{\large\bfseries\color{themeblue} 8. Modular Regex: Grouping \& Numbered Capturing Registers}\par\vspace{1pt}
+Parentheses \rx{(...)} serve two essential roles: \textbf{scoping} (overriding operator precedence) and \textbf{capturing} (storing matched substrings in indexed memory registers).
+
+\begin{itemize}[leftmargin=12pt, itemsep=1pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{Precedence Grouping:} Quantifiers apply to the entire grouped expression rather than a single character: \rx{(woodchuck)+} matches \textit{``woodchuckwoodchuck''}.
+    \item \textbf{Numbered Registers (\rx{\textbackslash 1, \textbackslash 2, ...}):} Each pair of capturing parentheses copies its matched substring into an internal numbered register ordered by the position of its opening parenthesis.
+    \item \textbf{Substitution Syntax (\rx{s/pattern/replacement/}):} Replaces the matched text stream using the contents stored in registers:
+    \begin{itemize}[leftmargin=10pt, itemsep=1pt, parsep=0pt, topsep=0.5pt]
+        \item Example: Applying \rx{s/([0-9]+)/<\textbackslash 1>/} to \textit{``the 35 boxes''} stores \textit{``35''} into register \rx{\textbackslash 1} and rewrites the string to \textit{``the <35> boxes''}.
+    \end{itemize}
+    \item \textbf{Pattern Backreferencing:} Registers can be evaluated \textit{within the match pattern itself} to enforce identity across separate string positions.
+\end{itemize}
+
+\vspace{-2pt}
+\begin{examplebox}
+\footnotesize
+\textbf{Prominent Backreferencing Demonstration (Slide Example):}
+\[
+\text{Regex Pattern:}\quad \rx{/the (.*)er they (.*), the \textbackslash 1er we \textbackslash 2/}
+\]
+\begin{itemize}[leftmargin=12pt, itemsep=2pt, parsep=0pt, topsep=1pt]
+    \item[\cmark] \textbf{Match Case:} \textit{``the faster they ran, the faster we ran''}
+    \newline \textit{Execution Trace:} Register \rx{\textbackslash 1} captures \textit{``fast''}; register \rx{\textbackslash 2} captures \textit{``ran''}. The backreference \rx{\textbackslash 1er} expects \textit{``faster''} and \rx{\textbackslash 2} expects \textit{``ran''}. Both match perfectly!
+    \item[\xmark] \textbf{Rejection Case:} \textit{``the faster they ran, the faster we ate''}
+    \newline \textit{Execution Trace:} Register \rx{\textbackslash 2} captured \textit{``ran''}, but the second clause has \textit{``ate''}. Because \textit{``ate''} $\neq$ \rx{\textbackslash 2} (\textit{``ran''}), the regex strictly rejects the string!
+\end{itemize}
+\end{examplebox}
+
+\vspace{1pt}
+\noindent{\large\bfseries\color{themeblue} 9. Non-Capturing Groups (\rx{(?:...)}) for Modular Design}\par\vspace{1pt}
+When parentheses are needed solely to group alternatives or control quantifier scope without consuming memory registers or polluting register numbering, prepend \rx{?:} immediately after the opening parenthesis.
+
+\vspace{-2pt}
+\begin{examplebox}
+\footnotesize
+\textbf{Prominent Non-Capturing Demonstration (Slide Example):}
+\[
+\text{Regex Pattern:}\quad \rx{/(?:some|a few) (people|cats) like some \textbackslash 1/}
+\]
+\begin{itemize}[leftmargin=12pt, itemsep=2pt, parsep=0pt, topsep=1pt]
+    \item \textbf{Register Allocation Analysis:} The first group \rx{(?:some|a few)} is non-capturing (unindexed). Therefore, register \rx{\textbackslash 1} refers exclusively to the second group \rx{(people|cats)}.
+    \item[\cmark] \textbf{Match Case:} \textit{``some cats like some cats''} $\longrightarrow$ Register \rx{\textbackslash 1} = \textit{``cats''}, identical in both positions.
+    \item[\xmark] \textbf{Rejection Case:} \textit{``some cats like some people''} $\longrightarrow$ Register \rx{\textbackslash 1} = \textit{``cats''}, but second position is \textit{``people''} ($\neq$ \rx{\textbackslash 1}).
+\end{itemize}
+\end{examplebox}
+
+\vspace{1pt}
+\noindent{\large\bfseries\color{themeblue} 10. Lookahead Assertions: Zero-Width Pointer Inspections}\par\vspace{1pt}
+Lookaheads are \textbf{zero-width assertions}: they test whether a subpattern matches or does not match immediately ahead in the text stream \textbf{without advancing the character pointer} or consuming characters into the match buffer.
+
+\vspace{1pt}
+\noindent{\footnotesize
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{3.2cm} >{\raggedright\arraybackslash}p{3.8cm} >{\raggedright\arraybackslash}X}
+\toprule
+\rowcolor{lightbg}
+\textbf{Lookahead Type} & \textbf{Syntax \& Formal Logic} & \textbf{Operational Behavior} \\
+\midrule
+\textbf{Positive Lookahead} & \rx{(?=pattern)}: True if \rx{pattern} matches immediately ahead. & The engine asserts that \rx{pattern} follows. If true, pointer remains at current position; subsequent tokens consume string. \\
+\midrule
+\textbf{Negative Lookahead} & \rx{(?!pattern)}: True if and only if \rx{pattern} \textbf{fails} to match ahead. & The engine asserts that \rx{pattern} does \textbf{not} follow. If it fails to match, assertion succeeds; pointer does not advance. \\
+\bottomrule
+\end{tabularx}}
+
+\vspace{2pt}
+\begin{examplebox}
+\footnotesize
+\textbf{Step-by-Step Execution Trace: Disallowing Prefixes (Slide Example)}
+\[
+\text{Task: Match any single word at the start of a line that does \textbf{not} begin with ``Volcano'':}\quad \rx{/\^{}(?!Volcano)[A-Za-z]+/}
+\]
+\begin{itemize}[leftmargin=12pt, itemsep=2.5pt, parsep=0pt, topsep=1pt]
+    \item \textbf{Candidate String 1:} \textit{``Vesuvius is an active volcano.''}
+    \begin{enumerate}[leftmargin=14pt, itemsep=1pt, parsep=0pt, topsep=0.5pt]
+        \item Start Anchor \rx{\^{}}: Pointer is initialized at index 0 (character \textit{`V'}).
+        \item Lookahead Assertion \rx{(?!Volcano)}: Engine looks ahead at \textit{``Vesuvius''}. Since \textit{``Vesuvius''} $\ne$ \textit{``Volcano''}, negative lookahead \textbf{succeeds}!
+        \item Pointer Position: Remains at index 0 (\textbf{zero-width assertion consumed zero characters}).
+        \item Token Consumption \rx{[A-Za-z]+}: Consumes and captures the word \textit{``Vesuvius''}. \cmark\ \textbf{MATCH SUCCESSFUL}.
+    \end{enumerate}
+    \item \textbf{Candidate String 2:} \textit{``Volcanoes are dangerous.''}
+    \begin{enumerate}[leftmargin=14pt, itemsep=1pt, parsep=0pt, topsep=0.5pt]
+        \item Start Anchor \rx{\^{}}: Pointer is at index 0 (character \textit{`V'}).
+        \item Lookahead Assertion \rx{(?!Volcano)}: Engine looks ahead and finds \textit{``Volcano''}. Because \textit{``Volcano''} matches, negative lookahead \textbf{fails}!
+        \item Verdict: \xmark\ \textbf{MATCH REJECTED IMMEDIATELY} at index 0. No characters consumed.
+    \end{enumerate}
+\end{itemize}
+\end{examplebox}
+
+\vspace{1pt}
+\noindent{\large\bfseries\color{themeblue} 11. Practical Lookahead Applications in NLP Text Pipelines}\par\vspace{1pt}
+\begin{itemize}[leftmargin=12pt, itemsep=1.5pt, parsep=0pt, topsep=1pt]
+    \item \textbf{Conjunctive Multi-Condition Validation:} Positive lookaheads allow asserting multiple criteria concurrently regardless of character ordering:
+    \newline \textbf{Pattern:} \rx{/\^{}(?=.*[A-Z])(?=.*\textbackslash d).\{8,\}\$/} $\longrightarrow$ Demands at least one uppercase letter \textbf{and} at least one digit in $\ge 8$ characters.
+    \item \textbf{Exclusion Boundary Filtering:} Negative lookaheads allow filtering out unwanted file extensions or patterns:
+    \newline \textbf{Pattern:} \rx{/\^{}.*(?!\textbackslash.txt\$)[A-Za-z0-9]+\$/} $\longrightarrow$ Matches alphanumeric tokens that do \textbf{not} conclude with \rx{.txt}.
+\end{itemize}
+
+\newpage
+
+% =========================================================================
+% PAGE 4: Solved Exercise, Precision vs. Recall & ELIZA Case Study
+% =========================================================================
+
+\noindent{\large\bfseries\color{themeblue} 12. Solved Slide Exercise: Enclosing First \& Second Numbers}\par\vspace{1pt}
+
+\begin{insightbox}[title={\bfseries\sffamily Solved Slide Exercise: Delimiting First and Second Numbers (Slide 20 Task)}]
+\footnotesize
+\textbf{Slide Problem Statement:} \textit{``What if I wanted to surround any first number in a string with \rx{<} and \rx{>} and the second with \rx{[} and \rx{]}? e.g., `The 35 boxes and 42 items are nice.' $\longrightarrow$ `The <35> boxes and [42] items are nice.' Think about it.''}
+
+\vspace{2pt}
+\noindent\textbf{Theoretical Pure Regex Substitution Formulation:}
+\[
+\text{\textbf{Match Pattern:}}\quad \rx{(\textbackslash d+)(\textbackslash D+)(\textbackslash d+)} \qquad\qquad \text{\textbf{Replacement:}}\quad \rx{<\textbackslash 1>\textbackslash 2[\textbackslash 3]}
+\]
+\textit{Applied on the first matched occurrence (or full-string capture: \rx{\^{}(.*?)(\textbackslash d+)(.*?)(\textbackslash d+)(.*)\$} $\rightarrow$ \rx{\textbackslash 1<\textbackslash 2>\textbackslash 3[\textbackslash 4]\textbackslash 5}}).
+
+\vspace{3pt}
+\textbf{Register Allocation \& Structural Decomposition:}
+\begin{center}
+\renewcommand{\arraystretch}{1.1}
+\begin{tabularx}{0.98\textwidth}{c l >{\raggedright\arraybackslash}p{2.8cm} >{\raggedright\arraybackslash}X}
+\toprule
+\rowcolor{lightbg}
+\textbf{Register} & \textbf{Sub-Pattern} & \textbf{Captured Chunk} & \textbf{Operational Role in Output Reassembly} \\
+\midrule
+\rx{\textbackslash 1} & \rx{(\textbackslash d+)} & \textit{``35''} & Captures the first numerical sequence; enclosed in \rx{<...>} during output. \\
+\rx{\textbackslash 2} & \rx{(\textbackslash D+)} & \textit{`` boxes and ''} & Captures the non-digit span; preserved intact between the numbers. \\
+\rx{\textbackslash 3} & \rx{(\textbackslash d+)} & \textit{``42''} & Captures the second numerical sequence; enclosed in \rx{[...]} during output. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\vspace{2pt}
+\noindent\textbf{Critical Engineering Nuance: The Multi-Number Greedy Trap}
+\begin{itemize}[leftmargin=12pt, itemsep=1.5pt, parsep=0pt, topsep=1pt]
+    \item \textbf{Why Greedy \rx{.*} Fails:} If the separator were written using greedy wildcard \rx{(.*)}, an input with 3+ numbers (e.g., \textit{``10 apples, 20 oranges, 30 pears''}) would cause \rx{.*} to greedily consume through \textit{``20''}, capturing \textit{``10''} in \rx{\textbackslash 1} and \textit{``30''} in \rx{\textbackslash 3}!
+    \item \textbf{The Solution:} Using non-digits \rx{(\textbackslash D+)} or lazy wildcard \rx{(.*?)} strictly bounds register \rx{\textbackslash 2} to the immediate gap between the first and second numbers.
+\end{itemize}
+\end{insightbox}
+
+\vspace{3pt}
+\noindent{\large\bfseries\color{themeblue} 13. Pattern Engineering in NLP: Precision vs. Recall Trade-Off}\par\vspace{1pt}
+Developing regexes in NLP is an iterative empirical process balancing two competing error types:
+
+\begin{itemize}[leftmargin=12pt, itemsep=1.5pt, parsep=0pt, topsep=1pt]
+    \item \textbf{False Negatives (Type II Error):} Missing target strings that should match $\Longrightarrow$ Minimizing false negatives increases \textbf{recall} (coverage).
+    \item \textbf{False Positives (Type I Error):} Incorrectly matching spurious strings $\Longrightarrow$ Minimizing false positives increases \textbf{precision} (accuracy).
+\end{itemize}
+
+\vspace{-1pt}
+\begin{examplebox}
+\footnotesize
+\textbf{Iterative Refinement Case Study: Extracting the English Article \textit{``the''}}
+\begin{enumerate}[leftmargin=14pt, itemsep=2.5pt, parsep=0pt, topsep=1pt]
+    \item \textbf{Iteration 1 --- Plain Literal \rx{the}:}
+    \newline Target: \textit{``The dog chased the cat.''}
+    \newline \xmark\ \textbf{Error Diagnosis (Low Recall):} Fails to match capitalized \textit{``The''} at sentence start $\Longrightarrow$ \textbf{False Negative}.
+    \item \textbf{Iteration 2 --- Disjunctive Capitalization \rx{[tT]he}:}
+    \newline Target: \textit{``The other theology student was there.''}
+    \newline \xmark\ \textbf{Error Diagnosis (Low Precision):} Matches \textit{``The''}, but also erroneously matches inside \textit{``o\textbf{the}r''}, \textit{``\textbf{The}ology''}, and \textit{``\textbf{the}re''} $\Longrightarrow$ \textbf{False Positives}.
+    \item \textbf{Iteration 3 --- Word Boundary Isolation \rx{\textbackslash b[tT]he\textbackslash b} (or \rx{\textbackslash W[tT]he\textbackslash W}):}
+    \newline Target: \textit{``The other theology student said the dog was there.''}
+    \newline \cmark\ \textbf{Optimal Solution:} Strictly matches standalone \textit{``The''} and \textit{``the''}, cleanly rejecting \textit{``other''}, \textit{``theology''}, and \textit{``there''}. Maximizes precision and recall simultaneously!
+\end{enumerate}
+\end{examplebox}
+
+\vspace{3pt}
+\noindent{\large\bfseries\color{themeblue} 14. Historical Case Study: ELIZA (Joseph Weizenbaum, 1966)}\par\vspace{1pt}
+
+\begin{theoremprompt}[title={\bfseries\sffamily ELIZA: Conversational NLP via Cascading Regex Substitutions}]
+\footnotesize
+ELIZA was one of the earliest conversational agents, simulating a Rogerian psychotherapist purely through a cascade of regex substitutions and pronoun reflections, with zero syntactic parsers or semantic logic:
+
+\vspace{2pt}
+\noindent{\footnotesize
+\begin{tabularx}{0.98\textwidth}{l >{\raggedright\arraybackslash}X}
+\toprule
+\rowcolor{lightbg}
+\textbf{Cascading Regex Substitution Rule} & \textbf{Simulated Dialogue Transformation} \\
+\midrule
+\rx{s/.* I'M (depressed|sad) .*/I AM SORRY TO HEAR YOU ARE \textbackslash 1/} & Patient: \textit{``I'm depressed much of the time.''} \newline ELIZA: \textit{``I AM SORRY TO HEAR YOU ARE DEPRESSED''} \\
+\midrule
+\rx{s/.* I AM (depressed|sad) .*/WHY DO YOU THINK YOU ARE \textbackslash 1/} & Patient: \textit{``I am sad today.''} \newline ELIZA: \textit{``WHY DO YOU THINK YOU ARE SAD''} \\
+\midrule
+\rx{s/.* all .*/IN WHAT WAY?/} & Patient: \textit{``Men are all alike.''} \newline ELIZA: \textit{``IN WHAT WAY?''} \\
+\midrule
+\rx{s/.* always .*/CAN YOU THINK OF A SPECIFIC EXAMPLE?/} & Patient: \textit{``They're always bugging us about something.''} \newline ELIZA: \textit{``CAN YOU THINK OF A SPECIFIC EXAMPLE?''} \\
+\bottomrule
+\end{tabularx}}
+
+\vspace{2pt}
+\noindent\textbf{Core Takeaway:} ELIZA demonstrated that cascading regex substitutions with capturing register reflections (`I AM' $\rightarrow$ `YOU ARE') can generate convincing conversational responses despite having no semantic comprehension.
+\end{theoremprompt}
+
+\end{document}

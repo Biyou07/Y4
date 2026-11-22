@@ -1,0 +1,435 @@
+HUMAN-COMPUTER
+INTERACTION (HCI)
+Prof. KamelEddine Heraguemi
+
+Dr. Hayet Saadi
+
+kameleddine.heraguemi@ensia.edu.dz
+
+hayet.saadi@ensia.edu.dz
+
+4th Year (7S) 2026/2027
+
+Unit 2:
+The Design
+Process & User
+Research
+
+Created in ENSIA
+Date: 14 April 2040
+
+Lecture 2
+Introduction to
+User Research
+
+Learning Goals
+Goal 1: Understand how users
+perceive an interface, and why
+developers miss usability
+problems.
+Goal 2: Describe the Design
+Rules and understand the
+Human-Centered Design
+process and apply it to
+improve an interface.
+
+Open Discussion:
+User vs. Developer
+
+What do you see?
+
+What do you see?
+
+What do you see?
+
+The conclusion is that we see what we want to see
+
+What do you see?
+User vs. Developer Perspective
+
+What do you see?
+User vs. Developer Perspective
+
+Their attention goes to the logo, the blue underlined
+text, and the hand cursor, and they read them as a live
+website. Their reasoning is logical, since on the web
+those cues all mean clickable. When nothing happens,
+they usually blame themselves, not the interface.
+
+What do you see?
+User vs. Developer Perspective
+
+Their attention goes to the toolbar, the zoom level, and
+"Page 1 of 2", and they read the screen as a static PDF
+of a printed page. From that view, the confusion looks
+absurd.
+
+What do you see?
+User vs. Developer Perspective
+
+What do you see?
+User vs. Developer Perspective
+
+What do you see?
+User vs. Developer Perspective
+
+Sees a smooth, expressive face. Their brain blends the
+coarse blocks, ﬁlls in what's missing, and later
+remembers the character as more detailed than it was.
+
+What do you see?
+User vs. Developer Perspective
+
+Sees a grid of hundreds of blocks with hard edges. They
+know each pixel was placed carefully to trick the eye on
+one particular display, and they can judge it too harshly
+or test it on the wrong screen.
+
+What do you see?
+User vs. Developer Perspective
+
+User vs. Developer
+Developers live in the back-end and know almost everything about it:
+●
+●
+●
+●
+●
+
+System and software architecture
+Remote database connections
+State transitions and dependencies
+Internal query syntax
+Application context and system restrictions
+
+Users only meet the front-end:
+●
+●
+●
+
+They see the screen, the labels, the buttons, and the feedback
+They have little idea what happens behind it
+They don't care about the back-end, and they shouldn't need to
+
+User vs. Developer
+The code isn't meant for the user. It's a back-end label that a
+developer or support engineer can look up, and it tells an ordinary
+person nothing.
+
+Why care about user-friendly design as a Developer
+
+Why care about user-friendly design as a Developer
+
+Why care about user-friendly design as a Developer
+
+Why care about user-friendly design as a Developer
+
+Why care about user-friendly design as a Developer
+"Users will (must) adapt": Windows 8
+
+HCI
+
+Design Rules
+
+Consistency
+
+Consistency means that similar elements, actions, terminology, and behaviors should be
+presented and operate in similar ways across an interface or product.
+The user should not have to relearn how the system (Software/Hardware) works when moving from
+one part of it to another.
+
+Consistency
+
+Success
+
+Consistency
+
+Success
+
+Consistency
+
+Failure
+
+Consistency
+
+Visibility
+Visibility means that the system
+state and relevant possibilities for
+action should be perceptible to
+the user at the appropriate
+moment.
+The design should keep users
+informed about what is happening
+through appropriate feedback
+within a reasonable time. No
+guessing
+
+Visibility
+
+Visibility
+
+Success
+
+Visibility
+
+Success
+
+Visibility
+
+Failure
+
+Visibility
+
+Failure
+
+Visibility
+
+Failure
+
+Feedback
+
+The information returned by a system after a user's action, allowing the user
+to understand whether the action occurred and what its result was. I.e., every
+user action should receive appropriate interface feedback, with the amount of
+feedback proportional to the importance of the action.
+
+Feedback
+
+Feedback
+Success
+
+Feedback
+Failure
+
+Feedback
+Failure
+
+Affordance &
+Constraints
+
+An affordance is a possible action that an object or
+interface element supports. It makes possible actions
+understandable and inappropriate actions difﬁcult or
+impossible.
+
+Each object is drawn with the action it invites: an arrow
+pressing down into the button, a key stroke feeding a letter
+into the text ﬁeld.
+
+The shape tells you what to do before you read a
+single label.
+
+Affordance &
+Constraints
+
+Constraint:
+A constraint limits the actions available to the
+user, helping prevent inappropriate or erroneous
+actions.
+
+Norman identiﬁes affordances and constraints
+among the fundamental concepts that help users
+understand what can be done with a system.
+
+Affordance &
+Constraints
+
+Affordance
+
+Success
+
+Constraints
+
+Success
+
+Affordance
+
+Failure
+
+Affordance
+
+Failure
+The visual signal (grey, the same as the past dates) tells you
+"you can't pick this," but the system's actual behavior would
+let you. The signiﬁer is lying about what the interface truly
+affords. That's an affordance problem; the same grey styling
+is reused for two situations with completely different
+underlying rules (truly blocked vs. actually available), so
+users can't tell them apart.
+
+The calendar didn't fail to block anything, it failed to tell
+users what could still be clicked
+
+Constraints
+
+Failure
+
+Constraints
+
+Failure
+
+Check the link
+
+Constraints
+
+Failure
+The system should have restricted or validated
+what a user could type into a cell without an
+explicit format being set, and it didn't. The user's
+action (typing a gene name) wasn't wrong, but the
+interface failed to protect the user's genuine
+intent from its own overeager auto-formatting.
+
+USER-CENTRED DESIGN
+(UCD)
+
+Highlight on
+Human-Centered Design
+(HCD)
+
+Mapping the User:
+Beyond the Person at the Machine
+
+Every bed on a cardiac ward is connected to a
+monitor that tracks heart rate, oxygen levels,
+and breathing and sounds an alarm when
+something crosses a dangerous threshold. We'll
+follow this one system through all three types of
+users.
+
+Scenario: a hospital
+patient-monitoring and
+alarm system.
+
+Mapping the User:
+Beyond the Person at the Machine
+Primary user: A primary user interacts with the
+system directly to achieve their own goal.
+Primary user: the nurse
+In this scenario, the nurse is the primary user.
+She sets the alarm thresholds for each patient,
+watches the monitor, responds when it sounds,
+and silences it once she's assessed the
+situation. The system exists for her to act on,
+and she's trained to operate it.
+
+Scenario: a hospital
+patient-monitoring and
+alarm system.
+
+Mapping the User:
+Beyond the Person at the Machine
+Secondary user: A secondary user interacts with the
+system occasionally, or on someone else's behalf, usually
+without the training or context the primary user has.
+Secondary user: the visiting family member
+In this scenario, a family member sitting at the bedside
+hears the alarm, ﬁnds it distressing or disruptive, and
+presses the button to silence it, without understanding
+what it means or whether it's safe to do so. They're
+interacting with the real interface, but not to achieve the
+system's actual purpose, and not with the knowledge
+required to do it safely.
+
+Scenario: a hospital
+patient-monitoring and
+alarm system.
+
+Mapping the User:
+Beyond the Person at the Machine
+Indirect user: An indirect user is affected by the system without
+ever operating it themselves. The system exists because of
+them, but they are its subject, not its operator.
+Indirect user: the patient. Why the patient counts as indirect,
+not primary
+This is the detail worth spending real time on, since it's
+counterintuitive. The patient is wearing the sensors, and the
+alarm exists entirely for their beneﬁt, but they never conﬁgure a
+threshold, silence an alert, or read a readout. Their well-being
+depends completely on how well the other users operate the
+system around them. This category was built to address the
+gap between the person the system is for and the person who
+touches the interface.
+
+Scenario: a hospital
+patient-monitoring and
+alarm system.
+
+Mapping the User:
+Beyond the Person at the Machine
+As a conclusion: HCD/ UCD/ and ISO 9241-210
+Have you actually understood all three users, not just the one typing?
+The standard says design must be based on real understanding of users
+and context, involve them throughout, be tested and iterated with
+evidence, and bring in different disciplines to see the full picture. In our
+hospital case, that means the engineer, the nurse, and even the patient's
+experience all need a seat at the table, not just the person holding the
+device
+
+USER-CENTRED DESIGN
+(UCD)
+
+Case Study:
+The $300 Million Button
+A Checkout That Blocked
+Purchases
+
+The Problem:
+A major e-commerce retailer required customers to Login or Register before
+Checkout. Designers assumed registration would make future purchases easier,
+but the form was actually preventing customers from completing purchases.
+
+What did UCD reveal?
+
+The testing showed that ﬁrst-time customers did not want to create an
+account simply to buy something. Existing customers frequently
+struggled to remember their login information, with 45% of customers
+having multiple registrations and around 160,000 password requests per
+day.
+
+The UX/UI Solution
+The team removed Register and replaced it with Continue, with a message explaining that an
+account was not required. Customers could proceed directly to checkout and create an account
+later if they wished.
+
+The impact
+
+The impact
+
+A small UI change, informed by UCD, removed a major UX
+barrier and generated enormous business value. The team
+was led by UX expert Jared Spool . For more information,
+check
+
+Metrics Overview
+
+Reﬂection
+
+If AI can generate a
+complete interface
+in seconds, do we
+still need UCD?
+AI vs. UCD
+
+Final reﬂection
+
+AI can generate
+interfaces, but who
+decides whether
+they are good?
+Any questions?
+
+Refrences
+
+1] D. A. Norman, The Design of Everyday Things: Revised and Expanded Edition. Basic Books,
+2013.
+[2] B. Shneiderman et al., Designing the User Interface, 6th ed. Pearson, 2016.
+[3] J. Nielsen, “10 Usability Heuristics for User Interface Design,” Nielsen Norman Group,
+1994/2024.
+[4] J. M. Spool, “The $300 Million Button,” Center Centre, 2009.
+[5] E. Niforatos et al., “Integrating Generative AI in the UX Design Process: An Empirical
+Perspective,” Ekphrasis, vol. 32, no. 2, pp. 114–122, 2024, doi: 10.24193/ekphrasis.32.7.
+
+THANK YOU ALL!!
+
+

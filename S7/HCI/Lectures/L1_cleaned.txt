@@ -1,0 +1,397 @@
+--- Slide 1 ---
+HUMAN-COMPUTER
+INTERACTION (HCI)
+Prof. KamelEddine Heraguemi
+Dr. Hayet Saadi
+
+--- Slide 2 ---
+UNIT 1: Foundations of
+HCI & Human Factor
+UNDERSTANDING THE BASICS
+
+--- Slide 3 ---
+Human–Computer
+explores
+how
+Interaction
+people
+interact
+technology
+how
+and
+to
+design
+(HCI)
+with
+systems
+that are useful, usable, accessible, and
+Syllabus and enjoyable.
+instructions The syllabus contains key information,
+activities, and instructions to guide
+you throughout the semester. It will be
+shared on Google Classroom.
+
+--- Slide 4 ---
+Understanding that HCI treats
+the human, not the computer,
+as the starting point for
+Main
+Objective of
+design, and students should be
+Unit I
+able to recognize a good or
+bad interface
+
+--- Slide 5 ---
+Introduction
+
+--- Slide 9 ---
+The
+Human–Technology
+Relationship
+
+--- Slide 10 ---
+HCI examines and shapes how people interact with
+computer systems and digital technologies. It
+influences:
+1.
+What users can accomplish with digital products and services.
+2.
+How easy and efficient systems are to use.
+3.
+How quickly users can learn to interact with a system.
+4.
+How technology supports and augments human capabilities.
+5.
+How safe and reliable systems are during interaction.
+6.
+How
+users
+technologies.
+.
+experience
+and
+feel
+while
+interacting
+with
+digital
+
+--- Slide 11 ---
+Human-Computer Interaction
+
+--- Slide 13 ---
+We will go
+back to it
+
+--- Slide 14 ---
+Human-Computer Interaction Definitions
+As a field of research, HCI is situated at the intersection of
+computer science, behavioral sciences, design, media studies, and
+several other fields of study. The term was popularized by Stuart
+K. Card, Allen Newell, and Thomas P. Moran in their 1983 book, The
+Psychology of Human–Computer Interaction
+
+--- Slide 15 ---
+Human-Computer Interaction Definitions
+HCI is research in the design and the use of computer technology,
+which focuses on the interfaces between people (users) and
+computers. HCI researchers observe the ways humans interact with
+computers and design technologies that allow humans to interact
+with computers in novel ways
+
+--- Slide 16 ---
+The Human
+Factors
+
+--- Slide 17 ---
+The concept of Norman Doors
+How to open this
+door?
+Push?
+Pull?
+
+--- Slide 18 ---
+You didn't fail. The door
+failed to tell you how to use
+it. That's Human Factors.
+This is the same question we
+will ask about every computer
+interface: Does the design tell
+the user what to do, or does it
+leave them guessing?
+
+--- Slide 19 ---
+What are the human factors?
+The scientific study of how humans interact with
+systems, focused on human capabilities,
+limitations, and characteristics, is used to
+design safer, more efficient, and more comfortable
+systems.
+
+--- Slide 20 ---
+The core dimensions
+● Physical: ergonomics, physical strain, reach,
+posture
+● Cognitive: memory limits, attention, mental
+workload, decision-making under pressure
+● Perceptual: vision, hearing, reaction time
+
+--- Slide 21 ---
+The relation between
+the different layers of
+experience
+
+--- Slide 22 ---
+●
+●
+●
+UI (User Interface): the visual and interactive surface of a
+product: buttons, screens, layout, motion, and feedback. What
+the user directly touches or sees.
+UX (User Experience): the full journey of using a product: ease
+of navigation, accessibility, and how it feels to accomplish a
+task from start to finish. UI is one layer inside UX.
+CX (Customer Experience): every interaction a customer has with
+a brand, not just the product: marketing, sales, customer
+service, brand perception. UX is one part of CX.
+
+--- Slide 25 ---
+Usability as
+Competitive Value
+
+--- Slide 26 ---
+Once two competing products offer the same functionality at
+the same price, we will have that: price and features stop
+being differentiators.
+Usability: the extent to which a product enables users to
+achieve their goals effectively, efficiently, and with
+satisfaction. It is measured not by what a system can
+technically do, but by how easily, quickly, and pleasantly a
+human can actually do it.
+
+--- Slide 29 ---
+Fashion & the Limits of
+Novelty
+
+--- Slide 30 ---
+➔
+➔
+Not everything about a product is usability. Some of a product's appeal comes
+from fashion
+How long does an interface "look new"?
+
+--- Slide 31 ---
+➔
+➔
+Fashion (in design): a stylistic trend valued for its novelty and
+currency, not for functional improvement.
+The BIC Cristal pen : Timless/Optimal (Fashion/ Design)
+26 famous products that have never needed a redesign
+
+--- Slide 32 ---
+Timeline in HCI
+
+--- Slide 34 ---
+1950s: Experimental Computers
+Interface at the hardware level for engineers: switch panels,
+plugboards.Example: ENIAC ( Electronic Numerical Integrator
+and Computer )
+
+--- Slide 35 ---
+1960s–1970s: Batch / Offline Mode
+Interface at the programming level only: punch cards, printer
+output.Example: FORTRAN
+
+--- Slide 36 ---
+1970s–1980s: Timesharing / Text
+Terminals
+Interface at the terminal level:
+command languages.Example: IBM 3270
+
+--- Slide 38 ---
+1980s–1990s — Raster Graphics / GUI
+Interface at the interaction-dialogue
+level : GUIs, multimedia, direct
+manipulation.Example:Apple Macintosh
+(1984)
+
+--- Slide 39 ---
+2000s: Multimedia & Internet
+Interface at the work-setting
+level: networked systems,
+groupware, web browsers.
+Example:World Wide Web
+
+--- Slide 40 ---
+Check the Link
+
+--- Slide 41 ---
+Check the link
+
+--- Slide 42 ---
+2010s: Mobile, Wearable, Embedded,
+Ubiquitous Interface is everywhere,
+increasingly natural.
+● iPhone (2007)
+● Mark Weiser, "The Computer for the
+21st Century" (ubiquitous
+computing)
+● Wearables (smartwatches, fitness
+trackers)
+
+--- Slide 44 ---
+2020s: AI-Driven, Immersive & Conversational Interfaces
+Interface increasingly adaptive, generative, and multimodal
+The system anticipates, converses, and reasons alongside the
+user.
+●
+●
+●
+●
+LLM conversational interfaces (ChatGPT, 2022)
+AR/VR/XR headsets ( Apple Vision Pro)
+Voice assistants and multimodal AI interaction
+Brain-computer interfaces (early consumer-facing research)
+
+--- Slide 46 ---
+2025–Present (emerging): Ambient & Agentic Interaction
+Interface moves from something you operate to something that
+acts with or for the user: agentic AI, proactive systems.
+● AI agents that act on the user's behalf across
+apps/devices: Anthropic's Model Context Protocol
+
+--- Slide 49 ---
+WHY WE FOCUS ON USER & INTERACTION?
+For decades, computing was machine-centered:
+Old paradigm: "What can computers do?"
+Humans adapted to the machine; success meant processing power and
+features.
+
+--- Slide 50 ---
+WHY WE FOCUS ON USER & INTERACTION?
+A New Understanding of Computing
+Ben Shneiderman's Leonardo's Laptop (2002) reframed this into a
+human-centered paradigm:
+New paradigm: "What can humans do with computers?"
+This shift is the conceptual core of HCI: success isn't what a machine
+can execute, but what it enables a person to accomplish, understand,
+or create.
+
+--- Slide 51 ---
+Emerging Directions
+in HCI: Technology
+and Human
+Interaction
+
+--- Slide 52 ---
+1. User Experience &
+Usability
+Key idea: Designing interfaces that are
+easy, effective, efficient, and satisfying
+to use.
+2. Applications &
+Human-Centered Contexts
+Key idea: How does HCI change when the
+users
+and
+context
+change?
+Education,
+Healthcare,...
+3. Interaction & Emerging
+Technologies
+Key idea: What new ways can humans interact
+with
+technology?
+AR/VR/XR,
+wearables,
+games,...
+4. AI and Human-Computer
+Interaction
+Key idea: How does interaction change when
+the computer can perceive, reason, learn,
+and
+generate?
+human–AI
+interaction,
+intelligent interfaces,...
+
+--- Slide 53 ---
+5. HCI, Society & Ethics
+Key idea: What are the human and societal
+consequences of the systems we design?
+privacy, security, culture...
+6. Visualization &
+Computational Interaction
+Key idea: How can computation help people
+understand information and interact with
+complex systems? information visualization,
+interactive data systems, …
+7. HCI Research
+Foundations
+Key idea: How do we scientifically study
+human interaction with technology? user
+studies,
+experiments,
+interviews,
+observation,...
+
+--- Slide 54 ---
+Let’s have a
+quick application
+
+--- Slide 55 ---
+Application 1:
+Design a Library Platform (applies: HCI, UI/UX, Usability, Human Factors)
+Task:Design the interface for a digital platform that helps students at our school
+find, reserve, and borrow books from the library.
+What you must include:
+●
+●
+●
+A sketch of the main screen (search, browse, or reservation flow)
+3 design decisions, each justified with a concept from today (e.g., natural
+mapping for icons for Human Factors)
+One sentence naming who the human is (a rushed first-year? a professor searching
+an archive?)
+ILoveENSIA.com
+@HCI_ENSIA
+Fourth Year S7
+
+--- Slide 56 ---
+Application 2:
+Compare Phone Generations (applies: Usability vs. Fashion)
+Task:Choose two generations of the same phone. For each, identify:
+1.
+2.
+3.
+What changed for functional/usability reasons (e.g., faster processor, better
+camera, Face ID replacing a fingerprint sensor)
+What changed for fashion/trend reasons only (e.g., color options,...)
+What stayed the same, and argue whether that's because it already reached a
+timeless /optimal design, the way the BIC pen did.
+ILoveENSIA.com
+@HCI_ENSIA
+Fourth Year S7
+
+--- Slide 57 ---
+References
+1.
+2.
+3.
+4.
+Shneiderman, B., et al. Designing the User Interface:
+Strategies for Effective Human-Computer Interaction.
+https://drive.google.com/file/d/1eBBf20t4hpXYh0Rez2Qe3anIW69NxzP/view?usp=drive_link
+Norman, D. — The Design of Everyday Things.
+https://drive.google.com/file/d/1j_Xm3I-rA_H90Q69Poo9Tj43dbdxZG
+9N/view?usp=drive_link
+IEEE Computer Society HCI Trends 2026.
+https://www.computer.org/publications/tech-news/trends/hci-tren
+ds-2026
+HCI Lecture and Exercises.
+https://hci-studies.org/hci-lecture-and-exercises/
+HUMAN-COMPUTER
+INTERACTION
+

@@ -1,0 +1,377 @@
+--- Slide 1 ---
+HUMAN-COMPUTER
+INTERACTION (HCI)
+Prof. KamelEddine Heraguemi
+Dr. Hayet Saadi
+
+--- Slide 2 ---
+Unit III:
+Beautiful
+Things I’ve Got
+in HCI🎵
+–
+ENSIA HCI
+Parody 🎵
+Ideation, Prototyping, &
+Interaction Design
+WWW.ILoveENSIA.COM
+
+--- Slide 3 ---
+Lecture 6:
+Prototyping (Low, Mid, High)
+Fidelity
+
+--- Slide 4 ---
+Learning Goals:
+1. Distinguish low-, mid-, and
+high-fidelity prototypes and
+choose the right level for a
+given design stage, question,
+and cost.
+2. Learn to build a simple
+prototype from a persona and
+scenario and use it to test a
+design idea with users.
+
+--- Slide 5 ---
+This example is
+inspired by IKEA
+1. Open
+Discussion:
+Which One Do You
+Show First?
+
+--- Slide 6 ---
+Amar Darek App
+You are part of a design team developing Amar
+Darek, a mobile app for buying home furniture.
+Your team wants to test the initial design with
+five potential customers before starting
+development.
+You have only one afternoon to prepare a
+prototype and conduct the user testing
+
+--- Slide 7 ---
+Amar Darek App
+Choose one of the three prototype
+versions presented and justify your
+choice.
+
+--- Slide 8 ---
+A
+B
+C
+
+--- Slide 9 ---
+Low
+Mid
+High
+
+--- Slide 10 ---
+Amar Darek App
+We do not ask which prototype is
+best.
+BUT: Ask what you need to learn
+from the user in the cheapest way
+
+--- Slide 11 ---
+Amar Darek App: Discussion
+For this case (5 customers, one afternoon):
+The question is can customers add a sofa to
+their cart without help?
+That is about flow and navigation, so a clickable
+wireframe (mid fidelity) is the best fit.
+Use the paper sketch (low) if the flow is still
+unclear.
+
+--- Slide 12 ---
+Amar Darek App: Discussion
+Why not high fidelity?
+●
+●
+●
+●
+Time: you can’t build it in one afternoon.
+Wrong feedback: people comment on
+colors and fonts instead of the flow.
+Avoidance of criticism: users hesitate to
+criticize something that looks finished.
+Cost of change: it is expensive to drop or
+redo.
+
+--- Slide 13 ---
+Amar Darek App: Discussion
+Link to Lecture 5 (Personas and Scenarios):
+The scenario builds on the previous lecture by
+connecting a persona (the user: Custemer), a
+goal (what they want to achieve: Purchase
+Furniture), and a context (the situation in
+which they interact with the system: the use of
+Amar Darek).
+
+--- Slide 15 ---
+Beautiful Things I’ve Got in
+HCI🎵
+–
+ENSIA HCI Parody 🎵
+1. Definitions
+
+--- Slide 16 ---
+▪ An early sample, model, or release of a system built to test and to
+rate/evaluate a concept or interaction.
+▪ A tool in the design process that serves to bridge the gap
+between theoretical design and practical, functional product
+▪ It enables you to explore the ideas and show the intention behind
+a feature or the overall design concept to users before investing
+time and money into development.
+▪ Can provide the Look and Feel of the product but do not
+necessarily include the functional elements
+
+--- Slide 17 ---
+2. Importance
+of prototyping
+
+--- Slide 19 ---
+3. Prototype,
+HCD and UCD
+
+--- Slide 20 ---
+What is the relation
+between prototyping
+and HCD (UCD)?
+
+--- Slide 23 ---
+4. Prototype
+Creation
+and
+Evaluation
+
+--- Slide 27 ---
+Example: Designing a university mobile application
+●
+Prototype Creation: The design team studies
+students' needs, identifies the main tasks
+(checking grades, viewing schedules,
+accessing courses), and creates a prototype.
+●
+Prototype Co-Creation: Students participate in
+workshops, suggest features, organize
+information, and help design the application's
+navigation and workflows.
+
+--- Slide 29 ---
+5. Types of
+prototypes
+
+--- Slide 30 ---
+Purpose: Early visualization and concept exploration.
+For brainstorming
+Characteristics: Simple, quick to create, cheap, easily
+5.1. Low-fidelity changed.
+Examples:
+Prototypes
+1. Hand-drawn sketches: Basic layouts, interface elements,
+and user flows on paper.
+2.Paper prototypes: Cut-outs representing screens
+and UI elements that users can interact with.
+3.Storyboards: Like a comic strip, showing how a
+user interacts with the design over time.
+
+--- Slide 31 ---
+5.1. Low-fidelity
+Prototypes
+
+--- Slide 33 ---
+Purpose: Refining the design, testing basic interactions,
+and getting early feedback.
+•Characteristics: More detailed and interactive than
+5.2. Mid-fidelity lowfidelity, but still with some abstraction.
+•Examples:
+Prototypes
+• Wireframes: Digital skeletons of the interface,
+showing structure and layout.
+• Interactive mockups: Created with tools like
+Figma or Adobe XD, these simulate basic user
+flows and interactions
+
+--- Slide 34 ---
+5.2. Mid-fidelity
+Prototypes
+
+--- Slide 36 ---
+Purpose: Closely simulate the final product,
+test complex interactions, and gather detailed feedback.
+•Characteristics: Highly interactive, visually refined,
+5.3. High-fidelity and often include realistic content and animations.
+Examples:
+Prototypes
+• Functional prototypes: Partially or fully functional
+versions of the product, often coded with basic
+functionality.
+• Coded prototypes: Built with languages like HTML,
+CSS, and JavaScript; these closely resemble
+the final product.
+
+--- Slide 37 ---
+5.3. High-fidelity such as Figma to simulate realistic interfaces,
+navigation, transitions, and user interactions without
+Prototypes
+• Interactive Design Prototypes: Created using tools
+requiring full implementation.
+
+--- Slide 40 ---
+Beautiful
+Things I’ve
+ot in HCI🎵
+–
+ENSIA HCI
+Parody 🎵
+6.
+Choosing
+the right
+Fidelity
+
+--- Slide 42 ---
+Beautiful
+Things I’ve
+Got in HCI🎵
+–
+ENSIA HCI
+Parody 🎵
+We chose fidelity
+by stage, goals
+and resources. But
+a prototype is
+always shown to
+someone. Who are
+they?
+
+--- Slide 43 ---
+Beautiful
+Things I’ve
+Got in HCI🎵
+–
+ENSIA HCI
+Parody 🎵
+7.
+Stakeholders
+
+--- Slide 44 ---
+7.1. Definition
+1.
+A stakeholder is any group or individual who can
+affect or is affected by the achievement of
+the organization’s objectives (Freeman, 1984).
+2.
+In app design: anyone who can influence the app
+or is affected by it. We have two major
+types of stakeholders, as:
+
+--- Slide 47 ---
+Beautiful
+Things I’ve
+Got in HCI🎵
+–
+ENSIA HCI
+Parody 🎵
+Who are the
+stakeholders of
+Amar Darek with
+the suitable
+Fidelity?
+
+--- Slide 49 ---
+Beautiful Things I’ve Got in
+HCI🎵
+–
+ENSIA HCI Parody 🎵
+
+--- Slide 51 ---
+8. AI,
+Prototyping
+
+--- Slide 53 ---
+Check
+the link
+
+--- Slide 55 ---
+AI layouts gave diverse alternatives and a new idea
+(users build filters dynamically by choosing fields,
+operators, and values).
+Results
+Weaknesses: repeated prompting in one session led to
+cumulative errors, and code generated from screenshots
+reproduced the visuals but not the interactions.
+Interactive prototypes improved feedback: users held
+back detailed critique on sketches and low-fidelity
+designs but engaged and found issues with interactive
+ones.
+
+--- Slide 56 ---
+Conclusions
+Generative UI speeds up communication and feedback
+but brings code errors, security concerns, and a risk of
+converging on conventional patterns. When to introduce
+AI
+depends
+on
+the
+team’s
+expertise,
+and
+prompt-engineering skill and domain knowledge are
+needed.
+
+--- Slide 57 ---
+One case study, one team, and no
+quantitative results.
+Limits
+
+--- Slide 58 ---
+Beautiful Things I’ve Got in
+HCI🎵
+–
+ENSIA HCI Parody 🎵
+
+--- Slide 59 ---
+1.
+Design → Prototype → Evaluate → Refine
+The goal is not to create a perfect prototype immediately
+but to progressively improve the design based on user
+feedback.
+2.
+Key
+Takeaways
+Whether we create prototypes manually or using AI
+tools, the objective remains the same: to design
+solutions that meet users' needs. AI can accelerate
+the process, but it cannot replace the importance of
+understanding users and evaluating usability.
+
+--- Slide 60 ---
+1.
+2.
+REFERENCES
+3.
+Freeman, R. E. (1984). Strategic Management: A
+Stakeholder Approach. Boston: Pitman.
+HCI Lecture and Exercises.
+https://hci-studies.org/hci-lecture-and-exercis
+es/
+Li, T., Maheshwari, T., and Voelker, A.,
+“User-Centered Design with AI in the Loop: A
+Case Study of Rapid User Interface Prototyping
+with ‘Vibe Coding’,” ACM Collective Intelligence
+2025, arXiv:2507.21012, Jul. 2025.
+https://doi.org/10.48550/arXiv.2507.21012
+
+--- Slide 61 ---
+Beautiful
+Things I’ve Got
+in HCI🎵
+–
+ENSIA HCI
+Parody 🎵
+THANK YOU
+WWW.ILoveENSIA.COM
+

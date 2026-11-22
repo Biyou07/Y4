@@ -1,0 +1,539 @@
+--- Slide 1 ---
+HUMAN-COMPUTER
+INTERACTION (HCI)
+Prof. KamelEddine Heraguemi
+Dr. Hayet Saadi
+
+--- Slide 2 ---
+Unit 2:
+The Design
+Process & User
+Research
+Created in ENSIA
+Date: 14 April 2040
+
+--- Slide 3 ---
+Lecture 3:
+Design Evaluation &
+Heuristics
+Learning Goals
+Goal 1: Understand the role of
+heuristics
+and
+design
+guidelines
+in
+improving
+usability and user experience.
+Goal 2: Recognize common
+usability
+principles
+and
+guidelines through real-world
+interface examples.
+
+--- Slide 4 ---
+Open Discussion:
+One click, 38 minutes of
+panic: Hawaii false
+missile alert, 2018
+
+--- Slide 5 ---
+What Happened?
+On January 13, 2018, phones across Hawaii received the message:
+“BALLISTIC MISSILE THREAT INBOUND TO HAWAII. SEEK IMMEDIATE
+SHELTER. THIS IS NOT A DRILL."
+It had been sent by mistake. The employee was meant to run an
+internal test but selected the real alert instead. The two options had
+almost identical labels and sat one after the other in the list, and a
+single conﬁrmation prompt was the only safeguard. The false alarm
+lasted 38 minutes and caused widespread panic.
+
+--- Slide 6 ---
+What Happened?
+Check these articles: 1 and 2
+
+--- Slide 7 ---
+What Happened?
+
+--- Slide 8 ---
+Question
+Who is at fault:
+the employee or the
+interface?
+
+--- Slide 9 ---
+Question
+If a hundred different
+people had sat at this
+screen, how many would
+have made the same
+mistake?
+
+--- Slide 10 ---
+Conclusion
+In this real case, no one ran a systematic evaluation of this
+screen before it went live. Today you learn the method that
+would have caught this problem, with a handful of
+evaluators and no users at risk.
+
+--- Slide 11 ---
+Previous Lecture vs. This Lecture
+Building on the previous lecture, Design Rules in HCI are
+principles, guidelines, and standards that help designers
+create user-friendly, consistent, and accessible interfaces.
+
+--- Slide 12 ---
+Previous Lecture vs. This Lecture
+Why do design rules matter in HCI
+
+--- Slide 13 ---
+Previous Lecture vs. This Lecture
+Type of Design Rules
+
+--- Slide 14 ---
+Previous Lecture vs. This Lecture
+Type of Evaluation
+
+--- Slide 15 ---
+Previous Lecture vs. This Lecture
+Type of Evaluation
+
+--- Slide 16 ---
+HCI
+Core Design
+Principles in HCI
+
+--- Slide 17 ---
+Design Principles
+These principles serve as the foundation for creating effective and
+user-centered interfaces.
+In which cognitive psychology and visual perception insights are used
+to guide the design process.
+
+--- Slide 18 ---
+I. Gestalt Principles
+Gestalt is a German word meaning form or shape. Gestalt psychology is a school
+of psychology that was founded in the early 20th century by Max Wertheimer,
+Kurt Koffka, and Wolfgang Köhler, and is often summed up as the idea that the
+whole is different from the sum of its parts. Its starting point was with the
+experiments on visual perception and on how we interpret sensory input, not
+just what the eyes and brain physically do.
+In HCI, we borrow its laws of perceptual organization to explain why users see
+some interface elements as groups, as paths, or as foreground and background,
+before they read anything.
+
+--- Slide 19 ---
+I. Gestalt Principles
+
+--- Slide 20 ---
+Proximity
+Elements that are close together are perceived as related, and elements that are
+far apart as playing different roles.
+
+--- Slide 21 ---
+Similarity
+Objects perceived as similar are grouped together, even when they are not near
+each other, i.e., the same color, shape, or size.
+
+--- Slide 22 ---
+Closure
+The mind unconsciously completes incomplete objects.
+
+--- Slide 23 ---
+Closure
+
+--- Slide 24 ---
+Continuity
+(continuation)
+Elements aligned along a line or curve are perceived as related, and the eye is
+guided from one object to another.
+
+--- Slide 25 ---
+Figure-Ground
+We separate the ﬁgure (what we focus on) from the ground (the background). To
+make sure that the user will be drawn to the most important aspect of the UI.
+
+--- Slide 26 ---
+Prägnanz
+German for conciseness. We tend to reduce reality to its simplest form. When we
+see complex shapes in a design, the eye simpliﬁes these by transforming them
+into a single, uniﬁed shape (by removing detail from these shapes).
+
+--- Slide 27 ---
+Prägnanz
+
+--- Slide 28 ---
+Prägnanz
+What we actually see
+
+--- Slide 29 ---
+II - Cognitive Principles
+These principles consider the mental processes involved in user
+interaction. Gestalt explains what users see. Cognitive principles explain
+what users think, expect, and remember while they use the interface.
+
+--- Slide 31 ---
+II - Cognitive Principles
+
+--- Slide 32 ---
+Usability Heuristics and
+Guidelines
+To create UIs that are more
+likely to be usable, effective,
+and enjoyable for your
+users.
+
+--- Slide 33 ---
+Heuristics vs. Guidelines
+➔
+Heuristics are not strict rules, so two evaluators can interpret them
+differently, which is why heuristic evaluation uses several evaluators.
+➔
+Guidelines are speciﬁc and measurable, so two evaluators checking the
+same screen should reach the same result, which is why guideline checks
+can be done by one person or even automated with a tool.
+
+--- Slide 34 ---
+Heuristics vs. Guidelines
+
+--- Slide 35 ---
+Heuristics vs. Guidelines
+
+--- Slide 37 ---
+I - Nielsen's 10
+Heuristic Principles
+➔
+Nielsen’s 10 Usability Heuristics are a set of general principles proposed by Jakob Nielsen to
+guide the design and evaluation of user interfaces.
+➔
+They help identify usability problems and improve the effectiveness, efﬁciency, and user
+satisfaction of interactive systems.
+➔
+Nielsen, J. (1994). Enhancing the explanatory power of usability heuristics. Proceedings of
+the SIGCHI Conference on Human Factors in Computing Systems (CHI ’94), 152–158. ACM.
+https://doi.org/10.1145/191666.191729
+➔
+Book Jakob Nielsen’s Usability Engineering (1993) Book
+
+--- Slide 38 ---
+1. Visibility of system status
+➔
+The system should always keep users informed about
+what is going on through appropriate feedback within
+reasonable time.
+➔
+Example: When we download an application in the
+AppStore or in the PlayStore, the store interface
+clearly shows through a progress bar that the app is
+being downloaded and how much it is left.
+
+--- Slide 39 ---
+2. Match between system and the real world
+➔
+The system should speak the users' language, with
+words, phrases, and concepts familiar to the user,
+rather than system-oriented terms. Follow real-world
+conventions, making information appear in a natural
+and logical order.
+➔
+Example: The iOS compass app is designed to look
+like a real compass. This way the users can apply
+what they already know from their real-world
+experience about how the object works and they
+don't have to learn something new before using it.
+
+--- Slide 40 ---
+3. User control and freedom
+➔
+Users often choose system functions by mistake and will need a clearly
+marked emergency exit to leave the unwanted state without having to go
+through an extended dialogue. Support undo and redo.
+➔
+Example: being able to recover an email deleted by mistake is an example
+of an action that allows the user to have control over what is happening.
+
+--- Slide 41 ---
+3. User control and freedom
+
+--- Slide 42 ---
+4. Consistency and standards
+➔
+●
+●
+●
+●
+➔
+Users should not have to wonder whether different words, situations, or
+actions mean the same thing. Follow platform conventions. In practice, this
+means:
+Use the same terminology for the same action throughout the product.
+Use the same visual representation for the same function.
+Keep actions in predictable locations and make them behave consistently.
+Follow familiar platform conventions so users can transfer knowledge from
+other applications.
+Example: Using the same terminology and layout throughout a website, or
+adhering to standard button styles for a particular operating system.
+
+--- Slide 43 ---
+4. Consistency and standards
+
+--- Slide 44 ---
+4. Consistency and standards
+
+--- Slide 45 ---
+5. Error prevention
+➔
+The
+system
+should
+not
+encourage user errors. On the
+contrary, it should try to prevent
+them in every possible way.
+➔
+Example:
+The
+Ryanair
+destination selection screen
+does not allow users to select a
+country that cannot be ﬂown to
+from the selected origin.
+
+--- Slide 46 ---
+6. Minimize memory load
+(Recognition rather than recall)
+➔
+The system should help users recognize interface elements without the need to analyze
+them in detail each time, spending more energy and time.
+➔
+Example: Word is actually excellent for this principle because users recognize formatting
+icons such as B, I, U, alignment, bullets, and font size instead of having to remember the
+command names or syntax.
+
+--- Slide 47 ---
+7. Flexibility and Efﬁciency of use
+➔
+This best practice indicates that the system
+should provide the user with different ways to
+get to the content, accelerators, and custom
+actions.
+➔
+In addition, the system should accommodate
+the way both expert and novice users browse,
+without penalizing either of the two.
+➔
+Example: Amazon's many ﬁlters are a good
+example of this heuristic. Users can ﬁnd the
+product they want in many different ways
+depending on their needs, their priorities, and
+the way they use to browse.
+
+--- Slide 48 ---
+8. Aesthetic and minimalist design
+➔
+Information that is not very relevant or rarely
+used should not be included in the interface.
+Instead, show only the elements necessary for
+the action to be carried out. This way, you will
+create UIs that are easier to understand and to
+use, and you will allow the users to focus on
+what is really important to them.
+➔
+Example: YouTube keeps the video as the main
+focus, with essential controls visible when
+needed and less frequently used options
+hidden in menus, reducing clutter and
+distractions.
+
+--- Slide 49 ---
+9. Help users recognize, diagnose, and
+recover from errors
+➔
+Error messages should be expressed in plain
+language (no codes), precisely indicate the
+problem, and constructively suggest a
+solution.
+➔
+Example: Error messages must clearly indicate
+the errors, their causes, and how to ﬁx them.
+Speciﬁc messages like “Insert a password of
+at least 8 characters” are always better than
+generic messages like “invalid password”
+
+--- Slide 50 ---
+10. Help and documentation
+➔
+The interface should always provide help and
+documentation for the user. It has to be easy
+to ﬁnd, focused on the tasks and steps they
+need to carry out, and not too long.
+➔
+Example: The AirBnB app offers different help
+and contact options.
+
+--- Slide 51 ---
+II - Schneiderman's
+8 Golden Rules
+➔
+They are a set of design principles proposed by Ben Shneiderman to guide the
+development of consistent, user-friendly, and efﬁcient interfaces.
+➔
+Shneiderman, B. (1987). Designing the User Interface: Strategies for Effective
+Human-Computer Interaction (2nd ed.). Addison-Wesley. Book
+
+--- Slide 52 ---
+1. Strive for
+Consistency
+➔
+Use the same design patterns and terminology
+throughout the interface. Maintain consistency in
+layout, color schemes, fonts, and button styles.
+➔
+Example: Using the same icon for "search" across
+different sections of a website (Diffrent Platforms).
+
+--- Slide 53 ---
+1. Strive for
+Consistency
+
+--- Slide 54 ---
+2. Enable Frequent
+Users to Use
+Shortcuts
+➔
+Provide shortcuts for experienced users to speed up
+their interactions. Offer keyboard shortcuts, macros, or
+hidden commands for advanced tasks.
+➔
+Example: Allowing users to use "Ctrl+S" to save a
+document.
+
+--- Slide 55 ---
+3. Offer Informative
+Feedback
+➔ Provide clear and immediate feedback for
+every user action. Display messages
+indicating success, errors, or ongoing
+processes.
+➔ Example:
+Showing
+a
+conﬁrmation
+message after a user submits a form.
+
+--- Slide 56 ---
+4. Design Dialog to
+Yield Closure
+➔ The rule aims to ensure that users
+receive clear feedback after completing a
+task, conﬁrming that their action was
+successful and the process is complete.
+➔ Offer clear beginnings, middles, and ends
+for interactions.
+➔ Example: A multi-step checkout process
+with a clear progress indicator.
+
+--- Slide 57 ---
+5. Offer Simple
+Error Handling
+➔ Design the system to prevent errors
+whenever possible. Provide clear and
+informative
+error
+messages
+with
+constructive solutions.
+➔ Example: Instead of a vague "error"
+message, say "Invalid email address.
+Please enter a valid email."
+
+--- Slide 58 ---
+6. Permit Easy
+Reversal of
+Actions
+➔ Allow users to undo actions easily,
+reducing anxiety and encouraging
+exploration. Provide "undo" buttons or
+clear ways to revert to previous states.
+➔ Example: Offering an "undo" option after
+deleting an email. (Ctrl + Z)
+
+--- Slide 59 ---
+7. Support Internal
+Locus of Control
+➔ Give users a sense of control over the
+system. Avoid unexpected actions or
+changes in the UI.
+➔ Example: Allowing users to customize
+their preferences and settings.
+
+--- Slide 60 ---
+8. Reduce
+Short-Term
+Memory Load
+➔ Keep displays simple and concise,
+minimizing the information users need to
+remember. Provide clear labels and visual
+cues to aid recognition.
+➔ Example: Displaying frequently used
+options in a toolbar instead of burying
+them in menus. (MS Ofﬁce frequant used
+Options; YouTube Play/Pause)
+
+--- Slide 61 ---
+III - Platform-Speciﬁc
+Guidelines
+
+--- Slide 62 ---
+They are sets of recommendations provided by operating
+system developers (like Apple, Google, and Microsoft) to
+help designers create apps that feel at home on their
+platforms. They ensure consistency and familiarity for
+users: navigation, layout, typography, accessibility, color,
+motion,...
+1. Apple's Human Interface Guidelines (HIG) for iOS
+2. Google's Material Design for Android
+3. Microsoft's Fluent Design System for Windows
+
+--- Slide 63 ---
+Final reﬂection
+Closing up Section
+
+--- Slide 64 ---
+Final reﬂection
+Now you have the tools
+to prove it:
+Hawaii alert,
+redesigned
+
+--- Slide 65 ---
+From the case of the Hawaii missile drill, you have 60 seconds. Find one problem,
+tell me which principle/heuristic it breaks, and tell me how you would ﬁx it.
+
+--- Slide 66 ---
+Proposal
+
+--- Slide 67 ---
+References
+●
+●
+●
+●
+●
+Boeree, C. G., "Gestalt Psychology" (Shippensburg University):
+https://webspace.ship.edu/cgboer/gestalt.html
+Classics in the History of Psychology (York University), Koffka glossary page:
+https://www.yorku.ca/pclassic/Koffka/Perception/glossary.htm
+Preece, J., Rogers, Y., & Sharp, H. (2019). Interaction Design: Beyond Human-Computer
+Interaction (5th ed.). Wiley.
+https://ebooks.karbust.me/Technology/Interaction%20Design%20-%20Beyond%20Hum
+an-Computer%20Interaction%20-%205th%20Edition%20-%20Helen%20Sharp,%20Jenny
+%20Preece,%20Yvonne%20Rogers%20-%20Wiley%20(2019).pdf
+Nielsen, J., & Mack, R. L. (Eds.). (1994). Usability Inspection Methods. Wiley.
+Shneiderman, B., Plaisant, C., Cohen, M., Jacobs, S., & Elmqvist, N. (2018). Designing the
+User Interface: Strategies for Effective Human-Computer Interaction (6th ed.).
+
+--- Slide 68 ---
+THANK YOU ALL!!
+

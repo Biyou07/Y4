@@ -1,0 +1,416 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[margin=1.0cm,top=1.05cm,bottom=1.05cm]{geometry}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{colortbl}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage{fancyhdr}
+\usepackage{needspace}
+\usepackage{hyperref}
+
+% =========================================================================
+% Canonical ENSIA / DL Color Palette
+% =========================================================================
+\definecolor{themeblue}{HTML}{2B5A87}   % Primary headings, borders
+\definecolor{lightbg}{HTML}{E8EEF4}     % Background fills for overview & headers
+\definecolor{accentred}{HTML}{C8453A}   % Warnings, theorems, errors
+\definecolor{accentgreen}{HTML}{2E7D32} % Optimality, valid matches, definitions
+\definecolor{darkgray}{HTML}{333333}    % Metadata, body accents
+\definecolor{lightgray}{HTML}{D0D8E0}   % Table borders, soft dividers
+\definecolor{codebg}{HTML}{F6F8FA}      % Background for code/callout boxes
+\definecolor{pathcolor}{HTML}{D0DFEE}   % Shading for highlights
+\definecolor{inlinecode}{HTML}{1A365D}  % Inline code color
+
+\newcommand{\rx}[1]{\texttt{\bfseries\color{inlinecode}#1}}
+\newcommand{\cmark}{\textcolor{accentgreen}{\textbf{\checkmark}}}
+\newcommand{\xmark}{\textcolor{accentred}{\textbf{\texttimes}}}
+
+% Display math spacing compaction
+\setlength{\abovedisplayskip}{3pt}
+\setlength{\belowdisplayskip}{3pt}
+\setlength{\abovedisplayshortskip}{2pt}
+\setlength{\belowdisplayshortskip}{2pt}
+
+% =========================================================================
+% Running Header & Footer Setup
+% =========================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyhead[L]{\footnotesize\bfseries\color{themeblue} Natural Language Processing --- Lecture 3: Language Modeling \& N-grams}
+\fancyhead[R]{\footnotesize\color{darkgray} ENSIA 2026--2027}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{themeblue}\leaders\hrule height \headrulewidth\hfill}}
+\renewcommand{\footrule}{\hbox to\headwidth{\color{lightgray}\leaders\hrule height \footrulewidth\hfill}}
+\fancyfoot[L]{\footnotesize\color{darkgray} Instructor: Prof. Ahmed Guessoum}
+\fancyfoot[R]{\footnotesize\color{themeblue}\bfseries Page \thepage\ of 4}
+
+% =========================================================================
+% Custom Box Environments
+% =========================================================================
+\newtcolorbox{overviewbox}[1][]{
+    colframe=themeblue, colback=lightbg, coltitle=white,
+    fonttitle=\bfseries\sffamily\small,
+    arc=1.2mm, boxrule=0.5pt,
+    left=6pt, right=6pt, top=2.5pt, bottom=2.5pt,
+    title={Lecture Scope: Language Modeling, Markov Models, Perplexity \& Smoothing},
+    #1
+}
+
+\newtcolorbox{examplebox}[1][]{
+    colframe=themeblue!75!black, colback=codebg,
+    arc=1.2mm, boxrule=0.5pt,
+    left=6pt, right=6pt, top=2pt, bottom=2pt,
+    #1
+}
+
+\newtcolorbox{theoremprompt}[1][]{
+    colframe=accentred, colback=white, coltitle=white,
+    fonttitle=\bfseries\sffamily\small,
+    arc=1.2mm, boxrule=0.5pt,
+    left=6pt, right=6pt, top=2.5pt, bottom=2.5pt,
+    #1
+}
+
+\newtcolorbox{insightbox}[1][]{
+    colframe=accentgreen, colback=white, coltitle=white,
+    fonttitle=\bfseries\sffamily\small,
+    arc=1.2mm, boxrule=0.5pt,
+    left=6pt, right=6pt, top=2pt, bottom=2pt,
+    #1
+}
+
+\begin{document}
+
+% =========================================================================
+% PAGE 1: Foundations of Language Modeling & The Markov Assumption
+% =========================================================================
+\begin{center}
+    \vspace{-4pt}
+    {\LARGE\bfseries\color{themeblue} Natural Language Processing: Language Modeling \& N-grams}\\[1.5pt]
+    {\normalsize\bfseries Probabilistic Language Models, Markov Approximations, Perplexity Evaluation, Smoothing \& OOV Management}\\[1.5pt]
+    {\footnotesize\color{darkgray} ENSIA 2026--2027 \quad$\vert$\quad Instructor: Prof. Ahmed Guessoum \quad$\vert$\quad Lecture 3 Summary}
+\end{center}
+
+\vspace{-7pt}
+
+\begin{overviewbox}
+\footnotesize
+A \textbf{Language Model (LM)} assigns probabilities to sequences of words $P(W) = P(w_1, w_2, \dots, w_n)$ or predicts the conditional distribution of upcoming words $P(w_n \mid w_1, \dots, w_{n-1})$. Probabilistic LMs form the computational core of speech recognition, machine translation, predictive communication, and natural language generation. This summary details the Chain Rule of probability, the Markov assumption and $N$-gram hierarchies, extrinsic vs. intrinsic evaluation, dataset partitioning (train/dev/test) and data leakage prevention, mathematical formulation of Perplexity as an effective branching factor, zero-probability handling, smoothing techniques (Laplace, Add-$k$, Linear Interpolation with EM derivation from Lab 3, Stupid Backoff), and open vs. closed vocabulary management for Out-Of-Vocabulary (OOV) tokens.
+\end{overviewbox}
+
+\vspace{-3pt}
+
+\noindent{\large\bfseries\color{themeblue} 1. Definition \& Core Applications of Language Models}\par\vspace{1pt}
+A probabilistic language model computes either the joint probability of an entire word sequence $W = (w_1, w_2, \dots, w_n)$, denoted $P(W)$, or the conditional probability of an upcoming word given historical context, $P(w_n \mid w_1, \dots, w_{n-1})$. These dual formulations quantify linguistic fluency:
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{Automatic Speech Recognition (ASR):} Resolves homophones: \cmark\ $P(\text{\rx{I saw a van}}) \gg P(\text{\rx{eyes awe of an}})$.
+    \item \textbf{Spelling Correction:} Contextual scoring: \cmark\ $P(\text{\rx{about fifteen minutes from}}) > P(\text{\rx{about fifteen minuets from}})$.
+    \item \textbf{AAC Assistive Typing:} Speeds up communication for motor-impaired users via predictive word menus.
+    \item \textbf{Machine Translation (MT):} Selects fluent word order: \cmark\ $P(\text{\rx{the green table}}) \gg P(\text{\rx{the table green}})$.
+\end{itemize}
+
+\vspace{-2pt}
+
+\noindent{\large\bfseries\color{themeblue} 2. The Chain Rule of Probability \& The Counting Dilemma}\par\vspace{1pt}
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{Chain Rule Decomposition:} From $P(A, B) = P(A)P(B \mid A)$, any joint distribution over $n$ variables factorizes into conditional probabilities:
+    \[
+    P(w_1, w_2, \dots, w_n) = P(w_1) P(w_2 \mid w_1) P(w_3 \mid w_1, w_2) \cdots P(w_n \mid w_1, \dots, w_{n-1}) = \prod_{i=1}^n P(w_i \mid w_1, \dots, w_{i-1})
+    \]
+    \item \textbf{Worked Sentence Example:}
+    $P(\text{\rx{its water is so transparent}}) = P(\text{\rx{its}}) \cdot P(\text{\rx{water}}\mid\text{\rx{its}}) \cdot P(\text{\rx{is}}\mid\text{\rx{its water}}) \cdot P(\text{\rx{so}}\mid\text{\rx{its water is}})$ \newline \hspace*{16pt} $\cdot P(\text{\rx{transparent}}\mid\text{\rx{its water is so}})$.
+    \item \textbf{The Empirical Counting Dilemma:} We cannot estimate these terms by relative frequency: $P(w_n \mid w_1, \dots, w_{n-1}) \stackrel{?}{=} \frac{C(w_1, \dots, w_n)}{C(w_1, \dots, w_{n-1})}$.
+    \newline \textbf{Failure Mode:} Natural language is creative. The space of sentences is combinatorially infinite. Most valid long histories never appear in any finite corpus, leading to $C(w_1, \dots, w_{n-1}) = 0$ (division by zero and catastrophic probability collapse $P(W) = 0$).
+\end{itemize}
+
+\vspace{-2pt}
+
+\noindent{\large\bfseries\color{themeblue} 3. The Markov Assumption \& The $N$-gram Hierarchy}\par\vspace{1pt}
+To make estimation tractable, the \textbf{Markov Assumption} (Andrei Markov) posits that word probability depends only on the previous $k$ words:
+\[
+P(w_i \mid w_1, w_2, \dots, w_{i-1}) \approx P(w_i \mid w_{i-k}, \dots, w_{i-1})
+\]
+This parameter $k$ establishes the standard $N$-gram hierarchy ($N = k + 1$), normalized via Maximum Likelihood Estimation (MLE):
+
+\vspace{1pt}
+\noindent{\footnotesize
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{2.2cm} >{\centering\arraybackslash}p{1.2cm} >{\raggedright\arraybackslash}p{3.2cm} >{\raggedright\arraybackslash}X}
+\toprule
+\rowcolor{lightbg}
+\textbf{Model Model} & \textbf{Order $N$} & \textbf{Conditioning Context} & \textbf{Mathematical Definition \& MLE Formula} \\
+\midrule
+\textbf{Unigram} & $N=1, k=0$ & None (Bag-of-words independence) & $P(w_1, \dots, w_n) \approx \prod_{i=1}^n P(w_i)$, \quad $P_{\text{MLE}}(w_i) = \frac{C(w_i)}{N_{\text{tokens}}}$ \\
+\textbf{Bigram} & $N=2, k=1$ & 1 word: $w_{i-1}$ & $P(w_1, \dots, w_n) \approx \prod_{i=1}^n P(w_i \mid w_{i-1})$, \quad $P_{\text{MLE}}(w_i \mid w_{i-1}) = \frac{C(w_{i-1}, w_i)}{C(w_{i-1})}$ \\
+\textbf{Trigram} & $N=3, k=2$ & 2 words: $(w_{i-2}, w_{i-1})$ & $P(w_i \mid w_1 \dots w_{i-1}) \approx P(w_i \mid w_{i-2}, w_{i-1}) = \frac{C(w_{i-2}, w_{i-1}, w_i)}{C(w_{i-2}, w_{i-1})}$ \\
+\textbf{General $N$-gram} & $N, k=N-1$ & $N-1$ words: $w_{i-N+1}^{i-1}$ & $P(w_i \mid w_1 \dots w_{i-1}) \approx P(w_i \mid w_{i-N+1}^{i-1}) = \frac{C(w_{i-N+1}^i)}{C(w_{i-N+1}^{i-1})}$ \\
+\bottomrule
+\end{tabularx}}
+
+\vspace{1pt}
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{Sentence Boundary Padding:} To define a valid probability distribution over sentences of variable length, we augment text with boundary tokens: $\rx{<s>}$ (start) and $\rx{</s>}$ (end). For a bigram model: $P(\text{\rx{<s> I want food </s>}}) = P(\text{\rx{I}}\mid\text{\rx{<s>}}) P(\text{\rx{want}}\mid\text{\rx{I}}) P(\text{\rx{food}}\mid\text{\rx{want}}) P(\text{\rx{</s>}}\mid\text{\rx{food}})$.
+\end{itemize}
+
+\vspace{-2pt}
+
+\noindent{\large\bfseries\color{themeblue} 4. Limitations of Markov Models \& Practical Computation}\par\vspace{1pt}
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{Violation of Long-Distance Dependencies:} Syntax spans across long clauses. A bigram fails to preserve agreement:
+    \newline \xmark\ \textit{``The \textbf{books} that I borrowed yesterday from the central library \textbf{were} fascinating''} ($N$-gram only conditions on \rx{library}).
+    \item \textbf{Context vs. Sparsity Dilemma:} Parameters scale as $\mathcal{O}(|V|^N)$. For $|V| = 10^5$, a 4-gram has $10^{20}$ parameters; almost all combinations have count 0.
+    \item \textbf{Log-Space Underflow Prevention:} Multiplying small probabilities causes floating-point underflow. We compute in log-space: $\log P(W) = \sum_{i=1}^n \log P(w_i \mid w_{i-N+1}^{i-1})$. Summing logs preserves floating-point precision and speeds up inference.
+\end{itemize}
+
+\newpage
+
+% =========================================================================
+% PAGE 2: Model Evaluation, Data Partitions & Perplexity Deep Dive
+% =========================================================================
+
+\noindent{\large\bfseries\color{themeblue} 5. Evaluation Paradigms: Extrinsic (In-Vivo) vs. Intrinsic (In-Vitro)}\par\vspace{1pt}
+To compare language models, we employ two complementary evaluation strategies:
+
+\vspace{1pt}
+\noindent{\footnotesize
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{2.7cm} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}p{4.2cm}}
+\toprule
+\rowcolor{lightbg}
+\textbf{Evaluation Paradigm} & \textbf{Operational Methodology \& Characterization} & \textbf{Engineering Trade-offs} \\
+\midrule
+\textbf{Extrinsic Evaluation} \newline \textit{(In-Vivo / End-to-End)} & Embed the LM directly into a downstream application (e.g., Speech Recognizer, Machine Translation engine). Measure end-task accuracy (e.g., Word Error Rate (WER) in ASR, BLEU in MT). & \textbf{Pros:} Directly measures operational task utility. \newline \textbf{Cons:} Extremely slow, expensive, and improvements can be confounded by other pipeline components. \\
+\midrule
+\textbf{Intrinsic Evaluation} \newline \textit{(In-Vitro / Standalone)} & Measure how well the LM predicts held-out, unseen natural text directly, independent of any external system. Evaluates assigned probability via \textbf{Perplexity}. & \textbf{Pros:} Fast, cheap, reproducible, and provides instantaneous feedback during model training. \newline \textbf{Cons:} Lower perplexity does not guarantee higher downstream task metric. \\
+\bottomrule
+\end{tabularx}}
+
+\vspace{2pt}
+
+\noindent{\large\bfseries\color{themeblue} 6. Dataset Partitioning, Integrity \& Data Leakage}\par\vspace{1pt}
+Valid evaluation requires strict segregation of textual data into three non-overlapping partitions:
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{Training Set (typically 80\%):} Used to compute raw $N$-gram frequency statistics and train base parameters.
+    \item \textbf{Development Set / Validation Set (typically 10\%):} A held-out partition used strictly to tune \textbf{hyperparameters} (e.g., smoothing parameters $k$, interpolation weights $\lambda$, backoff penalties $\alpha$) and diagnose error modes without compromising the test set.
+    \item \textbf{Test Set (typically 10\%):} Reserved exclusively for a single, final evaluation. Must never be consulted during training or tuning.
+    \item \textbf{Data Leakage (Training on the Test Set):} If sentences from the test set contaminate the training data, the model memorizes test $N$-grams, reporting artificially deflated perplexity that fails completely on genuinely novel text.
+    \item \textbf{Distributional Consistency:} The training, dev, and test sets must match in domain, genre, register, and dialect.
+\end{itemize}
+
+\vspace{-2pt}
+
+\begin{theoremprompt}[title={\bfseries\sffamily Mathematical Definition: Perplexity ($\text{PP}$)}]
+\footnotesize
+The \textbf{Perplexity} ($\text{PP}$) of a language model on a test set $W = (w_1, w_2, \dots, w_N)$ containing $N$ words is the \textbf{inverse probability of the test set, normalized by the total number of words}:
+\[
+\text{PP}(W) = P(w_1, w_2, \dots, w_N)^{-\frac{1}{N}} = \sqrt[N]{\frac{1}{P(w_1, w_2, \dots, w_N)}} = \sqrt[N]{\prod_{i=1}^N \frac{1}{P(w_i \mid w_{i-1})}} = \exp\left( -\frac{1}{N} \sum_{i=1}^N \ln P(w_i \mid w_{i-1}) \right)
+\]
+\textbf{Information-Theoretic Connection:} Perplexity is the base-2 exponentiation of the \textbf{cross-entropy} $H(W)$:
+\[
+H(W) = -\frac{1}{N} \log_2 P(w_1, \dots, w_N) \quad \Longrightarrow \quad \text{PP}(W) = 2^{H(W)}
+\]
+\textbf{Minimization Principle:} Minimizing cross-entropy $\iff$ Maximizing test probability $\iff$ \textbf{Minimizing Perplexity}.
+\end{theoremprompt}
+
+\vspace{-2pt}
+
+\noindent{\large\bfseries\color{themeblue} 7. Physical Intuition: Perplexity as Weighted Effective Branching Factor}\par\vspace{1pt}
+What does a perplexity value of $k$ physically mean? It measures the \textbf{effective branching factor} of the language:
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{Intuition:} If an LM must guess the next word from a vocabulary, a perplexity of $B$ means the model is as uncertain as if it were choosing uniformly at random among $B$ equally probable alternatives.
+    \item \textbf{Deterministic Language with Equal Branching:} Consider a language alphabet of size $B$ where every word is followed by any of the $B$ words with equal probability $P(w) = \frac{1}{B}$. For a sentence of length $N$:
+    $P(W) = (1/B)^N \implies \text{PP}(W) = [(1/B)^N]^{-1/N} = B$.
+    Thus, for a completely uniform distribution, perplexity \textbf{exactly equals} the branching factor $B$.
+\end{itemize}
+
+\vspace{-2pt}
+
+\begin{examplebox}
+\footnotesize
+\textbf{Concrete Demonstration: Uniform vs. Biased Models (Slide Walkthrough)}
+\newline Consider a miniature vocabulary $L = \{\text{\rx{red}}, \text{\rx{blue}}, \text{\rx{green}}\}$ ($B=3$), and a test set of $N=5$ words: $T = \text{\rx{red red red red blue}}$.
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{Model A (Uniform Guessing):} $P(\text{\rx{red}}) = P(\text{\rx{blue}}) = P(\text{\rx{green}}) = \frac{1}{3} \implies P_A(T) = (1/3)^5 = \frac{1}{243} \approx 0.004116$.
+    \[
+    \text{PP}_A(T) = \left[(1/3)^5\right]^{-\frac{1}{5}} = \mathbf{3.00} \quad \text{(Maximally uncertain across all 3 vocabulary candidates)}
+    \]
+    \item \textbf{Model B (Learned Language Regularities):} $P(\text{\rx{red}}) = 0.8$, $P(\text{\rx{blue}}) = 0.1$, $P(\text{\rx{green}}) = 0.1$.
+    \[
+    P_B(T) = 0.8^4 \times 0.1^1 = 0.4096 \times 0.1 = 0.04096 \quad \Longrightarrow \quad \text{PP}_B(T) = (0.04096)^{-\frac{1}{5}} \approx \mathbf{1.89}
+    \]
+    \textbf{Takeaway:} Model B leverages frequency knowledge to collapse its uncertainty from 3 choices down to an effective branching factor of \textbf{1.89}. A lower perplexity indicates higher predictive certainty and superior language modeling.
+\end{itemize}
+\end{examplebox}
+
+\vspace{-2pt}
+
+\begin{insightbox}[title={\bfseries\sffamily The Zero-Probability Breakdown: Why Smoothing is Mathematically Mandatory}]
+\footnotesize
+If a single test $N$-gram $(w_{i-1}, w_i)$ never occurred in the training corpus, maximum likelihood estimation assigns:
+\[
+P_{\text{MLE}}(w_i \mid w_{i-1}) = 0 \quad \Longrightarrow \quad P(W) = 0 \quad \Longrightarrow \quad \text{PP}(W) = \lim_{p \to 0^+} \left( \dots \times \frac{1}{0} \dots \right)^{\frac{1}{N}} = \boldsymbol{\infty}
+\]
+A single missing bigram in a 100,000-word test document destroys the entire evaluation metric. This fatal mathematical pathology makes \textbf{smoothing mandatory}.
+\end{insightbox}
+
+\newpage
+
+% =========================================================================
+% PAGE 3: Smoothing Techniques I: Laplace, Add-k, and Linear Interpolation
+% =========================================================================
+
+\noindent{\large\bfseries\color{themeblue} 8. The Data Sparsity Crisis \& The Philosophy of Smoothing}\par\vspace{1pt}
+In any real corpus, the vast majority of valid $N$-grams are unobserved:
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{Zipfian Sparsity:} In the Berkeley Restaurant corpus ($N=9222$ sentences), out of all possible bigrams between vocabulary words, over \textbf{99.7\%} have a count of zero.
+    \item \textbf{The Smoothing Mandate:} \textbf{Smoothing} shaves a fraction of probability mass from frequently observed $N$-grams and redistributes it to unobserved events (zeros), ensuring $P(w_i \mid w_{i-1}) > 0$ for all possible sequences while maintaining a valid probability sum $\sum_w P(w \mid \text{context}) = 1$.
+\end{itemize}
+
+\vspace{-2pt}
+
+\noindent{\large\bfseries\color{themeblue} 9. Add-One (Laplace) Smoothing}\par\vspace{1pt}
+Laplace smoothing pretends every possible $N$-gram has been observed exactly one additional time:
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{Mathematical Formulation:}
+    $P_{\text{Laplace}}(w_i \mid w_{i-1}) = \frac{C(w_{i-1}, w_i) + 1}{C(w_{i-1}) + |V|}$, \quad where $|V|$ is the total vocabulary size.
+    \newline \textbf{Proof of Valid Distribution:} $\sum_{w_i \in V} P_{\text{Laplace}}(w_i \mid w_{i-1}) = \frac{\sum_{w_i \in V} C(w_{i-1}, w_i) + |V|}{C(w_{i-1}) + |V|} = \frac{C(w_{i-1}) + |V|}{C(w_{i-1}) + |V|} = 1$.
+    \item \textbf{Reconstituted (Adjusted) Counts $c^*$:} What count $c^*$ would yield the smoothed probability if divided by raw context count $C(w_{i-1})$?
+    \[
+    P_{\text{Laplace}}(w_i \mid w_{i-1}) = \frac{c^*(w_{i-1}, w_i)}{C(w_{i-1})} \quad \Longrightarrow \quad c^*(w_{i-1}, w_i) = [C(w_{i-1}, w_i) + 1] \times \frac{C(w_{i-1})}{C(w_{i-1}) + |V|}
+    \]
+    \item \textbf{Discount Ratio ($d$):} The fractional count retained after smoothing: $d_c = \frac{c^*}{c}$.
+    \item \textbf{Why Add-1 is a ``Blunt Instrument'' (Pathology):}
+    Because $|V|$ is typically large (e.g., $10^4$ to $10^5$), the denominator $C(w_{i-1}) + |V|$ is overwhelmingly dominated by $|V|$. Laplace smoothing shifts a \textbf{monstrous amount of probability mass} into the zeros:
+    \newline \xmark\ In the Berkeley Restaurant corpus ($|V| = 1446$), the frequent bigram \textit{``want to''} has raw count $C = 608$.
+    Its reconstituted count plummets to $c^* = (608 + 1) \frac{927}{927 + 1446} \approx \mathbf{238}$ ($d = 0.39$). Probability $P(\text{\rx{to}}\mid\text{\rx{want}})$ crashes from $0.66 \to 0.26$!
+\end{itemize}
+
+\vspace{-2pt}
+
+\noindent{\large\bfseries\color{themeblue} 10. Add-$k$ (Lidstone) Smoothing}\par\vspace{1pt}
+To mitigate the excessive mass destruction of Laplace smoothing, Add-$k$ smoothing adds a fractional count $k \in (0, 1)$ (typically $k \in [0.01, 0.5]$):
+\[
+P_{\text{Add-}k}(w_i \mid w_{i-1}) = \frac{C(w_{i-1}, w_i) + k}{C(w_{i-1}) + k|V|}
+\]
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{Hyperparameter Tuning:} The value of $k$ cannot be tuned on the test set. It is chosen to maximize log-likelihood on the \textbf{development set}.
+    \item \textbf{Fundamental Inherent Flaw:} Add-$k$ still assigns identical probability $\frac{k}{C(w_{i-1}) + k|V|}$ to every unobserved word. It cannot distinguish between an unseen plausible word (e.g. \textit{``eat a mango''}) and an unseen absurd word (e.g. \textit{``eat a pterodactyl''}), treating both identically because it ignores unigram base rates.
+\end{itemize}
+
+\vspace{-2pt}
+
+\noindent{\large\bfseries\color{themeblue} 11. Linear Interpolation \& EM Optimization (Lab 3 Ground Truth)}\par\vspace{1pt}
+Instead of blindly adding uniform mass, \textbf{Linear Interpolation} mixes evidence across higher- and lower-order models:
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{Simple Linear Interpolation:} Combine trigram, bigram, and unigram MLE estimates using weights $\lambda_i$:
+    \[
+    P_{\text{interp}}(w_i \mid w_{i-2}, w_{i-1}) = \lambda_1 P_{\text{MLE}}(w_i) + \lambda_2 P_{\text{MLE}}(w_i \mid w_{i-1}) + \lambda_3 P_{\text{MLE}}(w_i \mid w_{i-2}, w_{i-1})
+    \]
+    subject to the simplex constraints: $\lambda_1 + \lambda_2 + \lambda_3 = 1$ and $\lambda_j \ge 0$.
+    \item \textbf{Context-Conditioned Interpolation:} The mixture weights are conditioned on context frequency: $\lambda_j(w_{i-2:i-1})$. If a trigram context is observed thousands of times, assign high weight to $\lambda_3$; if context is rare, shift weight to unigram $\lambda_1$.
+\end{itemize}
+
+\vspace{-2pt}
+
+\begin{insightbox}[title={\bfseries\sffamily The Expectation-Maximization (EM) Algorithm for Mixture Weights (Lab 3 Exercise 5)}]
+\footnotesize
+The mixture weights $\boldsymbol{\lambda} = (\lambda_1, \lambda_2, \lambda_3)$ are learned on a \textbf{held-out validation corpus} by maximizing log-likelihood via EM:
+\begin{enumerate}[leftmargin=14pt, itemsep=0.5pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{Initialization:} Fix $N$-gram parameters trained on training set. Initialize mixture weights uniformly: $\lambda_1 = \lambda_2 = \dots = \frac{1}{N_{\text{orders}}}$.
+    \item \textbf{Expectation Step (E-step):} For each token $w_i$ in the held-out set, compute the \textbf{posterior responsibility} of each $N$-gram order:
+    \[
+    \text{Resp}_{\text{unigram}}(w_i) = \frac{\lambda_1 P(w_i)}{P_{\text{interp}}(w_i \mid \text{context})}, \qquad \text{Resp}_{\text{bigram}}(w_i) = \frac{\lambda_2 P(w_i \mid w_{i-1})}{P_{\text{interp}}(w_i \mid \text{context})}
+    \]
+    \item \textbf{Maximization Step (M-step):} Re-estimate optimal $\lambda$ weights by summing responsibilities across all tokens in the held-out corpus:
+    \[
+    \lambda_1^{\text{new}} = \frac{\sum_{w_i} \text{Resp}_{\text{unigram}}(w_i)}{\sum_{w_i} [\text{Resp}_{\text{unigram}}(w_i) + \text{Resp}_{\text{bigram}}(w_i)]}, \qquad \lambda_2^{\text{new}} = \frac{\sum_{w_i} \text{Resp}_{\text{bigram}}(w_i)}{\sum_{w_i} [\text{Resp}_{\text{unigram}}(w_i) + \text{Resp}_{\text{bigram}}(w_i)]}
+    \]
+    \item \textbf{Convergence:} Repeat E-step and M-step iteratively until $|\lambda_j^{\text{new}} - \lambda_j| < \epsilon = 10^{-3}$. Guaranteed to improve held-out likelihood.
+\end{enumerate}
+\end{insightbox}
+
+\newpage
+
+% =========================================================================
+% PAGE 4: Smoothing II: Backoff Architectures & Unknown Words (OOV)
+% =========================================================================
+
+\noindent{\large\bfseries\color{themeblue} 12. Backoff Smoothing Architectures: Stupid Backoff \& Katz Backoff}\par\vspace{1pt}
+While interpolation always combines all orders, \textbf{backoff} relies on the highest available $N$-gram and \textit{only} falls back to lower orders when higher-order counts are zero:
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{Katz Backoff (Formal Probability Distribution):}
+    Uses Good-Turing discounting to calculate discounted probability $P^*(w_i \mid w_{i-1})$ for observed bigrams. The reserved probability mass $1 - \sum_{w: c>0} P^*(w \mid w_{i-1})$ is distributed to unseen bigrams in proportion to their lower-order unigram probabilities:
+    \[
+    P_{\text{Katz}}(w_i \mid w_{i-1}) = \begin{cases}
+    P^*(w_i \mid w_{i-1}) = \frac{c^*(w_{i-1}, w_i)}{C(w_{i-1})} & \text{if } C(w_{i-1}, w_i) > 0 \\
+    \alpha(w_{i-1}) P_{\text{Katz}}(w_i) & \text{if } C(w_{i-1}, w_i) = 0
+    \end{cases}
+    \]
+    where normalization constant $\alpha(w_{i-1}) = \frac{1 - \sum_{w: c>0} P^*(w \mid w_{i-1})}{1 - \sum_{w: c>0} P(w)}$ ensures $\sum_w P_{\text{Katz}}(w \mid w_{i-1}) = 1$.
+\end{itemize}
+
+\vspace{-2pt}
+
+\begin{theoremprompt}[title={\bfseries\sffamily Stupid Backoff: Web-Scale Language Modeling (Brants et al., 2007 \& Lab 3)}]
+\footnotesize
+Designed for gigantic web corpora (e.g., Google $N$-gram release with $10^{12}$ tokens), \textbf{Stupid Backoff} drops formal probability normalization in favor of raw computational efficiency:
+\[
+S(w_i \mid w_{i-k+1}^{i-1}) = \begin{cases}
+\frac{C(w_{i-k+1}^i)}{C(w_{i-k+1}^{i-1})} & \text{if } C(w_{i-k+1}^i) > 0 \\
+\alpha \cdot S(w_i \mid w_{i-k+2}^{i-1}) & \text{otherwise (back off to lower-order)}
+\end{cases}
+\]
+\textbf{Base Condition (Unigram):} $S(w_i) = \frac{C(w_i)}{N_{\text{tokens}}}$. \qquad \textbf{Empirical Discount Factor:} $\alpha = 0.4$.
+\newline \textbf{Theoretical Distinction:} The scores $S$ \textbf{do not sum to 1} and are not true probabilities. However, they preserve relative ranking, scale gracefully to billions of parameters, and rival complex models in downstream performance.
+\end{theoremprompt}
+
+\vspace{-2pt}
+
+\noindent{\large\bfseries\color{themeblue} 13. Comprehensive Comparative Matrix of Smoothing Methods}\par\vspace{1pt}
+\noindent{\footnotesize
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{2.6cm} >{\centering\arraybackslash}p{1.8cm} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}p{4.2cm}}
+\toprule
+\rowcolor{lightbg}
+\textbf{Smoothing Method} & \textbf{Valid Prob? ($\sum P = 1$)} & \textbf{Mathematical Core / Operational Mechanics} & \textbf{Diagnostic Limitations \& Use Case} \\
+\midrule
+\textbf{Laplace (Add-1)} & \cmark\ Yes & Adds $1$ to all counts: $\frac{C(w_{i-1}, w_i) + 1}{C(w_{i-1}) + |V|}$. & \textbf{Blunt instrument:} transfers massive mass to zeros. Never used in modern NLP; purely historical. \\
+\midrule
+\textbf{Add-$k$ (Lidstone)} & \cmark\ Yes & Adds $k \in (0, 1)$ to counts: $\frac{C(w_{i-1}, w_i) + k}{C(w_{i-1}) + k|V|}$. & Treats all unobserved words uniformly; ignores unigram base rates. Useful only for text classification. \\
+\midrule
+\textbf{Linear Interpolation} & \cmark\ Yes & Weighted sum of orders: $\sum \lambda_j P_j$; $\boldsymbol{\lambda}$ tuned on dev set via EM algorithm. & Highly effective; captures unigram plausibility for unseen $N$-grams. Standard for small/medium corpora. \\
+\midrule
+\textbf{Katz Backoff} & \cmark\ Yes & Good-Turing discounting on observed counts; backs off strictly when count $=0$ with scaling $\alpha$. & Rigorous probability distribution; requires Good-Turing discount schedules. Computationally demanding. \\
+\midrule
+\textbf{Stupid Backoff} & \xmark\ No \newline (Heuristic score) & Backs off recursively with constant decay $\alpha = 0.4$: $S = \alpha \cdot S_{\text{lower}}$. & Extremely fast, no normalization overhead. Preferred industry standard for web-scale corpora. \\
+\bottomrule
+\end{tabularx}}
+
+\vspace{1pt}
+
+\noindent{\large\bfseries\color{themeblue} 14. Unknown Words: Open vs. Closed Vocabularies \& The $\rx{<UNK>}$ Protocol}\par\vspace{1pt}
+Real-world natural language text constantly introduces unseen words: named entities, neologisms, and domain terminology:
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{Closed Vocabulary Assumption:} Assumes test vocabulary is identical to training ($V_{\text{test}} \subseteq V_{\text{train}}$). Out-of-vocabulary words are assumed impossible. Completely unviable for open-world NLP.
+    \item \textbf{Open Vocabulary Task:} Explicitly models the occurrence of unknown words (\textbf{Out-Of-Vocabulary / OOV} words) using a designated pseudo-token: $\rx{<UNK>}$.
+\end{itemize}
+
+\vspace{-2pt}
+
+\begin{insightbox}[title={\bfseries\sffamily The Two-Step $\rx{<UNK>}$ Protocol \& Perplexity Comparison Integrity}]
+\footnotesize
+Handling OOV tokens requires strict training and inference discipline:
+\begin{enumerate}[leftmargin=14pt, itemsep=0.5pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{Training Phase (Vocabulary Induction):} Fix vocabulary lexicon $L$ (top $K$ types or words with count $C(w) \ge \text{threshold}$). In training corpus normalization, replace all words not in $L$ with $\rx{<UNK>}$. Train $N$-gram probabilities treating $\rx{<UNK>}$ as an ordinary word (estimating $P(\rx{<UNK>}\mid w_{i-1})$).
+    \item \textbf{Inference Phase (Test Scoring):} Map any unseen test word $w \notin L$ to $\rx{<UNK>}$ and score using $P(\rx{<UNK>}\mid\text{context})$.
+\end{enumerate}
+\vspace{1pt}
+\hrule height 0.3pt\vspace{2pt}
+\textbf{Golden Rule of Evaluation Integrity:} Two LMs can be compared via perplexity \textbf{if and only if they share the identical vocabulary}. An LM with a smaller vocabulary trivially achieves a lower (better-looking) perplexity because probability mass is distributed across fewer options. Dropping OOV tokens invalidates comparability.
+\end{insightbox}
+
+\end{document}

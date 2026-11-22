@@ -1,0 +1,534 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[margin=1.0cm,top=1.0cm,bottom=1.0cm]{geometry}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{colortbl}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage{fancyhdr}
+\usepackage{ragged2e}
+\usepackage{hyperref}
+
+\newcolumntype{Y}{>{\RaggedRight\arraybackslash}X}
+\newcolumntype{L}[1]{>{\RaggedRight\arraybackslash}p{#1}}
+
+% =========================================================================
+% Canonical ENSIA / DL Color Palette
+% =========================================================================
+\definecolor{themeblue}{HTML}{2B5A87}   % Primary headings, borders
+\definecolor{lightbg}{HTML}{E8EEF4}     % Background fills for overview & headers
+\definecolor{accentred}{HTML}{C8453A}   % Warnings, theorems, errors
+\definecolor{accentgreen}{HTML}{2E7D32} % Optimality, valid matches, definitions
+\definecolor{darkgray}{HTML}{333333}    % Metadata, body accents
+\definecolor{lightgray}{HTML}{D0D8E0}   % Table borders, soft dividers
+\definecolor{codebg}{HTML}{F6F8FA}      % Background for code/callout boxes
+\definecolor{pathcolor}{HTML}{D0DFEE}   % Shading for highlights
+\definecolor{inlinecode}{HTML}{1A365D}  % Inline code color
+
+\newcommand{\rx}[1]{\texttt{\bfseries\color{inlinecode}#1}}
+\newcommand{\cmark}{\textcolor{accentgreen}{\textbf{\checkmark}}}
+\newcommand{\xmark}{\textcolor{accentred}{\textbf{\texttimes}}}
+
+% Display math spacing compaction
+\setlength{\abovedisplayskip}{2pt}
+\setlength{\belowdisplayskip}{2pt}
+\setlength{\abovedisplayshortskip}{1pt}
+\setlength{\belowdisplayshortskip}{1pt}
+
+% =========================================================================
+% Running Header & Footer Setup
+% =========================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{18.7pt}
+\addtolength{\topmargin}{-6.7pt}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyhead[L]{\footnotesize\bfseries\color{themeblue} Natural Language Processing --- Lecture 6: Vector Semantics \& Embeddings}
+\fancyhead[R]{\footnotesize\color{darkgray} ENSIA 2026--2027}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{themeblue}\leaders\hrule height \headrulewidth\hfill}}
+\renewcommand{\footrule}{\hbox to\headwidth{\color{lightgray}\leaders\hrule height \footrulewidth\hfill}}
+\fancyfoot[L]{\footnotesize\color{darkgray} Instructor: Prof. Ahmed Guessoum}
+\fancyfoot[R]{\footnotesize\color{themeblue}\bfseries Page \thepage\ of 4}
+
+% =========================================================================
+% Custom Box Environments
+% =========================================================================
+\newtcolorbox{overviewbox}[1][]{
+    colframe=themeblue, colback=lightbg, coltitle=white,
+    fonttitle=\bfseries\sffamily\small,
+    arc=1.2mm, boxrule=0.5pt,
+    left=5pt, right=5pt, top=2pt, bottom=2pt,
+    title={Lecture Scope: Vector Semantics, Distributional Representations \& Embeddings},
+    #1
+}
+
+\newtcolorbox{examplebox}[1][]{
+    colframe=themeblue!75!black, colback=codebg,
+    arc=1.2mm, boxrule=0.5pt,
+    left=5pt, right=5pt, top=2pt, bottom=2pt,
+    #1
+}
+
+\newtcolorbox{theoremprompt}[1][]{
+    colframe=accentred, colback=white, coltitle=white,
+    fonttitle=\bfseries\sffamily\small,
+    arc=1.2mm, boxrule=0.5pt,
+    left=5pt, right=5pt, top=2pt, bottom=2pt,
+    #1
+}
+
+\newtcolorbox{insightbox}[1][]{
+    colframe=accentgreen, colback=white, coltitle=white,
+    fonttitle=\bfseries\sffamily\small,
+    arc=1.2mm, boxrule=0.5pt,
+    left=5pt, right=5pt, top=2pt, bottom=2pt,
+    #1
+}
+
+\begin{document}
+
+% =========================================================================
+% PAGE 1: Co-occurrence Matrices, Vector Spaces & Cosine Similarity
+% =========================================================================
+\begin{center}
+    \vspace{-4pt}
+    {\LARGE\bfseries\color{themeblue} Natural Language Processing: Vector Semantics \& Embeddings}\\[1pt]
+    {\small\color{darkgray} Comprehensive Course Summary --- Vector Space Models, Cosine Similarity, Weighting Schemes \& Word2Vec}
+    \vspace{-4pt}
+\end{center}
+
+\begin{overviewbox}
+\footnotesize
+\textbf{The Distributional Paradigm:} Traditional symbolic NLP models words as atomic symbols or orthogonal one-hot vectors $\mathbf{e}_w \in \{0, 1\}^{|V|}$, rendering all words equidistant ($\|\mathbf{e}_{\text{cat}} - \mathbf{e}_{\text{dog}}\| = \|\mathbf{e}_{\text{cat}} - \mathbf{e}_{\text{refrigerator}}\|$). \textbf{Vector Semantics} defines word meaning geometrically via the \textbf{Distributional Hypothesis} (Firth, 1957): \textit{Words that occur in similar contexts have similar meanings}.
+\begin{itemize}[leftmargin=10pt,topsep=1pt,itemsep=0.5pt]
+    \item \textbf{Sparse Count Vectors:} High-dimensional ($|V| \approx 50{,}000$), sparse co-occurrence counts weighted by Information Retrieval metrics (TF-IDF) or mutual information (PPMI).
+    \item \textbf{Dense Learned Embeddings:} Low-dimensional ($d \in [50, 300]$), continuous representations optimized via self-supervised classification (Word2Vec Skip-Gram with Negative Sampling).
+\end{itemize}
+\end{overviewbox}
+
+\vspace{-3pt}
+\subsection*{\color{themeblue} 1. Vector Space Models: Co-occurrence Matrix Architectures}
+\vspace{-2pt}
+
+\noindent\begin{minipage}[t]{0.485\textwidth}
+\textbf{A. Term-Document Matrix ($|V| \times |D|$):}
+\begin{itemize}[leftmargin=10pt,topsep=1pt,itemsep=1pt]
+    \footnotesize
+    \item Documents $d_j \in D$ are column vectors of term counts: $\mathbf{d}_j = [f_{1j}, f_{2j}, \dots, f_{|V|j}]^T$.
+    \item Terms $w_i \in V$ are row vectors across corpus documents: $\mathbf{w}_i = [f_{i1}, f_{i2}, \dots, f_{i|D|}]$.
+    \item \textbf{Use Case:} Document retrieval, search ranking, and topical similarity.
+\end{itemize}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.485\textwidth}
+\textbf{B. Term-Context / Word-Word Matrix ($|V| \times |V|$):}
+\begin{itemize}[leftmargin=10pt,topsep=1pt,itemsep=1pt]
+    \footnotesize
+    \item Square matrix tracking co-occurrences within a window of $\pm L$ tokens around target $w_i$.
+    \item Cell $F_{ij} = \text{count}(w_i, c_j)$ records co-occurrence count of target $w_i$ with context $c_j$.
+    \item \textbf{Use Case:} Word-level semantic similarity, distributional clustering, synonymy discovery.
+\end{itemize}
+\end{minipage}
+
+\vspace{1pt}
+\subsection*{\color{themeblue} 2. Similarity in Vector Spaces: Dot Product \& Cosine Similarity}
+\vspace{-2pt}
+
+\begin{theoremprompt}[title={\textbf{The Vector Length Pathology \& Cosine Similarity Formulation}}]
+\footnotesize
+The raw \textbf{dot product} $\mathbf{v} \cdot \mathbf{w} = \sum_{i=1}^d v_i w_i = \|\mathbf{v}\|_2 \|\mathbf{w}\|_2 \cos \theta$ is fundamentally biased by vector magnitude. Frequent words have massive L2 norms $\|\mathbf{v}\|_2 = \sqrt{\sum v_i^2}$, causing large dot products with unrelated terms purely due to raw occurrence frequency.
+
+\noindent\textbf{Cosine Similarity} cures this pathology by dividing by the product of Euclidean norms, measuring exclusively the \textbf{angle $\theta$} between vectors, completely invariant to absolute word frequency:
+\begin{equation}
+    \text{Cosine}(\mathbf{v}, \mathbf{w}) = \frac{\mathbf{v} \cdot \mathbf{w}}{\|\mathbf{v}\|_2 \|\mathbf{w}\|_2} = \frac{\sum_{i=1}^d v_i w_i}{\sqrt{\sum_{i=1}^d v_i^2}\sqrt{\sum_{i=1}^d w_i^2}} = \frac{\mathbf{v}}{\|\mathbf{v}\|_2} \cdot \frac{\mathbf{w}}{\|\mathbf{w}\|_2}
+\end{equation}
+\textbf{Properties:} For non-negative frequency counts ($v_i, w_i \ge 0$), $\cos \theta \in [0, 1]$. A value of $1.0$ indicates identical contextual proportions (parallel vectors); a value of $0.0$ indicates orthogonal vectors sharing no common context words.
+\end{theoremprompt}
+
+\vspace{1pt}
+\subsection*{\color{themeblue} 3. Full Step-by-Step Worked Exam Problem: Cosine Similarity on Context Counts}
+\vspace{-2pt}
+
+\begin{examplebox}
+\footnotesize
+\textbf{Exam Task:} Given co-occurrence counts across 3 context dimensions (\texttt{pie}, \texttt{data}, \texttt{computer}), compute the pairwise cosine similarity between $\mathbf{v}_{\text{cherry}}$ and $\mathbf{v}_{\text{information}}$, and between $\mathbf{v}_{\text{digital}}$ and $\mathbf{v}_{\text{information}}$. Explain the semantic implications.
+
+\vspace{1pt}
+\centering
+\begin{tabular}{l ccc >{\bfseries}l}
+\toprule
+\textbf{Target Word} & $c_1 = \text{\texttt{pie}}$ & $c_2 = \text{\texttt{data}}$ & $c_3 = \text{\texttt{computer}}$ & Vector Representation $\mathbf{v}$ \\
+\midrule
+$\mathbf{v}_{\text{cherry}}$      & 442 & 8    & 2    & $[442, 8, 2]^T$ \\
+$\mathbf{v}_{\text{digital}}$     & 5   & 1683 & 1670 & $[5, 1683, 1670]^T$ \\
+$\mathbf{v}_{\text{information}}$ & 5   & 3982 & 3325 & $[5, 3982, 3325]^T$ \\
+\bottomrule
+\end{tabular}
+
+\vspace{2pt}
+\flushleft
+\textbf{Step 1: Compute Vector L2 Euclidean Norms ($\|\mathbf{v}\|_2 = \sqrt{\sum v_i^2}$):}
+\begin{align*}
+    \|\mathbf{v}_{\text{cherry}}\|_2      &= \sqrt{442^2 + 8^2 + 2^2} = \sqrt{195{,}364 + 64 + 4} = \sqrt{195{,}432} \approx \mathbf{442.08} \\
+    \|\mathbf{v}_{\text{digital}}\|_2     &= \sqrt{5^2 + 1683^2 + 1670^2} = \sqrt{25 + 2{,}832{,}489 + 2{,}788{,}900} = \sqrt{5{,}621{,}414} \approx \mathbf{2370.95} \\
+    \|\mathbf{v}_{\text{information}}\|_2 &= \sqrt{5^2 + 3982^2 + 3325^2} = \sqrt{25 + 15{,}856{,}324 + 11{,}055{,}625} = \sqrt{26{,}911{,}974} \approx \mathbf{5187.68}
+\end{align*}
+
+\textbf{Step 2: Compute Raw Dot Products ($\mathbf{v} \cdot \mathbf{w}$):}
+\begin{align*}
+    \mathbf{v}_{\text{cherry}} \cdot \mathbf{v}_{\text{information}}  &= (442 \times 5) + (8 \times 3982) + (2 \times 3325) = 2210 + 31{,}856 + 6650 = \mathbf{40{,}716} \\
+    \mathbf{v}_{\text{digital}} \cdot \mathbf{v}_{\text{information}} &= (5 \times 5) + (1683 \times 3982) + (1670 \times 3325) = 25 + 6{,}701{,}706 + 5{,}552{,}750 = \mathbf{12{,}254{,}481}
+\end{align*}
+
+\textbf{Step 3: Compute Normalized Cosine Similarities:}
+\begin{align*}
+    \text{Cosine}(\mathbf{v}_{\text{cherry}}, \mathbf{v}_{\text{information}}) &= \frac{40{,}716}{442.08 \times 5187.68} = \frac{40{,}716}{2{,}293{,}368} \approx \mathbf{0.0177} \approx \mathbf{0.018} \\
+    \text{Cosine}(\mathbf{v}_{\text{digital}}, \mathbf{v}_{\text{information}}) &= \frac{12{,}254{,}481}{2370.95 \times 5187.68} = \frac{12{,}254{,}481}{12{,}299{,}720} \approx \mathbf{0.9963} \approx \mathbf{0.996}
+\end{align*}
+
+\textbf{Semantic Interpretation \& Exam Takeaway:}
+\begin{itemize}[leftmargin=10pt,topsep=1pt,itemsep=0.5pt]
+    \item $\text{Cosine}(\text{cherry}, \text{information}) = 0.018 \approx 0 \implies$ Near $90^\circ$ orthogonality. Despite the raw dot product ($40{,}716$), the words share virtually zero semantic affinity; their distributions inhabit orthogonal contextual subspaces.
+    \item $\text{Cosine}(\text{digital}, \text{information}) = 0.996 \approx 1 \implies$ Near $0^\circ$ parallelism. Their context profiles have almost identical proportional distributions across computational dimensions, proving high semantic synonymy.
+\end{itemize}
+\end{examplebox}
+
+\clearpage
+
+% =========================================================================
+% PAGE 2: Vector Weighting: TF-IDF vs. Pointwise Mutual Information (PPMI)
+% =========================================================================
+\begin{center}
+    \vspace{-4pt}
+    {\Large\bfseries\color{themeblue} Weighting Schemes: TF-IDF \& Positive Pointwise Mutual Information}\\[1pt]
+    {\small\color{darkgray} Overcoming Raw Frequency Skew in Term-Document and Term-Context Spaces}
+    \vspace{-4pt}
+\end{center}
+
+\begin{overviewbox}
+\footnotesize
+\textbf{The Frequency Skew Pathology:} Raw counts $f_{wc}$ are heavily dominated by ubiquitous grammatical function words (\textit{the}, \textit{of}, \textit{and}, \textit{is}) or generic domain words. These non-informative tokens co-occur with almost everything by pure chance. Optimal weighting schemes must amplify terms that carry \textbf{high informational specificity} and discount expected chance co-occurrences.
+\end{overviewbox}
+
+\vspace{-3pt}
+\subsection*{\color{themeblue} 4. TF-IDF Weighting (Information Retrieval \& Document Spaces)}
+\vspace{-2pt}
+
+\noindent\begin{minipage}[t]{0.485\textwidth}
+\begin{theoremprompt}[title={\textbf{Sub-linear Term Frequency ($\text{tf}_{t,d}$)}}]
+\footnotesize
+A word appearing 20 times in a document is not 20 times more relevant than one appearing once. Apply logarithmic dampening:
+\begin{equation}
+    \text{tf}_{t,d} = \begin{cases} 1 + \log_{10}(\text{count}(t, d)) & \text{if } \text{count}(t, d) > 0 \\ 0 & \text{otherwise} \end{cases}
+\end{equation}
+\end{theoremprompt}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.485\textwidth}
+\begin{theoremprompt}[title={\textbf{Inverse Document Frequency ($\text{idf}_t$)}}]
+\footnotesize
+Measures the corpus-level specificity of term $t$ ($N = |D|$ total documents; $\text{df}_t$ documents containing $t$):
+\begin{equation}
+    \text{idf}_t = \log_{10}\left(\frac{N}{\text{df}_t}\right)
+\end{equation}
+If term $t$ appears in every document ($\text{df}_t = N$), $\text{idf}_t = \log_{10}(1) = 0$.
+\end{theoremprompt}
+\end{minipage}
+
+\vspace{1pt}
+\noindent\textbf{Compound Weight \& Document Centroids:} $\text{tf-idf}_{t,d} = \text{tf}_{t,d} \times \text{idf}_t$. To represent an entire document $d$ as a dense or sparse vector in semantic space, compute its \textbf{Centroid Vector}: $\mathbf{d} = \frac{1}{|d|}\sum_{w \in d} \mathbf{w}$ or weight words by TF-IDF: $\mathbf{d} = \sum_{w \in d} \text{tf-idf}(w, d) \cdot \mathbf{w}$.
+
+\vspace{1pt}
+\subsection*{\color{themeblue} 5. Pointwise Mutual Information (PMI \& PPMI) for Word-Word Spaces}
+\vspace{-2pt}
+
+\begin{theoremprompt}[title={\textbf{PMI Definition, Contingency Matrix Formulation \& PPMI Truncation}}]
+\footnotesize
+\textbf{Pointwise Mutual Information (PMI)} measures whether target $w$ and context $c$ co-occur more frequently than expected under independence:
+\begin{equation}
+    \text{PMI}(w, c) = \log_2 \frac{P(w, c)}{P(w)P(c)} = \log_2 \left( \frac{f_{wc} / N}{(f_{w\bullet} / N)(f_{\bullet c} / N)} \right) = \log_2 \left( \frac{f_{wc} \cdot N}{f_{w\bullet} \cdot f_{\bullet c}} \right)
+\end{equation}
+where $f_{wc} = \text{count}(w, c)$, $f_{w\bullet} = \sum_{c'} f_{wc'}$, $f_{\bullet c} = \sum_{w'} f_{w'c}$, and $N = \sum_{i}\sum_{j} f_{ij}$.
+\begin{itemize}[leftmargin=10pt,topsep=1pt,itemsep=0.5pt]
+    \item $\text{PMI} = 0 \implies$ co-occurrence matches random chance; $\text{PMI} > 0 \implies$ positive semantic association; $\text{PMI} < 0 \implies$ mutual avoidance.
+    \item \textbf{Positive PMI (PPMI):} Negative PMI values are statistically unreliable due to count sparsity and human intuition reflects association rather than non-occurrence. Truncate negative values to zero: $\text{PPMI}(w, c) = \max(\text{PMI}(w, c), 0)$.
+\end{itemize}
+\end{theoremprompt}
+
+\vspace{-1pt}
+\subsection*{\color{themeblue} 6. Full Step-by-Step Worked Exam Problem: Computing PPMI from Contingency Counts}
+\vspace{-2pt}
+
+\begin{examplebox}
+\footnotesize
+\textbf{Exam Task:} Given the $2 \times 2$ co-occurrence count matrix below, compute expected counts $E_{wc} = \frac{f_{w\bullet} \cdot f_{\bullet c}}{N}$, the PMI scores, and the PPMI matrix.
+
+\vspace{1pt}
+\centering
+\begin{tabular}{l cc >{\bfseries}c}
+\toprule
+\textbf{Target Word ($w$)} & $c_1 = \text{\texttt{computer}}$ & $c_2 = \text{\texttt{pie}}$ & Marginal Row Sum $f_{w\bullet}$ \\
+\midrule
+$w_1 = \text{\texttt{data}}$   & 10 & 2  & 12 \\
+$w_2 = \text{\texttt{cherry}}$ & 1  & 8  & 9 \\
+\midrule
+\textbf{Marginal Col Sum $f_{\bullet c}$} & \textbf{11} & \textbf{10} & Total Sum $N = 21$ \\
+\bottomrule
+\end{tabular}
+
+\vspace{2pt}
+\flushleft
+\noindent\begin{minipage}[t]{0.49\textwidth}
+\textbf{Step 1: Expected Counts under Independence ($E_{wc}$):}
+\begin{align*}
+    E_{\text{data, comp}}   &= \tfrac{12 \times 11}{21} \approx \mathbf{6.29}, &
+    E_{\text{data, pie}}    &= \tfrac{12 \times 10}{21} \approx \mathbf{5.71} \\
+    E_{\text{cherry, comp}} &= \tfrac{9 \times 11}{21} \approx \mathbf{4.71}, &
+    E_{\text{cherry, pie}}  &= \tfrac{9 \times 10}{21} \approx \mathbf{4.29}
+\end{align*}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.49\textwidth}
+\textbf{Step 2: Compute $\text{PMI}(w, c) = \log_2 (f_{wc} / E_{wc})$:}
+\begin{align*}
+    \text{PMI}(\text{data}, \text{comp})   &= \log_2(10 / 6.29) \approx \mathbf{+0.670} \text{ bits} \\
+    \text{PMI}(\text{data}, \text{pie})    &= \log_2(2 / 5.71) \approx \mathbf{-1.515} \text{ bits} \\
+    \text{PMI}(\text{cherry}, \text{comp}) &= \log_2(1 / 4.71) \approx \mathbf{-2.238} \text{ bits} \\
+    \text{PMI}(\text{cherry}, \text{pie})  &= \log_2(8 / 4.29) \approx \mathbf{+0.901} \text{ bits}
+\end{align*}
+\end{minipage}
+
+\vspace{1pt}
+\textbf{Step 3: Apply PPMI Thresholding ($\text{PPMI} = \max(\text{PMI}, 0)$) to Construct Final Matrix:}
+\begin{equation*}
+    \mathbf{PPMI} = 
+    \begin{pmatrix}
+    \max(+0.670, 0) & \max(-1.515, 0) \\
+    \max(-2.238, 0) & \max(+0.901, 0)
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+    \mathbf{0.670} & \mathbf{0} \\
+    \mathbf{0}     & \mathbf{0.901}
+    \end{pmatrix}
+\end{equation*}
+\end{examplebox}
+
+\vspace{-2pt}
+\subsection*{\color{themeblue} 7. Context Distribution Smoothing ($\text{PPMI}_\alpha$ - Slide 64)}
+\vspace{-2pt}
+
+\begin{insightbox}
+\footnotesize
+\textbf{The Rare Word Pathology \& $\alpha = 0.75$ Smoothing:} Standard PMI exhibits severe bias toward extremely rare words. If rare context $c$ appears once with $w$, its marginal $P(c)$ is infinitesimally small, causing denominator $P(w)P(c) \approx 0$ and yielding spuriously massive PMI scores. \textbf{Fix:} Raise context probabilities to $\alpha = 0.75$:
+\begin{equation}
+    P_\alpha(c) = \frac{(\text{count}(c))^{\alpha}}{\sum_{c'} (\text{count}(c'))^{\alpha}} = \frac{(f_{\bullet c})^{0.75}}{\sum_{c'} (f_{\bullet c'})^{0.75}}, \qquad \text{PPMI}_\alpha(w, c) = \max\left( \log_2 \frac{P(w, c)}{P(w) P_\alpha(c)}, 0 \right)
+\end{equation}
+\textbf{Mechanism:} Raising rare counts to power $0.75$ inflates their normalized probability ($x^{0.75} > x$ for small fractions), enlarging the denominator and suppressing artificially high PMI scores for rare words.
+\end{insightbox}
+
+\clearpage
+
+% =========================================================================
+% PAGE 3: Dense Embeddings & Word2Vec Skip-Gram with Negative Sampling (SGNS)
+% =========================================================================
+\begin{center}
+    \vspace{-4pt}
+    {\Large\bfseries\color{themeblue} Dense Vectors \& Word2Vec Skip-Gram with Negative Sampling (SGNS)}\\[1pt]
+    {\small\color{darkgray} Mathematical Derivation of Sigmoid Loss, Analytical Gradients, and Parameter Update Equations}
+    \vspace{-4pt}
+\end{center}
+
+\begin{overviewbox}
+\footnotesize
+\textbf{Why Dense Embeddings?} PPMI vectors are high-dimensional ($|V| \ge 50{,}000$), extremely sparse ($>98\%$ zeros), and treat synonyms as orthogonal axes. \textbf{Dense embeddings} ($d \in [50, 300]$) provide: (1) \textbf{Parameter Economy:} drastically fewer weights in downstream models, preventing overfitting; (2) \textbf{Semantic Manifolds:} continuous representations where synonyms cluster together.
+\end{overviewbox}
+
+\vspace{-3pt}
+\subsection*{\color{themeblue} 8. The Skip-Gram Architecture with Negative Sampling (SGNS)}
+\vspace{-2pt}
+
+\noindent\begin{minipage}[t]{0.56\textwidth}
+\footnotesize
+\textbf{Self-Supervised Binary Classification Framing:}
+Rather than an intractable $|V|$-way softmax denominator $\sum_{v \in V} e^{\mathbf{v} \cdot \mathbf{w}}$, SGNS (Mikolov et al., 2013) trains a fast binary logistic classifier:
+\begin{itemize}[leftmargin=10pt,topsep=1pt,itemsep=1pt]
+    \item \textbf{Binary Task:} Given target $w$ and candidate $c$, predict: \textit{Is $c$ a true context word ($y = 1$) or noise ($y = 0$)?}
+    \item \textbf{Positive Pairs ($+$):} For target word $w$, extract true context words $c_{\text{pos}}$ within window $\pm L$.
+    \item \textbf{Negative Pairs ($-$):} For each positive pair $(w, c_{\text{pos}})$, draw $k$ noise words $c_{\text{neg}_1}, \dots, c_{\text{neg}_k}$ from unigram noise distribution $P_\alpha(w) \propto \text{count}(w)^{0.75}$.
+\end{itemize}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.42\textwidth}
+\begin{theoremprompt}[title={\textbf{Sigmoid Classifier Probabilities}}]
+\footnotesize
+Target $\mathbf{w} \in \mathbb{R}^d$, Context $\mathbf{c} \in \mathbb{R}^d$:
+\begin{align}
+    P(+ \mid w, c) &= \sigma(\mathbf{c} \cdot \mathbf{w}) = \frac{1}{1 + e^{-\mathbf{c} \cdot \mathbf{w}}} \\
+    P(- \mid w, c) &= 1 - \sigma(\mathbf{c} \cdot \mathbf{w}) = \sigma(-\mathbf{c} \cdot \mathbf{w})
+\end{align}
+Dot product $\mathbf{c} \cdot \mathbf{w}$ measures compatibility.
+\end{theoremprompt}
+\end{minipage}
+
+\vspace{1pt}
+\subsection*{\color{themeblue} 9. SGNS Objective Function \& Analytical Gradient Derivations (Slides 85 \& 89)}
+\vspace{-2pt}
+
+\begin{examplebox}
+\footnotesize
+\textbf{Loss Function:} Assuming conditional independence between positive context $c_{\text{pos}}$ and $k$ negative samples, the joint likelihood is $P(+ \mid w, c_{\text{pos}}) \prod_{i=1}^k P(- \mid w, c_{\text{neg}_i})$. Taking negative log-likelihood yields the \textbf{Binary Cross-Entropy Loss}:
+\begin{equation}
+    \mathcal{L}_{\text{CE}} = - \log \sigma(\mathbf{c}_{\text{pos}} \cdot \mathbf{w}) - \sum_{i=1}^k \log \sigma(-\mathbf{c}_{\text{neg}_i} \cdot \mathbf{w})
+\end{equation}
+
+\textbf{Foundational Sigmoid Derivative Lemmas:}
+$\frac{d}{dz}\log \sigma(z) = 1 - \sigma(z)$ \quad and \quad $\frac{d}{dz}\log \sigma(-z) = -\sigma(z)$.
+
+\noindent\textbf{1. Partial Derivative w.r.t. Positive Context Vector $\mathbf{c}_{\text{pos}}$:}
+\begin{equation}
+    \frac{\partial \mathcal{L}_{\text{CE}}}{\partial \mathbf{c}_{\text{pos}}} = -\frac{\partial}{\partial \mathbf{c}_{\text{pos}}} \log \sigma(\mathbf{c}_{\text{pos}} \cdot \mathbf{w}) = - [1 - \sigma(\mathbf{c}_{\text{pos}} \cdot \mathbf{w})] \frac{\partial (\mathbf{c}_{\text{pos}} \cdot \mathbf{w})}{\partial \mathbf{c}_{\text{pos}}} = \mathbf{[\sigma(\mathbf{c}_{\text{pos}} \cdot \mathbf{w}) - 1]\mathbf{w}}
+\end{equation}
+
+\noindent\textbf{2. Partial Derivative w.r.t. Negative Context Vector $\mathbf{c}_{\text{neg}_i}$:}
+\begin{equation}
+    \frac{\partial \mathcal{L}_{\text{CE}}}{\partial \mathbf{c}_{\text{neg}_i}} = -\frac{\partial}{\partial \mathbf{c}_{\text{neg}_i}} \log \sigma(-\mathbf{c}_{\text{neg}_i} \cdot \mathbf{w}) = - [-\sigma(\mathbf{c}_{\text{neg}_i} \cdot \mathbf{w})] \frac{\partial (\mathbf{c}_{\text{neg}_i} \cdot \mathbf{w})}{\partial \mathbf{c}_{\text{neg}_i}} = \mathbf{[\sigma(\mathbf{c}_{\text{neg}_i} \cdot \mathbf{w})]\mathbf{w}}
+\end{equation}
+
+\noindent\textbf{3. Partial Derivative w.r.t. Target Word Vector $\mathbf{w}$:}
+\begin{equation}
+    \frac{\partial \mathcal{L}_{\text{CE}}}{\partial \mathbf{w}} = -\frac{\partial}{\partial \mathbf{w}} \log \sigma(\mathbf{c}_{\text{pos}} \cdot \mathbf{w}) - \sum_{i=1}^k \frac{\partial}{\partial \mathbf{w}} \log \sigma(-\mathbf{c}_{\text{neg}_i} \cdot \mathbf{w}) = \mathbf{[\sigma(\mathbf{c}_{\text{pos}} \cdot \mathbf{w}) - 1]\mathbf{c}_{\text{pos}} + \sum_{i=1}^k [\sigma(\mathbf{c}_{\text{neg}_i} \cdot \mathbf{w})]\mathbf{c}_{\text{neg}_i}}
+\end{equation}
+\end{examplebox}
+
+\vspace{-2pt}
+\subsection*{\color{themeblue} 10. Stochastic Gradient Descent (SGD) Parameter Updates (Slide 91)}
+\vspace{-2pt}
+
+\begin{theoremprompt}[title={\textbf{Parameter Update Rules with Learning Rate $\eta$}}]
+\footnotesize
+Applying gradient descent $\theta^{(t+1)} = \theta^{(t)} - \eta \nabla_\theta \mathcal{L}_{\text{CE}}$ yields the exact online update equations:
+\begin{align}
+    \mathbf{c}_{\text{pos}}^{(t+1)}   &= \mathbf{c}_{\text{pos}}^{(t)} - \eta \, [\sigma(\mathbf{c}_{\text{pos}}^{(t)} \cdot \mathbf{w}^{(t)}) - 1]\,\mathbf{w}^{(t)} \\
+    \mathbf{c}_{\text{neg}_i}^{(t+1)} &= \mathbf{c}_{\text{neg}_i}^{(t)} - \eta \, [\sigma(\mathbf{c}_{\text{neg}_i}^{(t)} \cdot \mathbf{w}^{(t)})]\,\mathbf{w}^{(t)} \qquad (\forall i \in \{1, \dots, k\}) \\
+    \mathbf{w}^{(t+1)}                &= \mathbf{w}^{(t)} - \eta \left( [\sigma(\mathbf{c}_{\text{pos}}^{(t)} \cdot \mathbf{w}^{(t)}) - 1]\,\mathbf{c}_{\text{pos}}^{(t)} + \sum_{i=1}^k [\sigma(\mathbf{c}_{\text{neg}_i}^{(t)} \cdot \mathbf{w}^{(t)})]\,\mathbf{c}_{\text{neg}_i}^{(t)} \right)
+\end{align}
+\end{theoremprompt}
+
+\vspace{-2pt}
+\begin{insightbox}
+\footnotesize
+\textbf{Geometric Forces \& Dual Matrices:}
+\textbf{Attraction:} For $c_{\text{pos}}$, $[\sigma - 1] < 0 \implies +\eta(1 - \sigma)\mathbf{w}$ pulls $\mathbf{c}_{\text{pos}}$ toward $\mathbf{w}$.
+\textbf{Repulsion:} For $c_{\text{neg}}$, $\sigma > 0 \implies -\eta \sigma \mathbf{w}$ pushes $\mathbf{c}_{\text{neg}}$ away from $\mathbf{w}$.
+\textbf{Dual Matrices:} Model learns Target matrix $\mathbf{W} \in \mathbb{R}^{|V| \times d}$ and Context matrix $\mathbf{C} \in \mathbb{R}^{|V| \times d}$. At test time, either discard $\mathbf{C}$ and keep $\mathbf{W}$, or sum them $\mathbf{e}_w = \mathbf{w} + \mathbf{c}$ for improved performance.
+\end{insightbox}
+
+\clearpage
+
+% =========================================================================
+% PAGE 4: Embedding Properties, Window Size Effects, Analogies, Bias & Matrix
+% =========================================================================
+\begin{center}
+    \vspace{-4pt}
+    {\Large\bfseries\color{themeblue} Embedding Dynamics, Vector Analogies, Societal Bias \& Architecture}\\[1pt]
+    {\small\color{darkgray} Hyperparameter Effects, Geometric Offset Arithmetic, Subspace Debiasing \& Model Taxonomy}
+    \vspace{-4pt}
+\end{center}
+
+\vspace{-3pt}
+\subsection*{\color{themeblue} 11. Context Window Size Dynamics ($L$)}
+\vspace{-2pt}
+
+\noindent\begin{minipage}[t]{0.485\textwidth}
+\begin{theoremprompt}[title={\textbf{Small Windows ($L = \pm 1$ or $\pm 2$)}}]
+\footnotesize
+\begin{itemize}[leftmargin=10pt,topsep=1pt,itemsep=1pt]
+    \item Captures \textbf{syntactic} and \textbf{grammatical} similarity.
+    \item Nearest neighbors are strictly interchangeable: identical Part-of-Speech, verb forms, and direct \textbf{co-hyponyms}.
+    \item \textit{Example:} Nearest neighbors for \textit{dog} are \textit{cat}, \textit{puppy}, \textit{terrier} (substitutable entities in the same sentence frame).
+\end{itemize}
+\end{theoremprompt}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.485\textwidth}
+\begin{theoremprompt}[title={\textbf{Large Windows ($L = \pm 5$ to $\pm 10$)}}]
+\footnotesize
+\begin{itemize}[leftmargin=10pt,topsep=1pt,itemsep=1pt]
+    \item Captures \textbf{topical}, \textbf{discourse}, and \textbf{associational} similarity.
+    \item Nearest neighbors reflect domain-level co-occurrence.
+    \item \textit{Example:} Nearest neighbors for \textit{coffee} are \textit{mug}, \textit{barista}, \textit{breakfast}, \textit{caffeine}, \textit{brew} (words sharing semantic scenarios).
+\end{itemize}
+\end{theoremprompt}
+\end{minipage}
+
+\vspace{1pt}
+\subsection*{\color{themeblue} 12. Analogical Reasoning via Parallelogram Method (Slides 96--99)}
+\vspace{-2pt}
+
+\begin{examplebox}
+\footnotesize
+\textbf{Proportional Analogies ($a : a^* :: b : \hat{b}^*$):} e.g., \textit{king is to man as ? is to woman} ($a = \text{man}, a^* = \text{king}, b = \text{woman}, \hat{b}^* = \text{queen}$).
+
+\noindent\textbf{Vector Offset Arithmetic:} The difference vector $\mathbf{a}^* - \mathbf{a}$ isolates a semantic relational displacement (e.g., $+[\text{royalty}]$). Adding this vector to $\mathbf{b}$ yields the target location in embedding space: $\hat{\mathbf{b}}^* \approx \mathbf{b} + (\mathbf{a}^* - \mathbf{a})$.
+
+\noindent\textbf{The Parallelogram Optimization Formula (Slide 97):}
+\begin{equation}
+    \hat{b}^* = \arg\max_{x \in V \setminus \{a, a^*, b\}} \text{Cosine}(\mathbf{x}, \; \mathbf{a}^* - \mathbf{a} + \mathbf{b})
+\end{equation}
+\textbf{Failure Modes \& Caveats:}
+1. \textit{Input Exclusion:} The query words $\{a, a^*, b\}$ must be explicitly masked; otherwise, $\mathbf{a}^* - \mathbf{a} + \mathbf{b}$ frequently retrieves $a^*$ or $b$ due to high self-similarity.
+2. \textit{Asymmetric Relations:} Works well for inflectional syntax (\textit{apple} $\to$ \textit{apples}) and functional relations (\textit{France} $\to$ \textit{Paris}), but breaks on hierarchical hypernymy (\textit{clothing} $\to$ \textit{shirt}).
+\end{examplebox}
+
+\vspace{-2pt}
+\subsection*{\color{themeblue} 13. Static vs. Dynamic/Contextual Embeddings \& Societal Bias}
+\vspace{-2pt}
+
+\noindent\begin{minipage}[t]{0.485\textwidth}
+\textbf{A. Static vs. Contextual Representations:}
+\begin{itemize}[leftmargin=10pt,topsep=1pt,itemsep=1pt]
+    \footnotesize
+    \item \textbf{Static (Word2Vec, GloVe, FastText):} Generates a single fixed vector per vocabulary entry. \textbf{Polysemy Blindness:} Conflates distinct senses of a polysemous word into a single vector (e.g., \textit{bank} of a river vs. financial \textit{bank}).
+    \item \textbf{Dynamic / Contextual (ELMo, BERT):} Computes distinct vectors for token instances conditioned on the entire sentence: $\mathbf{h}_i = f(w_i, w_1, \dots, w_n)$.
+\end{itemize}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.485\textwidth}
+\textbf{B. Societal Bias \& Subspace Debiasing:}
+\begin{itemize}[leftmargin=10pt,topsep=1pt,itemsep=1pt]
+    \footnotesize
+    \item Vectors geometrically encode societal stereotypes:
+    $\mathbf{v}_{\text{doctor}} - \mathbf{v}_{\text{man}} + \mathbf{v}_{\text{woman}} \approx \mathbf{v}_{\text{nurse}}$.
+    \item \textbf{Debiasing (Bolukbasi et al.):}
+    1. Identify gender subspace direction $\mathbf{g}$ via PCA on pairs (\textit{he/she}, \textit{man/woman}).
+    2. Project gender-neutral words $\mathbf{w}$ onto orthogonal complement: $\mathbf{w}_{\text{debiased}} = \mathbf{w} - (\mathbf{w} \cdot \mathbf{g})\mathbf{g}$.
+\end{itemize}
+\end{minipage}
+
+\vspace{1pt}
+\subsection*{\color{themeblue} 14. Comprehensive Semantic Representation Architecture Matrix}
+\vspace{-2pt}
+
+\begin{table}[h!]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{2.5pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{2.35cm} >{\raggedright\arraybackslash}p{2.0cm} >{\centering\arraybackslash}p{1.4cm} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X}
+\toprule
+\rowcolor{lightbg}
+\textbf{Architecture} & \textbf{Type} & \textbf{Dim.} & \textbf{Optimization / Objective} & \textbf{Primary NLP Application} \\
+\midrule
+\textbf{Term-Document (TF-IDF)} & Sparse Count & $|V| \approx 50\text{k}$--$1\text{M}$ & Sub-linear TF-IDF: \newline $(1 + \log_{10} \text{tf})\log_{10}(N/\text{df}_t)$ & Information Retrieval, Search Ranking, Document Categorization \\
+\midrule
+\textbf{Term-Context (PPMI)} & Sparse Contextual & $|V| \approx 50\text{k}$ & PPMI with $\alpha = 0.75$ smoothing: \newline $\max(\log_2 \frac{P(w, c)}{P(w)P_\alpha(c)}, 0)$ & Computational Linguistics, Word Association Modeling, Feature Extraction \\
+\midrule
+\textbf{Word2Vec (SGNS)} & Dense Learned & $d \in [100, 300]$ & Binary Cross-Entropy on true context vs.\ $k$ negative noise samples & Pretrained Static Word Vectors, Downstream Neural Text Classification \\
+\midrule
+\textbf{GloVe (Global Vectors)} & Dense Factorization & $d \in [50, 300]$ & Weighted least-squares regression on log-co-occurrence matrix counts & Fast Global Pretraining, Dense Semantic \& Syntactic Analogical Reasoning \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\end{document}

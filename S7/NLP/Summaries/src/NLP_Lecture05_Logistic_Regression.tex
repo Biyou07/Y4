@@ -1,0 +1,378 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[margin=1.0cm,top=1.05cm,bottom=1.05cm]{geometry}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{colortbl}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage{fancyhdr}
+\usepackage{ragged2e}
+\usepackage{hyperref}
+
+\newcolumntype{Y}{>{\RaggedRight\arraybackslash}X}
+\newcolumntype{L}[1]{>{\RaggedRight\arraybackslash}p{#1}}
+
+% =========================================================================
+% Canonical ENSIA / DL Color Palette
+% =========================================================================
+\definecolor{themeblue}{HTML}{2B5A87}   % Primary headings, borders
+\definecolor{lightbg}{HTML}{E8EEF4}     % Background fills for overview & headers
+\definecolor{accentred}{HTML}{C8453A}   % Warnings, theorems, errors
+\definecolor{accentgreen}{HTML}{2E7D32} % Optimality, valid matches, definitions
+\definecolor{darkgray}{HTML}{333333}    % Metadata, body accents
+\definecolor{lightgray}{HTML}{D0D8E0}   % Table borders, soft dividers
+\definecolor{codebg}{HTML}{F6F8FA}      % Background for code/callout boxes
+\definecolor{pathcolor}{HTML}{D0DFEE}   % Shading for highlights
+\definecolor{inlinecode}{HTML}{1A365D}  % Inline code color
+
+\newcommand{\rx}[1]{\texttt{\bfseries\color{inlinecode}#1}}
+\newcommand{\cmark}{\textcolor{accentgreen}{\textbf{\checkmark}}}
+\newcommand{\xmark}{\textcolor{accentred}{\textbf{\texttimes}}}
+
+% Display math spacing compaction
+\setlength{\abovedisplayskip}{3pt}
+\setlength{\belowdisplayskip}{3pt}
+\setlength{\abovedisplayshortskip}{2pt}
+\setlength{\belowdisplayshortskip}{2pt}
+
+% =========================================================================
+% Running Header & Footer Setup
+% =========================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyhead[L]{\footnotesize\bfseries\color{themeblue} Natural Language Processing --- Lecture 5: Logistic Regression \& MaxEnt}
+\fancyhead[R]{\footnotesize\color{darkgray} ENSIA 2026--2027}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{themeblue}\leaders\hrule height \headrulewidth\hfill}}
+\renewcommand{\footrule}{\hbox to\headwidth{\color{lightgray}\leaders\hrule height \footrulewidth\hfill}}
+\fancyfoot[L]{\footnotesize\color{darkgray} Instructor: Prof. Ahmed Guessoum}
+\fancyfoot[R]{\footnotesize\color{themeblue}\bfseries Page \thepage\ of 4}
+
+% =========================================================================
+% Custom Box Environments
+% =========================================================================
+\newtcolorbox{overviewbox}[1][]{
+    colframe=themeblue, colback=lightbg, coltitle=white,
+    fonttitle=\bfseries\sffamily\small,
+    arc=1.2mm, boxrule=0.5pt,
+    left=6pt, right=6pt, top=2.5pt, bottom=2.5pt,
+    title={Lecture Scope: Logistic Regression in NLP --- Differential Summary from Deep Learning},
+    #1
+}
+
+\newtcolorbox{examplebox}[1][]{
+    colframe=themeblue!75!black, colback=codebg,
+    arc=1.2mm, boxrule=0.5pt,
+    left=6pt, right=6pt, top=2pt, bottom=2pt,
+    #1
+}
+
+\newtcolorbox{theoremprompt}[1][]{
+    colframe=accentred, colback=white, coltitle=white,
+    fonttitle=\bfseries\sffamily\small,
+    arc=1.2mm, boxrule=0.5pt,
+    left=6pt, right=6pt, top=2.5pt, bottom=2.5pt,
+    #1
+}
+
+\newtcolorbox{insightbox}[1][]{
+    colframe=accentgreen, colback=white, coltitle=white,
+    fonttitle=\bfseries\sffamily\small,
+    arc=1.2mm, boxrule=0.5pt,
+    left=6pt, right=6pt, top=2pt, bottom=2pt,
+    #1
+}
+
+\begin{document}
+
+% =========================================================================
+% PAGE 1: Generative vs Discriminative & Feature Engineering in NLP
+% =========================================================================
+\begin{center}
+    \vspace{-4pt}
+    {\LARGE\bfseries\color{themeblue} Natural Language Processing: Logistic Regression in NLP}\\[1pt]
+    {\small\color{darkgray} Comprehensive Differential Course Summary --- New \& Modified NLP Concepts Beyond Deep Learning}
+    \vspace{-3pt}
+\end{center}
+
+\begin{overviewbox}
+\textbf{Differential Focus:} While general binary logistic regression, the sigmoid curve, and basic cross-entropy loss were established in Deep Learning, this summary focuses strictly on the \textbf{distinct NLP foundations}: Generative vs. Discriminative classifier duality (Naïve Bayes vs. LR), handcrafted NLP feature engineering (lexicons, negation flags, log-length), sub-word period disambiguation, TF-IDF weighting, full movie review worked forward pass and loss evaluation, Stochastic Gradient Descent (SGD) with step-by-step parameter updates, high-dimensional regularization (L1 Lasso vs. L2 Ridge), Multinomial LR (Softmax), and the core theoretical \textbf{Model Identifiability Problem} solved via the \textbf{Reference Class Constraint}.
+\end{overviewbox}
+\vspace{2pt}
+
+\noindent{\large\bfseries\color{themeblue} 1. Generative vs. Discriminative Classifiers in NLP}\par\vspace{1pt}
+Supervised text classification partitions classifiers into two fundamentally distinct probabilistic modeling paradigms:
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{Generative Classifiers (e.g., Naïve Bayes):} Model the \textbf{joint probability} $P(d, c) = P(c)P(d \mid c)$.
+    \begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt]
+        \item They build a statistical model of what text belonging to class $c$ looks like by learning how class $c$ generates words.
+        \item Classification applies Bayes' rule: $P(c \mid d) \propto P(c) \prod_{i} P(w_i \mid c)$.
+        \item \textit{Analogy:} To distinguish cats from dogs, a generative model learns whiskers, ears, and fur textures for both species. Given a new image, it tests which generative model produced the features.
+    \end{itemize}
+    \item \textbf{Discriminative Classifiers (e.g., Logistic Regression / MaxEnt):} Model the \textbf{posterior} $P(c \mid d)$ directly.
+    \begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt]
+        \item They do not attempt to model language generation. Instead, they search directly for the optimal mathematical \textbf{decision boundary} separating classes in feature space.
+        \item \textit{Analogy:} If all dogs happen to wear collars, a discriminative classifier simply checks for a collar and ignores whiskers entirely.
+    \end{itemize}
+    \item \textbf{The Core Advantage in NLP (Freedom from Independence Assumptions):}
+    \begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt]
+        \item Naïve Bayes strictly assumes that words are conditionally independent given the class. If two correlated features occur (e.g., \textit{``San''} and \textit{``Francisco''}, or a word and its lemma), NB \textbf{double-counts} the evidence, generating overconfident probabilities.
+        \item Logistic Regression has \textbf{no independence assumptions}. Features can freely overlap, correlate, or measure linguistic phenomena at multiple granularities (word, stem, capitalization, prefix). The learning algorithm automatically weights them jointly.
+    \end{itemize}
+\end{itemize}
+\vspace{2pt}
+
+\noindent{\large\bfseries\color{themeblue} 2. NLP Feature Engineering: Transforming Text into Vectors}\par\vspace{1pt}
+Unlike computer vision where raw pixels are natural numerical inputs, text must be mapped to feature vectors $\mathbf{x} = [x_1, \dots, x_n]^T$:
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{Handcrafted Linguistic Features for Sentiment Analysis:}
+    \begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt]
+        \item $x_1 = \text{count}(w \in \text{PositiveLexicon})$: Total occurrences of words in a sentiment dictionary (e.g. VADER, General Inquirer).
+        \item $x_2 = \text{count}(w \in \text{NegativeLexicon})$: Total occurrences of negative polarity words.
+        \item $x_3 = \mathbb{I}(\text{"no"} \in d) \in \{0, 1\}$: Binary negation flag indicating presence of explicit negation markers.
+        \item $x_4 = \text{count}(\text{"!"})$: Punctuation intensity cue indicating strong emotional charge.
+        \item $x_5 = \text{count}(\text{1st/2nd person pronouns})$: Subjectivity marker (informal reviews use \textit{I, me, you}).
+        \item $x_6 = \ln(\text{document length in words})$: Sub-linear logarithmic scaling prevents long documents from inflating linear scores.
+    \end{itemize}
+    \item \textbf{Sub-Word \& Contextual Feature Engineering: The Period Disambiguation Task:}
+    Deciding whether a period `\rx{.}' marks an End-of-Sentence (\textbf{EOS}) or an abbreviation (\textbf{Not-EOS}):
+    \begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt]
+        \item $x_1 = 1 \text{ if } \text{Case}(w_i) = \text{Lower}$ (current token lower-cased $\implies$ large positive weight for EOS).
+        \item $x_2 = 1 \text{ if } w_i \in \text{AcronymDict}$ (e.g., \textit{U.S.A.} $\implies$ large negative weight for EOS).
+        \item $x_3 = 1 \text{ if } w_i = \text{"St."} \land \text{Case}(w_{i-1}) = \text{Cap}$ (e.g., \textit{Main St.} $\implies$ negative weight for EOS).
+    \end{itemize}
+\end{itemize}
+\vspace{2pt}
+
+\noindent{\large\bfseries\color{themeblue} 3. TF-IDF Feature Representation \& Damping (Lab 5)}\par\vspace{1pt}
+In bag-of-words text classification, raw word counts cause frequent words (\textit{the, is}) to dominate weights. \textbf{TF-IDF} damps frequency:
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{Term Frequency (TF):} $\text{TF}(w, d) = \frac{\text{count}(w, d)}{\sum_{w' \in d} \text{count}(w', d)}$ (measures word concentration in document $d$).
+    \item \textbf{Inverse Document Frequency (IDF):} $\text{IDF}(w) = \log\left(\frac{N}{\text{DF}(w)}\right)$ or smoothed: $\text{IDF}_{\text{smooth}}(w) = \log\left(\frac{1+N}{1+\text{DF}(w)}\right) + 1$, where $N$ is total documents and $\text{DF}(w)$ is the document frequency of $w$.
+    \item \textbf{Compound Weight:} $\text{TF-IDF}(w, d) = \text{TF}(w, d) \times \text{IDF}(w)$. High score $\implies$ word appears frequently in $d$ but rarely in corpus.
+\end{itemize}
+
+\newpage
+
+% =========================================================================
+% PAGE 2: Binary LR, Worked Sentiment Forward Pass & Weight Interpretability
+% =========================================================================
+
+\noindent{\large\bfseries\color{themeblue} 4. Binary Logistic Regression in NLP: Formulation \& Log-Odds}\par\vspace{1pt}
+For binary classification ($y \in \{0, 1\}$, e.g., positive vs. negative sentiment), the model parameterizes conditional probabilities via the \textbf{sigmoid} function:
+\[
+P(y = 1 \mid x) = \sigma(z) = \frac{1}{1 + e^{-z}} = \frac{1}{1 + e^{-(\mathbf{w}^T \mathbf{x} + b)}}, \qquad P(y = 0 \mid x) = 1 - P(y = 1 \mid x) = \frac{e^{-z}}{1 + e^{-z}}
+\]
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{Log-Odds (Logit) Formulation:} The linear score $z$ is the natural logarithm of the odds ratio:
+    \[
+    \ln\left( \frac{P(y = 1 \mid x)}{1 - P(y = 1 \mid x)} \right) = \ln\left( \frac{\sigma(z)}{1 - \sigma(z)} \right) = z = \mathbf{w}^T \mathbf{x} + b = \sum_{j=1}^n w_j x_j + b
+    \]
+    \item \textbf{Decision Boundary:} The classifier predicts $\hat{y} = 1$ if $P(y = 1 \mid x) \ge 0.5$, which corresponds exactly to $\mathbf{w}^T \mathbf{x} + b \ge 0$.
+    \item \textbf{Binary Cross-Entropy Loss for a Single Document:}
+    \[
+    \mathcal{L}_{\text{CE}}(\hat{y}, y) = -\big[ y \ln \hat{y} + (1 - y) \ln(1 - \hat{y}) \big] = \begin{cases} -\ln \hat{y} & \text{if } y = 1 \\ -\ln(1 - \hat{y}) & \text{if } y = 0 \end{cases}
+    \]
+\end{itemize}
+\vspace{2pt}
+
+\begin{examplebox}
+\noindent{\bfseries\color{themeblue} Complete Step-by-Step Worked Exam Problem: Sentiment Forward Pass \& Loss (Slides 23--28 \& 37--40)}\par\vspace{1pt}
+\textbf{Document Text ($d$):} \textit{``It's hokey. There are virtually no surprises, and the writing is second-rate. So why was it so enjoyable? For one thing, the cast is great. Another nice touch is the music. I was overcome with the urge to get off the couch and start dancing. It sucked me in, and it'll do the same to you.''}
+
+\vspace{1pt}
+\noindent\textbf{Step 1: Extracted Feature Vector $\mathbf{x} \in \mathbb{R}^6$:}
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt]
+    \item $x_1 = 3$ (count of positive words: \textit{``great''}, \textit{``enjoyable''}, \textit{``nice''}).
+    \item $x_2 = 2$ (count of negative words: \textit{``hokey''}, \textit{``second-rate''}).
+    \item $x_3 = 1$ (negation indicator: presence of the token \textit{``no''}).
+    \item $x_4 = 3$ (punctuation count: exactly 3 exclamation marks in expanded review text).
+    \item $x_5 = 0$ (count of specific pronominal subjectivity cues).
+    \item $x_6 = \ln(66) \approx 4.19$ (logarithmic total word length of the review: $66$ words).
+\end{itemize}
+$$\mathbf{x} = [3,\, 2,\, 1,\, 3,\, 0,\, 4.19]^T$$
+
+\noindent\textbf{Step 2: Pre-Learned Parameter Weights \& Bias:}
+$$\mathbf{w} = [2.5,\, -5.0,\, -1.2,\, 0.5,\, 2.0,\, 0.7]^T, \qquad b = 0.1$$
+
+\noindent\textbf{Step 3: Linear Score ($z$) Dot Product:}
+\begin{align*}
+z = \mathbf{w}^T \mathbf{x} + b &= (2.5 \times 3) + (-5.0 \times 2) + (-1.2 \times 1) + (0.5 \times 3) + (2.0 \times 0) + (0.7 \times 4.19) + 0.1 \\
+&= 7.5 - 10.0 - 1.2 + 1.5 + 0.0 + 2.933 + 0.1 = \mathbf{0.833}
+\end{align*}
+
+\noindent\textbf{Step 4: Sigmoid Activation \& Class Posterior Probabilities:}
+\[
+P(+ \mid x) = \sigma(0.833) = \frac{1}{1 + e^{-0.833}} = \frac{1}{1 + 0.4347} = \mathbf{0.70}, \qquad P(- \mid x) = 1 - 0.70 = \mathbf{0.30}
+\]
+\textbf{Classification Decision:} Since $P(+ \mid x) = 0.70 \ge 0.50$ (or $z = 0.833 > 0$), predict \textbf{Positive (+)}.
+
+\vspace{2pt}
+\noindent\textbf{Step 5: Cross-Entropy Loss Evaluation (Model Behavior Analysis):}
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt]
+    \item \textbf{Case A (Ground truth is $y = 1$ --- Model is Correct):}
+    $$\mathcal{L}_{\text{CE}} = -\ln P(+ \mid x) = -\ln(0.70) \approx \mathbf{0.36} \quad \text{(Small penalty; model rewarded for correct confidence)}$$
+    \item \textbf{Case B (Ground truth is $y = 0$ --- Model is Wrong):}
+    $$\mathcal{L}_{\text{CE}} = -\ln P(- \mid x) = -\ln(0.30) \approx \mathbf{1.20} \quad \text{(Severe penalty; $\mathbf{3.33\times}$ larger loss punishing error)}$$
+\end{itemize}
+\end{examplebox}
+\vspace{2pt}
+
+\noindent{\large\bfseries\color{themeblue} 5. Model Interpretability \& Feature Attribution in Text NLP}\par\vspace{1pt}
+A crucial advantage of Logistic Regression over deep neural networks is \textbf{direct interpretability}:
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt, topsep=0.5pt]
+    \item Each weight $w_j$ represents the increase in log-odds of the positive class per unit increase in feature $x_j$, holding all else constant.
+    \item $w_j > 0$ pushes the document towards the positive class (e.g., $w_{\text{``awesome''}} = +10$, $w_{\text{``great''}} = +2.5$).
+    \item $w_j < 0$ pushes the document towards the negative class (e.g., $w_{\text{``abysmal''}} = -10$, $w_{\text{``mediocre''}} = -2.0$).
+    \item Magnitudes reflect linguistic strength: $|w_j|$ quantifies the diagnostic importance of each word or syntactic feature.
+\end{itemize}
+
+\newpage
+
+% =========================================================================
+% PAGE 3: Optimization, Worked SGD Step & High-Dimensional Regularization
+% =========================================================================
+
+\noindent{\large\bfseries\color{themeblue} 6. Optimization for NLP: Batch vs. Mini-Batch vs. SGD}\par\vspace{1pt}
+In text processing, corpora contain hundreds of thousands or millions of documents. Optimization strategies balance speed and stability:
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{Batch Gradient Descent:} Computes gradients over the entire training set $m$. Highly smooth convergence, but computationally prohibitive when $m \ge 10^6$ text documents (requires a full dataset pass per parameter step).
+    \item \textbf{Stochastic Gradient Descent (SGD):} Updates weights after observing a \textbf{single document} $(x^{(i)}, y^{(i)})$. Fast online updates, handles streaming text, and noisy trajectory helps escape shallow local minima / flat plateaus.
+    \item \textbf{Mini-Batch Gradient Descent:} Groups $B$ examples (e.g., $B \in \{512, 1024\}$). Combines SGD's speed with GPU SIMD vectorization.
+\end{itemize}
+\vspace{2pt}
+
+\begin{examplebox}
+\noindent{\bfseries\color{themeblue} Complete Step-by-Step Worked Exam Problem: SGD Parameter Update (Slides 56--58)}\par\vspace{1pt}
+\textbf{Setup:} Perform \textbf{one step} of Stochastic Gradient Descent on a single training document with true class $y = 1$ (Positive).
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt]
+    \item Input features: $x_1 = 3$ (count of positive words), $x_2 = 2$ (count of negative words).
+    \item Initial parameters ($\theta^{(0)}$): $w_1^{(0)} = 0, \quad w_2^{(0)} = 0, \quad b^{(0)} = 0$.
+    \item Learning rate hyperparameter: $\eta = 0.1$.
+\end{itemize}
+
+\noindent\textbf{Step 1: Forward Prediction \& Error:}
+$z = w_1 x_1 + w_2 x_2 + b = (0)(3) + (0)(2) + 0 = 0 \implies \hat{y} = \sigma(0) = \mathbf{0.5}$.
+$$\text{Error Term: } (\hat{y} - y) = 0.5 - 1.0 = \mathbf{-0.5}$$
+
+\noindent\textbf{Step 2: Loss Gradient Vector ($\nabla_\theta \mathcal{L}$):} Since $\frac{\partial \mathcal{L}}{\partial w_j} = (\hat{y} - y) x_j$ and $\frac{\partial \mathcal{L}}{\partial b} = (\hat{y} - y)$:
+\[
+\frac{\partial \mathcal{L}}{\partial w_1} = -0.5 \times 3 = \mathbf{-1.5}, \quad \frac{\partial \mathcal{L}}{\partial w_2} = -0.5 \times 2 = \mathbf{-1.0}, \quad \frac{\partial \mathcal{L}}{\partial b} = \mathbf{-0.5} \implies \nabla_\theta \mathcal{L} = \big[ -1.5,\, -1.0,\, -0.5 \big]^T
+\]
+
+\noindent\textbf{Step 3: Steepest Descent Parameter Updates ($\theta^{(1)} = \theta^{(0)} - \eta \nabla_\theta \mathcal{L}$ with $\eta = 0.1$):}
+\[
+w_1^{(1)} = 0 - 0.1(-1.5) = \mathbf{+0.15}, \qquad w_2^{(1)} = 0 - 0.1(-1.0) = \mathbf{+0.10}, \qquad b^{(1)} = 0 - 0.1(-0.5) = \mathbf{+0.05}
+\]
+
+\noindent\textbf{Critical Exam Concept (Why Did Negative Weight $w_2$ Increase?):}
+$w_2$ increased from $0 \to +0.10$ because this single document was labeled \textbf{positive} despite containing negative words ($x_2 = 2$). The gradient descent update credits all active features in positive documents. However, across the full corpus, negative documents ($y=0 \implies \hat{y}-y > 0$) will encounter negative gradients, driving $w_2$ into negative territory.
+\end{examplebox}
+\vspace{2pt}
+
+\noindent{\large\bfseries\color{themeblue} 7. Regularization in High-Dimensional Text NLP: L1 vs. L2}\par\vspace{1pt}
+In NLP, vocabulary spaces are massive ($|V| \ge 50{,}000$; bigrams and trigrams reach millions of features). An unregularized model easily overfits by assigning huge weights to rare idiosyncratic words that happened to appear in one class (e.g., achieving 100\% train accuracy but failing on test data).
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{Regularized Objective:} Minimize cross-entropy loss plus a penalty on weight magnitude:
+    \[
+    J(\theta) = \mathcal{L}_{\text{CE}}(\theta) + \alpha R(\theta)
+    \]
+    \item \textbf{L2 Regularization (Ridge Regression):} Penalizes the Euclidean norm (sum of squared weights):
+    \[
+    R_{\text{L2}}(\mathbf{w}) = \|\mathbf{w}\|_2^2 = \sum_{j=1}^n w_j^2, \qquad \nabla R_{\text{L2}} = 2\mathbf{w}
+    \]
+    \begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt]
+        \item Easy to optimize due to smooth, continuous derivative.
+        \item Acts as \textbf{weight decay}: shrinks all weights towards zero, preferring many small weights across the vocabulary.
+    \end{itemize}
+    \item \textbf{L1 Regularization (Lasso Regression):} Penalizes the Manhattan norm (sum of absolute weights):
+    \[
+    R_{\text{L1}}(\mathbf{w}) = \|\mathbf{w}\|_1 = \sum_{j=1}^n |w_j|, \qquad \frac{\partial R_{\text{L1}}}{\partial w_j} = \text{sign}(w_j)
+    \]
+    \begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt]
+        \item Derivative is non-differentiable at $w_j = 0$.
+        \item Drives insignificant weights to \textbf{exactly zero}, producing \textbf{sparse weight vectors}.
+        \item \textbf{Major NLP Advantage:} Serves as built-in \textbf{feature selection}, discarding thousands of irrelevant vocabulary words.
+    \end{itemize}
+\end{itemize}
+
+\newpage
+
+% =========================================================================
+% PAGE 4: Multinomial LR & The Model Identifiability Problem
+% =========================================================================
+
+\noindent{\large\bfseries\color{themeblue} 8. Multinomial Logistic Regression (Softmax Regression / MaxEnt)}\par\vspace{1pt}
+When text classification involves $K > 2$ classes (e.g., sentiment $\{+, -, 0\}$, topic classification, POS tagging), binary LR generalizes to \textbf{Multinomial Logistic Regression}.
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{Class Weight Vectors:} The model maintains a separate weight vector $\mathbf{w}_k \in \mathbb{R}^n$ and bias $b_k \in \mathbb{R}$ for each class $k \in \{1, \dots, K\}$.
+    \item \textbf{The Softmax Activation Function:} Normalizes unconstrained real-valued scores $z_k = \mathbf{w}_k^T \mathbf{x} + b_k$ into a valid probability distribution:
+    \[
+    P(y = k \mid x) = \frac{\exp(\mathbf{w}_k^T \mathbf{x} + b_k)}{\sum_{j=1}^K \exp(\mathbf{w}_j^T \mathbf{x} + b_j)}, \qquad \text{where } \sum_{k=1}^K P(y = k \mid x) = 1, \quad P(y = k \mid x) \in (0, 1)
+    \]
+    \item \textbf{Categorical Cross-Entropy Loss:} For one-hot ground truth vector $\mathbf{y}$ where $y_k = 1$ for the true class $c$ and $0$ otherwise:
+    \[
+    \mathcal{L}_{\text{Multi}}(\hat{\mathbf{y}}, \mathbf{y}) = -\sum_{k=1}^K y_k \ln \hat{y}_k = -\ln P(y = c \mid x)
+    \]
+    \item \textbf{Softmax Gradient:} $\frac{\partial \mathcal{L}}{\partial \mathbf{w}_k} = (\hat{y}_k - y_k) \mathbf{x}$. Remarkably identical in form to binary logistic regression!
+\end{itemize}
+\vspace{2pt}
+
+\noindent{\large\bfseries\color{themeblue} 9. The Model Identifiability Problem \& Reference Class Constraint}\par\vspace{1pt}
+\begin{theoremprompt}
+\noindent{\bfseries\color{accentred} Mathematical Definition of Model Identifiability (Slides 79--83 --- High Exam Probability):}\par\vspace{1pt}
+A statistical model parameterized by $\theta$ is \textbf{identifiable} if distinct parameter values strictly generate distinct probability distributions:
+\[
+P(y \mid x;\, \theta_1) = P(y \mid x;\, \theta_2) \implies \theta_1 = \theta_2
+\]
+If a model is \textbf{non-identifiable}, multiple different parameter sets yield the exact same output probabilities.
+\end{theoremprompt}
+\vspace{1pt}
+
+\begin{itemize}[leftmargin=12pt, itemsep=0.5pt, parsep=0pt, topsep=0.5pt]
+    \item \textbf{The Parameter Redundancy Proof (Why Standard Softmax is Non-Identifiable):}
+    Suppose we add an arbitrary constant vector $\mathbf{a} \in \mathbb{R}^n$ to all class weight vectors: $\mathbf{w}_k' = \mathbf{w}_k + \mathbf{a}$ for all $k \in \{1, \dots, K\}$.
+    \begin{align*}
+    P(y = k \mid x;\, \mathbf{w}') &= \frac{\exp\big((\mathbf{w}_k + \mathbf{a})^T \mathbf{x}\big)}{\sum_{j=1}^K \exp\big((\mathbf{w}_j + \mathbf{a})^T \mathbf{x}\big)} = \frac{\exp(\mathbf{w}_k^T \mathbf{x}) \cdot \exp(\mathbf{a}^T \mathbf{x})}{\sum_{j=1}^K \big[ \exp(\mathbf{w}_j^T \mathbf{x}) \cdot \exp(\mathbf{a}^T \mathbf{x}) \big]} \\
+    &= \frac{\exp(\mathbf{w}_k^T \mathbf{x}) \cdot \exp(\mathbf{a}^T \mathbf{x})}{\left[\sum_{j=1}^K \exp(\mathbf{w}_j^T \mathbf{x})\right] \cdot \exp(\mathbf{a}^T \mathbf{x})} = \frac{\exp(\mathbf{w}_k^T \mathbf{x})}{\sum_{j=1}^K \exp(\mathbf{w}_j^T \mathbf{x})} = P(y = k \mid x;\, \mathbf{w})
+    \end{align*}
+    The shift factor $\exp(\mathbf{a}^T \mathbf{x})$ cancels completely from numerator and denominator!
+    \item \textbf{The Problem:} The unconstrained system is ``floating''. Infinitely many parameter configurations produce identical predictions, making it impossible to determine a unique optimal weight vector $\theta^*$ during optimization.
+    \item \textbf{Fixing Identifiability via the Reference Class Constraint:}
+    To remove the degree-of-freedom redundancy, we pin one class as the \textbf{reference class} (baseline category, typically class $K$) and fix its parameters to zero:
+    \[
+    \mathbf{w}_{\text{ref}} = \mathbf{w}_K = \mathbf{0}, \qquad b_K = 0
+    \]
+    \item \textbf{Resulting Non-Redundant Identifiable Probabilities:}
+    \begin{align*}
+        \text{For non-reference classes } c \in \{1, \dots, K-1\}: \qquad & P(y = c \mid x) = \frac{\exp(\mathbf{w}_c^T \mathbf{x} + b_c)}{1 + \sum_{j=1}^{K-1} \exp(\mathbf{w}_j^T \mathbf{x} + b_j)} \\[3pt]
+        \text{For the reference class } K: \qquad & P(y = K \mid x) = \frac{1}{1 + \sum_{j=1}^{K-1} \exp(\mathbf{w}_j^T \mathbf{x} + b_j)}
+    \end{align*}
+    \item \textbf{Direct Link to Binary Logistic Regression:} For $K = 2$, setting $\mathbf{w}_2 = \mathbf{0}$ yields $P(y=1\mid x) = \frac{e^{\mathbf{w}_1^T \mathbf{x}}}{1 + e^{\mathbf{w}_1^T \mathbf{x}}} = \sigma(\mathbf{w}_1^T \mathbf{x})$ and $P(y=2\mid x) = \frac{1}{1 + e^{\mathbf{w}_1^T \mathbf{x}}} = 1 - \sigma(\mathbf{w}_1^T \mathbf{x})$. Binary LR is simply multinomial LR with one reference class!
+\end{itemize}
+\vspace{2pt}
+
+\noindent{\large\bfseries\color{themeblue} 10. Comprehensive Comparison: Naïve Bayes vs. Logistic Regression}\par\vspace{1pt}
+\vspace{1pt}
+\noindent{\footnotesize
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{2.5cm} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X}
+\toprule
+\rowcolor{lightbg}
+\textbf{Dimension} & \textbf{Naïve Bayes (Generative)} & \textbf{Logistic Regression (Discriminative)} \\
+\midrule
+\textbf{Modeling Target} & Joint distribution $P(d, c) = P(c)P(d \mid c)$ & Posterior distribution $P(c \mid d)$ directly \\
+\textbf{Independence Assumption} & Strict conditional independence: $P(d\mid c) = \prod P(w_i\mid c)$ & \textbf{None}. Features can correlate, overlap, and interact \\
+\textbf{Correlated Features} & Overcounts evidence, yielding extreme/distorted probabilities & Calibrates distributed weights across correlated features \\
+\textbf{Optimization / Training} & Closed-form counting (one-pass MLE); ultra-fast & Iterative gradient descent (SGD/Mini-batch); slower \\
+\textbf{Data Regime Performance} & Converges quickly to asymptotic error on \textbf{small datasets} & Achieves \textbf{lower asymptotic error} on \textbf{large datasets} \\
+\textbf{Interpretability} & Word likelihood ratio $\frac{P(w \mid c)}{P(w \mid c')}$ & Linear feature weights $w_j$ directly indicate feature log-odds \\
+\bottomrule
+\end{tabularx}}
+
+\end{document}
