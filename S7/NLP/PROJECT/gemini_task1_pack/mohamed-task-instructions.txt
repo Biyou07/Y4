@@ -1,0 +1,45 @@
+MOHAMED AYOUB BELHIMER – Task 2: SLANG GLOSSARY V1 AND CONTEXT SET (when a word means a drug)
+Goal of the week: the dataset is complete and frozen on Sunday 15 November. Exact column names, ids and anonymisation rules are in dataset-format-v1: read it before you start. You present each deliverable at the team meeting; there is no separate peer review. A file counts as done only when it follows dataset-format-v1 and passes Abdellah's validator.
+Your tasks at a glance
+Glossary v1 – Mon 9 Nov
+Context set – Fri 13 Nov
+Second labeller for the agreement check – Fri 13 Nov
+20 dialogues (common) – Wed 11 Nov
+Task 1 – Glossary v1 (Mon 9 Nov)
+What to do: turn slang-glossary-v0.xlsx into a Google Sheet and clean it.
+One row per term and per drug: split rows that mix substances (for example the tramadol row).
+Write the canonical spelling in Arabic script and in Arabizi following darija-spelling-rules (ق for q/g; q, not 9, in Arabizi), and put the other spellings in variants.
+Fix the script column.
+Remove prices, dealer code words and adulteration details.
+Add ambiguous (yes | no) and normal_meaning (what the word means outside drugs), and verified (yes | no): yes only if a written source or a second speaker confirms it.
+Outcome
+slang-glossary-v1 (Google Sheet) in 04-glossary-and-rules, columns: term_id | term | canonical_arabic | canonical_arabizi | variants | script | drug | ambiguous | normal_meaning | verified | source | notes.
+Example row: G-012 | zatla | زطلة | zatla | zetla; ztla | arabizi | cannabis | no | – | yes | press article | common word for hashish.
+A summary tab: number of terms per drug, ambiguous terms, verified terms.
+Why it matters: the glossary drives the filters that found the real messages, the normaliser, and the drug detection in triage.
+Task 2 – Context set (Fri 13 Nov)
+What to do: this answers the meeting point that a word may or may not mean a drug depending on the sentence. For every ambiguous term (about 40):
+at least 3 sentences where it means the drug and 2 where it does not;
+take real sentences from messages_real_souha and messages_real_malak first (write their msg_id in origin), and invent the rest (origin = invented);
+mix the scripts (Arabic, Arabizi, French mixing).
+Outcome
+context-set-v1 in 04-glossary-and-rules, about 200 rows, columns of section 4 of dataset-format-v1, at least 40% real sentences.
+Example rows: C-031 | (term) | (canonical) | (sentence where it means the drug) | arabizi | drug | cannabis | M-S25-0042 | Mohamed; C-032 | same term | (sentence with its normal meaning) | arabic | not-drug | – | invented | Mohamed.
+Why it matters: it teaches and tests the app to understand the word from its context instead of reacting to the word alone, so a normal sentence is not treated as drug talk and drug talk is not missed.
+Task 3 – Second labeller for the agreement check (Fri 13 Nov)
+Ahmed sends you 40 real messages without his labels; label them with label guide v1 on your own.
+Outcome: your 40 labels returned to Ahmed, who computes the agreement for the paper.
+Task 4 – 20 dialogues (common task, due Wed 11 Nov)
+What to do
+Write 20 invented dialogues on your theme: families, friends and young people: noticing use, talking to a son or brother, prevention.
+Take the facts from the Psychological support passages in 02-passages (S08, S21, S23, S02 – available from Mon 9 Nov). Every answer must cite the passage_ids it uses and must not add facts that are not in those passages.
+User message in Darija: Arabic script, Arabizi, or Arabizi mixed with French, as real users write.
+Assistant answer in Darija, Arabic script, following darija-spelling-rules, 80 words maximum, warm and non-judgemental.
+Label each dialogue with drug, user_type, request and danger from label guide v1.
+Mix: at least 6 Arabizi, 3 mixed with French, 5 high, 2 crisis, the rest none or low.
+If danger is crisis, do not write an answer: write CRISIS_TEMPLATE in assistant_answer.
+Outcome
+A Google Sheet dialogues_mohamed in 03-dialogues with 20 rows and the columns of section 2 of dataset-format-v1.
+Example row: D-MB-001 | "wach ndir ki tjini l'envie ta3 zatla?" | arabizi | (Darija answer, 80 words max) | P-S08-003; P-S08-005 | cannabis | person who uses | craving | low.
+Ids D-MB-001 to D-MB-020, no empty cells, every cited passage_id exists in 02-passages.
+Why it matters: these dialogues test whether the app retrieves the right passage (RAG) and are the training data when we fine-tune later.

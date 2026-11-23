@@ -1,0 +1,61 @@
+Dataset format v1 (4–15 November)
+Goal: the dataset is complete and frozen on Sunday 15 November. Every file below is a Google Sheet. Use exactly these column names, in this order, so the validator can merge everything. Status: agreed format, do not change columns without telling Abdellah.
+What the dataset contains
+Part
+Used for
+Folder
+File name
+Passages
+RAG knowledge base (what the assistant may say)
+02-passages
+passages_<firstname>
+Dialogues
+Fine-tuning later, RAG testing now
+03-dialogues
+dialogues_<firstname>
+Real Darija messages (scraped)
+Triage training, context of slang, real language
+03-dialogues
+messages_real_<firstname>
+General Darija corpus
+Darija style for fine-tuning later
+03-dialogues
+darija-general-v1
+Context set (ambiguous slang)
+Teaching/testing that a word means a drug only in some contexts
+04-glossary-and-rules
+context-set-v1
+Evaluation set (held out)
+Final testing only. Never used for training.
+06-evaluation
+eval-set-v1
+1. passages_<firstname>
+Columns: passage_id | source_id | pages | type | topic | drug | language | text | redundant_with | cleaned_by
+passage_id: P-<source id>-<number>, e.g. P-S08-001.
+type: medical | psychological support | emergency | religious
+drug: cannabis | alcohol | pills | cocaine | heroin | general
+language: en | fr | ar (keep the source language, do not translate).
+text: 50 to 150 words, one idea, understandable on its own.
+redundant_with: if the same idea already exists in another passage, write that passage_id and do not keep the duplicate.
+Keep only what a person talking to the app needs: effects and risks, withdrawal, how to cut down or quit, coping with cravings, relapse, advice for families, emergency steps, where to get treatment (Algeria first).
+Remove: statistics tables, policy and strategy text, law enforcement and seizures, methodology, references, headers and footers, content for clinicians only (doses, prescribing).
+2. dialogues_<firstname>
+Columns: dialogue_id | user_message | script | assistant_answer | passage_ids | drug | user_type | request | danger | written_by
+dialogue_id: D-<initials>-<number>, e.g. D-AG-001. Initials: AK Abdellah, AG Ahmed, MM Malak, SB Souha, YK Yassine, MB Mohamed Ayoub.
+user_message: invented, in Darija. script: arabic | arabizi | mixed-fr.
+assistant_answer: Darija in Arabic script, following darija-spelling-rules, 80 words maximum, using only facts from the passages listed in passage_ids.
+drug, user_type, request, danger: values from label guide v1.
+If danger = crisis, do not write an answer. Write CRISIS_TEMPLATE in assistant_answer.
+3. messages_real_<firstname>
+Columns: msg_id | source_id | text | script | drug_term | drug_sense | drug | user_type | request | danger | collected_by | labelled_by
+msg_id: M-<source id>-<number>, e.g. M-S25-0001.
+source_id: the register row of the video, page or dataset it comes from.
+text: anonymised (see rules below).
+drug_term: the slang or drug word found, if any. drug_sense: drug | not-drug | unclear.
+The collector fills msg_id to drug_term. Ahmed fills drug_sense to danger.
+4. context-set-v1
+Columns: ctx_id | term | canonical_spelling | sentence | script | sense | drug | origin | written_by
+sense: drug | not-drug. origin: the msg_id if the sentence is real, otherwise "invented".
+5. eval-set-v1
+Columns: eval_id | message | script | drug | user_type | request | danger | expected_behaviour | passage_ids | notes
+expected_behaviour: answer | refer to professional | crisis template | refuse and redirect.
