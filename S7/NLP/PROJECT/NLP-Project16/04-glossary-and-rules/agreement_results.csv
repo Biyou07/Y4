@@ -1,0 +1,18 @@
+﻿record_type,metric,identical,total,percentage,kappa,interpretation,message_id,first_value,second_value,text
+metric,drug_sense,33,40,82.5,,,,,,
+metric,drug,36,40,90.0,,,,,,
+metric,user_type,37,40,92.5,,,,,,
+metric,request,34,40,85.0,,,,,,
+metric,danger,35,40,87.5,,,,,,
+kappa,danger,,40,,0.782,substantial,,,,
+disagreement,danger,,,,,,M-S34-0003,none,low,الاحياء الشعبية كلها اصبحت وكرا للمخذرات و الفساد .الله يجيبلهم طامة ك
+disagreement,danger,,,,,,M-S39-0048,Skip,none,ربي يعفو علا الخاوة لي مبليين بيها
+disagreement,request,,,,,,M-S39-0048,Skip,other,ربي يعفو علا الخاوة لي مبليين بيها
+disagreement,request,,,,,,M-S35-0024,other,wants to quit,راني نشوف فالفيديو ودمعتي على خدي 😢 صغيرة شابة مثقفة الحمدلله مايخصني 
+disagreement,danger,,,,,,M-S35-0016,Skip,low,نت ما تحبوش بصح علاه تاكلو ؟ بسكو مسحور ربي يعافينا ان شاء الله 😢
+disagreement,request,,,,,,M-S35-0016,Skip,information,نت ما تحبوش بصح علاه تاكلو ؟ بسكو مسحور ربي يعافينا ان شاء الله 😢
+disagreement,danger,,,,,,M-S39-0050,low,none,اللهم اهدي اخي لطريق المستقيم انه يحبس مخدر و دخان ادعوله ربي يهديه
+disagreement,danger,,,,,,M-S37-0001,none,Skip,الله يعافينا وعافي وليداتنا من هذا المرض لي راه منتشر بكثرة يارب العال
+disagreement,request,,,,,,M-S37-0001,other,Skip,الله يعافينا وعافي وليداتنا من هذا المرض لي راه منتشر بكثرة يارب العال
+disagreement,request,,,,,,M-S39-0009,other,withdrawal,إنشاء الله انا عندي 9 سنين ملي تهنيت و عفاني ربي سبحانو من الادمان ربي
+disagreement,request,,,,,,M-S38-0008,other,withdrawal,انا بطلت الزطلة عندي 3 سنين لاكن عايش مريض

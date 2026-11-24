@@ -1,0 +1,6 @@
+# validate_dataset.py report, 2026-11-23 23:39 (row numbers are spreadsheet rows; row 1 is the header)
+WARNING source-register: no source-register CSV found: source_id checks skipped
+WARNING passages: no passages_<name> CSV found: passage_id checks skipped
+WARNING crisis-templates: dialogues contain CRISIS_TEMPLATE but no crisis-templates CSV was found
+WARNING eval-set: no eval-set CSV found: leakage check skipped
+# 2 file(s) checked, 0 error(s), 4 warning(s)

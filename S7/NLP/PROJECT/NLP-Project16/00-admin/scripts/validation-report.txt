@@ -1,0 +1,1076 @@
+# validate_dataset.py report, 2026-11-23 13:01 (row numbers are spreadsheet rows; row 1 is the header)
+source-register, row 26: status is empty for S25
+dialogues_souha, row 14: passage_id 'none' does not exist in any passages file
+dialogues_souha, row 15: passage_id 'none' does not exist in any passages file
+messages_real_souha, row 6: source_id 'S26' is not in source-register
+messages_real_souha, row 7: source_id 'S27' is not in source-register
+messages_real_souha, row 8: source_id 'S27' is not in source-register
+messages_real_souha, row 9: source_id 'S27' is not in source-register
+messages_real_souha, row 10: source_id 'S28' is not in source-register
+messages_real_souha, row 11: source_id 'S28' is not in source-register
+messages_real_souha, row 12: source_id 'S28' is not in source-register
+messages_real_souha, row 13: source_id 'S28' is not in source-register
+messages_real_souha, row 14: source_id 'S30' is not in source-register
+messages_real_souha, row 15: source_id 'S31' is not in source-register
+messages_real_souha, row 16: source_id 'S31' is not in source-register
+messages_real_souha, row 17: source_id 'S31' is not in source-register
+messages_real_souha, row 18: source_id 'S32' is not in source-register
+messages_real_souha, row 19: source_id 'S32' is not in source-register
+messages_real_souha, row 20: source_id 'S32' is not in source-register
+messages_real_souha, row 21: source_id 'S32' is not in source-register
+messages_real_souha, row 22: source_id 'S33' is not in source-register
+messages_real_souha, row 23: source_id 'S34' is not in source-register
+messages_real_souha, row 24: source_id 'S34' is not in source-register
+messages_real_souha, row 25: source_id 'S34' is not in source-register
+messages_real_souha, row 26: source_id 'S34' is not in source-register
+messages_real_souha, row 27: source_id 'S34' is not in source-register
+messages_real_souha, row 28: source_id 'S34' is not in source-register
+messages_real_souha, row 29: source_id 'S34' is not in source-register
+messages_real_souha, row 30: source_id 'S34' is not in source-register
+messages_real_souha, row 31: source_id 'S34' is not in source-register
+messages_real_souha, row 32: source_id 'S34' is not in source-register
+messages_real_souha, row 33: source_id 'S34' is not in source-register
+messages_real_souha, row 34: source_id 'S35' is not in source-register
+messages_real_souha, row 35: source_id 'S35' is not in source-register
+messages_real_souha, row 36: source_id 'S35' is not in source-register
+messages_real_souha, row 37: source_id 'S35' is not in source-register
+messages_real_souha, row 38: source_id 'S35' is not in source-register
+messages_real_souha, row 39: source_id 'S35' is not in source-register
+messages_real_souha, row 40: source_id 'S35' is not in source-register
+messages_real_souha, row 41: source_id 'S35' is not in source-register
+messages_real_souha, row 42: source_id 'S35' is not in source-register
+messages_real_souha, row 43: source_id 'S35' is not in source-register
+messages_real_souha, row 44: source_id 'S35' is not in source-register
+messages_real_souha, row 45: source_id 'S35' is not in source-register
+messages_real_souha, row 46: source_id 'S35' is not in source-register
+messages_real_souha, row 47: source_id 'S35' is not in source-register
+messages_real_souha, row 48: source_id 'S35' is not in source-register
+messages_real_souha, row 49: source_id 'S35' is not in source-register
+messages_real_souha, row 50: source_id 'S35' is not in source-register
+messages_real_souha, row 51: source_id 'S35' is not in source-register
+messages_real_souha, row 52: source_id 'S35' is not in source-register
+messages_real_souha, row 53: source_id 'S35' is not in source-register
+messages_real_souha, row 54: source_id 'S35' is not in source-register
+messages_real_souha, row 55: source_id 'S35' is not in source-register
+messages_real_souha, row 56: source_id 'S35' is not in source-register
+messages_real_souha, row 57: source_id 'S35' is not in source-register
+messages_real_souha, row 58: source_id 'S36' is not in source-register
+messages_real_souha, row 59: source_id 'S36' is not in source-register
+messages_real_souha, row 60: source_id 'S36' is not in source-register
+messages_real_souha, row 61: source_id 'S36' is not in source-register
+messages_real_souha, row 62: source_id 'S36' is not in source-register
+messages_real_souha, row 63: source_id 'S36' is not in source-register
+messages_real_souha, row 64: source_id 'S36' is not in source-register
+messages_real_souha, row 65: source_id 'S36' is not in source-register
+messages_real_souha, row 66: source_id 'S36' is not in source-register
+messages_real_souha, row 67: source_id 'S36' is not in source-register
+messages_real_souha, row 68: source_id 'S37' is not in source-register
+messages_real_souha, row 69: source_id 'S37' is not in source-register
+messages_real_souha, row 70: source_id 'S37' is not in source-register
+messages_real_souha, row 71: source_id 'S37' is not in source-register
+messages_real_souha, row 72: source_id 'S37' is not in source-register
+messages_real_souha, row 73: source_id 'S37' is not in source-register
+messages_real_souha, row 74: source_id 'S37' is not in source-register
+messages_real_souha, row 75: source_id 'S37' is not in source-register
+messages_real_souha, row 76: source_id 'S37' is not in source-register
+messages_real_souha, row 77: source_id 'S37' is not in source-register
+messages_real_souha, row 78: source_id 'S37' is not in source-register
+messages_real_souha, row 79: source_id 'S37' is not in source-register
+messages_real_souha, row 80: source_id 'S37' is not in source-register
+messages_real_souha, row 81: source_id 'S37' is not in source-register
+messages_real_souha, row 82: source_id 'S38' is not in source-register
+messages_real_souha, row 83: source_id 'S38' is not in source-register
+messages_real_souha, row 84: source_id 'S38' is not in source-register
+messages_real_souha, row 85: source_id 'S38' is not in source-register
+messages_real_souha, row 86: source_id 'S38' is not in source-register
+messages_real_souha, row 87: source_id 'S38' is not in source-register
+messages_real_souha, row 88: source_id 'S38' is not in source-register
+messages_real_souha, row 89: source_id 'S38' is not in source-register
+messages_real_souha, row 90: source_id 'S38' is not in source-register
+messages_real_souha, row 91: source_id 'S38' is not in source-register
+messages_real_souha, row 92: source_id 'S39' is not in source-register
+messages_real_souha, row 93: source_id 'S39' is not in source-register
+messages_real_souha, row 94: source_id 'S39' is not in source-register
+messages_real_souha, row 95: source_id 'S39' is not in source-register
+messages_real_souha, row 96: source_id 'S39' is not in source-register
+messages_real_souha, row 97: source_id 'S39' is not in source-register
+messages_real_souha, row 98: source_id 'S39' is not in source-register
+messages_real_souha, row 99: source_id 'S39' is not in source-register
+messages_real_souha, row 100: source_id 'S39' is not in source-register
+messages_real_souha, row 101: source_id 'S39' is not in source-register
+messages_real_souha, row 102: source_id 'S39' is not in source-register
+messages_real_souha, row 103: source_id 'S39' is not in source-register
+messages_real_souha, row 104: source_id 'S39' is not in source-register
+messages_real_souha, row 105: source_id 'S39' is not in source-register
+messages_real_souha, row 106: source_id 'S39' is not in source-register
+messages_real_souha, row 107: source_id 'S39' is not in source-register
+messages_real_souha, row 108: source_id 'S39' is not in source-register
+messages_real_souha, row 109: source_id 'S39' is not in source-register
+messages_real_souha, row 110: source_id 'S39' is not in source-register
+messages_real_souha, row 111: source_id 'S39' is not in source-register
+messages_real_souha, row 112: source_id 'S39' is not in source-register
+messages_real_souha, row 113: source_id 'S39' is not in source-register
+messages_real_souha, row 114: source_id 'S39' is not in source-register
+messages_real_souha, row 115: source_id 'S39' is not in source-register
+messages_real_souha, row 116: source_id 'S39' is not in source-register
+messages_real_souha, row 117: source_id 'S39' is not in source-register
+messages_real_souha, row 118: source_id 'S39' is not in source-register
+messages_real_souha, row 119: source_id 'S39' is not in source-register
+messages_real_souha, row 120: source_id 'S39' is not in source-register
+messages_real_souha, row 121: source_id 'S39' is not in source-register
+messages_real_souha, row 122: source_id 'S39' is not in source-register
+messages_real_souha, row 123: source_id 'S39' is not in source-register
+messages_real_souha, row 124: source_id 'S39' is not in source-register
+messages_real_souha, row 125: source_id 'S39' is not in source-register
+messages_real_souha, row 126: source_id 'S39' is not in source-register
+messages_real_souha, row 127: source_id 'S39' is not in source-register
+messages_real_souha, row 128: source_id 'S39' is not in source-register
+messages_real_souha, row 129: source_id 'S39' is not in source-register
+messages_real_souha, row 130: source_id 'S39' is not in source-register
+messages_real_souha, row 131: source_id 'S39' is not in source-register
+messages_real_souha, row 132: source_id 'S39' is not in source-register
+messages_real_souha, row 133: source_id 'S39' is not in source-register
+messages_real_souha, row 134: source_id 'S39' is not in source-register
+messages_real_souha, row 135: source_id 'S39' is not in source-register
+messages_real_souha, row 136: source_id 'S39' is not in source-register
+messages_real_souha, row 137: source_id 'S39' is not in source-register
+messages_real_souha, row 138: source_id 'S39' is not in source-register
+messages_real_souha, row 139: source_id 'S39' is not in source-register
+messages_real_souha, row 140: source_id 'S39' is not in source-register
+messages_real_souha, row 141: source_id 'S39' is not in source-register
+messages_real_souha, row 142: source_id 'S39' is not in source-register
+messages_real_souha, row 143: source_id 'S39' is not in source-register
+messages_real_souha, row 144: source_id 'S39' is not in source-register
+messages_real_souha, row 145: source_id 'S39' is not in source-register
+messages_real_souha, row 146: source_id 'S39' is not in source-register
+messages_real_souha, row 147: source_id 'S39' is not in source-register
+messages_real_souha, row 148: source_id 'S39' is not in source-register
+messages_real_souha, row 149: source_id 'S39' is not in source-register
+messages_real_souha, row 150: source_id 'S39' is not in source-register
+messages_real_souha, row 151: source_id 'S39' is not in source-register
+messages_real_souha, row 152: source_id 'S39' is not in source-register
+messages_real_souha, row 153: source_id 'S39' is not in source-register
+messages_real_souha, row 154: source_id 'S39' is not in source-register
+messages_real_souha, row 155: source_id 'S39' is not in source-register
+messages_real_souha, row 156: source_id 'S39' is not in source-register
+messages_real_souha, row 157: source_id 'S39' is not in source-register
+messages_real_souha, row 158: source_id 'S39' is not in source-register
+messages_real_souha, row 159: source_id 'S39' is not in source-register
+messages_real_souha, row 160: source_id 'S39' is not in source-register
+messages_real_souha, row 161: source_id 'S39' is not in source-register
+messages_real_souha, row 162: source_id 'S39' is not in source-register
+messages_real_souha, row 163: source_id 'S39' is not in source-register
+messages_real_souha, row 164: source_id 'S39' is not in source-register
+messages_real_souha, row 165: source_id 'S39' is not in source-register
+messages_real_souha, row 166: source_id 'S39' is not in source-register
+messages_real_souha, row 167: source_id 'S39' is not in source-register
+messages_real_souha, row 168: source_id 'S39' is not in source-register
+messages_real_souha, row 169: source_id 'S39' is not in source-register
+messages_real_souha, row 170: source_id 'S39' is not in source-register
+messages_real_souha, row 171: source_id 'S39' is not in source-register
+messages_real_souha, row 172: source_id 'S39' is not in source-register
+messages_real_souha, row 173: source_id 'S39' is not in source-register
+messages_real_souha, row 174: source_id 'S39' is not in source-register
+messages_real_souha, row 175: source_id 'S39' is not in source-register
+messages_real_souha, row 176: source_id 'S39' is not in source-register
+messages_real_souha, row 177: source_id 'S39' is not in source-register
+messages_real_souha, row 178: source_id 'S39' is not in source-register
+messages_real_souha, row 179: source_id 'S39' is not in source-register
+messages_real_souha, row 180: source_id 'S39' is not in source-register
+WARNING messages_real_souha, row 2: drug_sense is empty
+WARNING messages_real_souha, row 2: drug is empty
+WARNING messages_real_souha, row 2: user_type is empty
+WARNING messages_real_souha, row 2: request is empty
+WARNING messages_real_souha, row 2: danger is empty
+WARNING messages_real_souha, row 3: drug_sense is empty
+WARNING messages_real_souha, row 3: drug is empty
+WARNING messages_real_souha, row 3: user_type is empty
+WARNING messages_real_souha, row 3: request is empty
+WARNING messages_real_souha, row 3: danger is empty
+WARNING messages_real_souha, row 4: drug_sense is empty
+WARNING messages_real_souha, row 4: drug is empty
+WARNING messages_real_souha, row 4: user_type is empty
+WARNING messages_real_souha, row 4: request is empty
+WARNING messages_real_souha, row 4: danger is empty
+WARNING messages_real_souha, row 5: drug_sense is empty
+WARNING messages_real_souha, row 5: drug is empty
+WARNING messages_real_souha, row 5: user_type is empty
+WARNING messages_real_souha, row 5: request is empty
+WARNING messages_real_souha, row 5: danger is empty
+WARNING messages_real_souha, row 6: drug_sense is empty
+WARNING messages_real_souha, row 6: drug is empty
+WARNING messages_real_souha, row 6: user_type is empty
+WARNING messages_real_souha, row 6: request is empty
+WARNING messages_real_souha, row 6: danger is empty
+WARNING messages_real_souha, row 7: drug_sense is empty
+WARNING messages_real_souha, row 7: drug is empty
+WARNING messages_real_souha, row 7: user_type is empty
+WARNING messages_real_souha, row 7: request is empty
+WARNING messages_real_souha, row 7: danger is empty
+WARNING messages_real_souha, row 8: drug_sense is empty
+WARNING messages_real_souha, row 8: drug is empty
+WARNING messages_real_souha, row 8: user_type is empty
+WARNING messages_real_souha, row 8: request is empty
+WARNING messages_real_souha, row 8: danger is empty
+WARNING messages_real_souha, row 9: drug_sense is empty
+WARNING messages_real_souha, row 9: drug is empty
+WARNING messages_real_souha, row 9: user_type is empty
+WARNING messages_real_souha, row 9: request is empty
+WARNING messages_real_souha, row 9: danger is empty
+WARNING messages_real_souha, row 10: drug_sense is empty
+WARNING messages_real_souha, row 10: drug is empty
+WARNING messages_real_souha, row 10: user_type is empty
+WARNING messages_real_souha, row 10: request is empty
+WARNING messages_real_souha, row 10: danger is empty
+WARNING messages_real_souha, row 11: drug_sense is empty
+WARNING messages_real_souha, row 11: drug is empty
+WARNING messages_real_souha, row 11: user_type is empty
+WARNING messages_real_souha, row 11: request is empty
+WARNING messages_real_souha, row 11: danger is empty
+WARNING messages_real_souha, row 12: drug_sense is empty
+WARNING messages_real_souha, row 12: drug is empty
+WARNING messages_real_souha, row 12: user_type is empty
+WARNING messages_real_souha, row 12: request is empty
+WARNING messages_real_souha, row 12: danger is empty
+WARNING messages_real_souha, row 13: drug_sense is empty
+WARNING messages_real_souha, row 13: drug is empty
+WARNING messages_real_souha, row 13: user_type is empty
+WARNING messages_real_souha, row 13: request is empty
+WARNING messages_real_souha, row 13: danger is empty
+WARNING messages_real_souha, row 14: drug_sense is empty
+WARNING messages_real_souha, row 14: drug is empty
+WARNING messages_real_souha, row 14: user_type is empty
+WARNING messages_real_souha, row 14: request is empty
+WARNING messages_real_souha, row 14: danger is empty
+WARNING messages_real_souha, row 15: drug_sense is empty
+WARNING messages_real_souha, row 15: drug is empty
+WARNING messages_real_souha, row 15: user_type is empty
+WARNING messages_real_souha, row 15: request is empty
+WARNING messages_real_souha, row 15: danger is empty
+WARNING messages_real_souha, row 16: drug_sense is empty
+WARNING messages_real_souha, row 16: drug is empty
+WARNING messages_real_souha, row 16: user_type is empty
+WARNING messages_real_souha, row 16: request is empty
+WARNING messages_real_souha, row 16: danger is empty
+WARNING messages_real_souha, row 17: drug_sense is empty
+WARNING messages_real_souha, row 17: drug is empty
+WARNING messages_real_souha, row 17: user_type is empty
+WARNING messages_real_souha, row 17: request is empty
+WARNING messages_real_souha, row 17: danger is empty
+WARNING messages_real_souha, row 18: drug_sense is empty
+WARNING messages_real_souha, row 18: drug is empty
+WARNING messages_real_souha, row 18: user_type is empty
+WARNING messages_real_souha, row 18: request is empty
+WARNING messages_real_souha, row 18: danger is empty
+WARNING messages_real_souha, row 19: drug_sense is empty
+WARNING messages_real_souha, row 19: drug is empty
+WARNING messages_real_souha, row 19: user_type is empty
+WARNING messages_real_souha, row 19: request is empty
+WARNING messages_real_souha, row 19: danger is empty
+WARNING messages_real_souha, row 20: drug_sense is empty
+WARNING messages_real_souha, row 20: drug is empty
+WARNING messages_real_souha, row 20: user_type is empty
+WARNING messages_real_souha, row 20: request is empty
+WARNING messages_real_souha, row 20: danger is empty
+WARNING messages_real_souha, row 21: drug_sense is empty
+WARNING messages_real_souha, row 21: drug is empty
+WARNING messages_real_souha, row 21: user_type is empty
+WARNING messages_real_souha, row 21: request is empty
+WARNING messages_real_souha, row 21: danger is empty
+WARNING messages_real_souha, row 22: drug_sense is empty
+WARNING messages_real_souha, row 22: drug is empty
+WARNING messages_real_souha, row 22: user_type is empty
+WARNING messages_real_souha, row 22: request is empty
+WARNING messages_real_souha, row 22: danger is empty
+WARNING messages_real_souha, row 23: drug_sense is empty
+WARNING messages_real_souha, row 23: drug is empty
+WARNING messages_real_souha, row 23: user_type is empty
+WARNING messages_real_souha, row 23: request is empty
+WARNING messages_real_souha, row 23: danger is empty
+WARNING messages_real_souha, row 24: drug_sense is empty
+WARNING messages_real_souha, row 24: drug is empty
+WARNING messages_real_souha, row 24: user_type is empty
+WARNING messages_real_souha, row 24: request is empty
+WARNING messages_real_souha, row 24: danger is empty
+WARNING messages_real_souha, row 25: drug_sense is empty
+WARNING messages_real_souha, row 25: drug is empty
+WARNING messages_real_souha, row 25: user_type is empty
+WARNING messages_real_souha, row 25: request is empty
+WARNING messages_real_souha, row 25: danger is empty
+WARNING messages_real_souha, row 26: drug_sense is empty
+WARNING messages_real_souha, row 26: drug is empty
+WARNING messages_real_souha, row 26: user_type is empty
+WARNING messages_real_souha, row 26: request is empty
+WARNING messages_real_souha, row 26: danger is empty
+WARNING messages_real_souha, row 27: drug_sense is empty
+WARNING messages_real_souha, row 27: drug is empty
+WARNING messages_real_souha, row 27: user_type is empty
+WARNING messages_real_souha, row 27: request is empty
+WARNING messages_real_souha, row 27: danger is empty
+WARNING messages_real_souha, row 28: drug_sense is empty
+WARNING messages_real_souha, row 28: drug is empty
+WARNING messages_real_souha, row 28: user_type is empty
+WARNING messages_real_souha, row 28: request is empty
+WARNING messages_real_souha, row 28: danger is empty
+WARNING messages_real_souha, row 29: drug_sense is empty
+WARNING messages_real_souha, row 29: drug is empty
+WARNING messages_real_souha, row 29: user_type is empty
+WARNING messages_real_souha, row 29: request is empty
+WARNING messages_real_souha, row 29: danger is empty
+WARNING messages_real_souha, row 30: drug_sense is empty
+WARNING messages_real_souha, row 30: drug is empty
+WARNING messages_real_souha, row 30: user_type is empty
+WARNING messages_real_souha, row 30: request is empty
+WARNING messages_real_souha, row 30: danger is empty
+WARNING messages_real_souha, row 31: drug_sense is empty
+WARNING messages_real_souha, row 31: drug is empty
+WARNING messages_real_souha, row 31: user_type is empty
+WARNING messages_real_souha, row 31: request is empty
+WARNING messages_real_souha, row 31: danger is empty
+WARNING messages_real_souha, row 32: drug_sense is empty
+WARNING messages_real_souha, row 32: drug is empty
+WARNING messages_real_souha, row 32: user_type is empty
+WARNING messages_real_souha, row 32: request is empty
+WARNING messages_real_souha, row 32: danger is empty
+WARNING messages_real_souha, row 33: drug_sense is empty
+WARNING messages_real_souha, row 33: drug is empty
+WARNING messages_real_souha, row 33: user_type is empty
+WARNING messages_real_souha, row 33: request is empty
+WARNING messages_real_souha, row 33: danger is empty
+WARNING messages_real_souha, row 34: drug_sense is empty
+WARNING messages_real_souha, row 34: drug is empty
+WARNING messages_real_souha, row 34: user_type is empty
+WARNING messages_real_souha, row 34: request is empty
+WARNING messages_real_souha, row 34: danger is empty
+WARNING messages_real_souha, row 35: drug_sense is empty
+WARNING messages_real_souha, row 35: drug is empty
+WARNING messages_real_souha, row 35: user_type is empty
+WARNING messages_real_souha, row 35: request is empty
+WARNING messages_real_souha, row 35: danger is empty
+WARNING messages_real_souha, row 36: drug_sense is empty
+WARNING messages_real_souha, row 36: drug is empty
+WARNING messages_real_souha, row 36: user_type is empty
+WARNING messages_real_souha, row 36: request is empty
+WARNING messages_real_souha, row 36: danger is empty
+WARNING messages_real_souha, row 37: drug_sense is empty
+WARNING messages_real_souha, row 37: drug is empty
+WARNING messages_real_souha, row 37: user_type is empty
+WARNING messages_real_souha, row 37: request is empty
+WARNING messages_real_souha, row 37: danger is empty
+WARNING messages_real_souha, row 38: drug_sense is empty
+WARNING messages_real_souha, row 38: drug is empty
+WARNING messages_real_souha, row 38: user_type is empty
+WARNING messages_real_souha, row 38: request is empty
+WARNING messages_real_souha, row 38: danger is empty
+WARNING messages_real_souha, row 39: drug_sense is empty
+WARNING messages_real_souha, row 39: drug is empty
+WARNING messages_real_souha, row 39: user_type is empty
+WARNING messages_real_souha, row 39: request is empty
+WARNING messages_real_souha, row 39: danger is empty
+WARNING messages_real_souha, row 40: drug_sense is empty
+WARNING messages_real_souha, row 40: drug is empty
+WARNING messages_real_souha, row 40: user_type is empty
+WARNING messages_real_souha, row 40: request is empty
+WARNING messages_real_souha, row 40: danger is empty
+WARNING messages_real_souha, row 41: drug_sense is empty
+WARNING messages_real_souha, row 41: drug is empty
+WARNING messages_real_souha, row 41: user_type is empty
+WARNING messages_real_souha, row 41: request is empty
+WARNING messages_real_souha, row 41: danger is empty
+WARNING messages_real_souha, row 42: drug_sense is empty
+WARNING messages_real_souha, row 42: drug is empty
+WARNING messages_real_souha, row 42: user_type is empty
+WARNING messages_real_souha, row 42: request is empty
+WARNING messages_real_souha, row 42: danger is empty
+WARNING messages_real_souha, row 43: drug_sense is empty
+WARNING messages_real_souha, row 43: drug is empty
+WARNING messages_real_souha, row 43: user_type is empty
+WARNING messages_real_souha, row 43: request is empty
+WARNING messages_real_souha, row 43: danger is empty
+WARNING messages_real_souha, row 44: drug_sense is empty
+WARNING messages_real_souha, row 44: drug is empty
+WARNING messages_real_souha, row 44: user_type is empty
+WARNING messages_real_souha, row 44: request is empty
+WARNING messages_real_souha, row 44: danger is empty
+WARNING messages_real_souha, row 45: drug_sense is empty
+WARNING messages_real_souha, row 45: drug is empty
+WARNING messages_real_souha, row 45: user_type is empty
+WARNING messages_real_souha, row 45: request is empty
+WARNING messages_real_souha, row 45: danger is empty
+WARNING messages_real_souha, row 46: drug_sense is empty
+WARNING messages_real_souha, row 46: drug is empty
+WARNING messages_real_souha, row 46: user_type is empty
+WARNING messages_real_souha, row 46: request is empty
+WARNING messages_real_souha, row 46: danger is empty
+WARNING messages_real_souha, row 47: drug_sense is empty
+WARNING messages_real_souha, row 47: drug is empty
+WARNING messages_real_souha, row 47: user_type is empty
+WARNING messages_real_souha, row 47: request is empty
+WARNING messages_real_souha, row 47: danger is empty
+WARNING messages_real_souha, row 48: drug_sense is empty
+WARNING messages_real_souha, row 48: drug is empty
+WARNING messages_real_souha, row 48: user_type is empty
+WARNING messages_real_souha, row 48: request is empty
+WARNING messages_real_souha, row 48: danger is empty
+WARNING messages_real_souha, row 49: drug_sense is empty
+WARNING messages_real_souha, row 49: drug is empty
+WARNING messages_real_souha, row 49: user_type is empty
+WARNING messages_real_souha, row 49: request is empty
+WARNING messages_real_souha, row 49: danger is empty
+WARNING messages_real_souha, row 50: drug_sense is empty
+WARNING messages_real_souha, row 50: drug is empty
+WARNING messages_real_souha, row 50: user_type is empty
+WARNING messages_real_souha, row 50: request is empty
+WARNING messages_real_souha, row 50: danger is empty
+WARNING messages_real_souha, row 51: drug_sense is empty
+WARNING messages_real_souha, row 51: drug is empty
+WARNING messages_real_souha, row 51: user_type is empty
+WARNING messages_real_souha, row 51: request is empty
+WARNING messages_real_souha, row 51: danger is empty
+WARNING messages_real_souha, row 52: drug_sense is empty
+WARNING messages_real_souha, row 52: drug is empty
+WARNING messages_real_souha, row 52: user_type is empty
+WARNING messages_real_souha, row 52: request is empty
+WARNING messages_real_souha, row 52: danger is empty
+WARNING messages_real_souha, row 53: drug_sense is empty
+WARNING messages_real_souha, row 53: drug is empty
+WARNING messages_real_souha, row 53: user_type is empty
+WARNING messages_real_souha, row 53: request is empty
+WARNING messages_real_souha, row 53: danger is empty
+WARNING messages_real_souha, row 54: drug_sense is empty
+WARNING messages_real_souha, row 54: drug is empty
+WARNING messages_real_souha, row 54: user_type is empty
+WARNING messages_real_souha, row 54: request is empty
+WARNING messages_real_souha, row 54: danger is empty
+WARNING messages_real_souha, row 55: drug_sense is empty
+WARNING messages_real_souha, row 55: drug is empty
+WARNING messages_real_souha, row 55: user_type is empty
+WARNING messages_real_souha, row 55: request is empty
+WARNING messages_real_souha, row 55: danger is empty
+WARNING messages_real_souha, row 56: drug_sense is empty
+WARNING messages_real_souha, row 56: drug is empty
+WARNING messages_real_souha, row 56: user_type is empty
+WARNING messages_real_souha, row 56: request is empty
+WARNING messages_real_souha, row 56: danger is empty
+WARNING messages_real_souha, row 57: drug_sense is empty
+WARNING messages_real_souha, row 57: drug is empty
+WARNING messages_real_souha, row 57: user_type is empty
+WARNING messages_real_souha, row 57: request is empty
+WARNING messages_real_souha, row 57: danger is empty
+WARNING messages_real_souha, row 58: drug_sense is empty
+WARNING messages_real_souha, row 58: drug is empty
+WARNING messages_real_souha, row 58: user_type is empty
+WARNING messages_real_souha, row 58: request is empty
+WARNING messages_real_souha, row 58: danger is empty
+WARNING messages_real_souha, row 59: drug_sense is empty
+WARNING messages_real_souha, row 59: drug is empty
+WARNING messages_real_souha, row 59: user_type is empty
+WARNING messages_real_souha, row 59: request is empty
+WARNING messages_real_souha, row 59: danger is empty
+WARNING messages_real_souha, row 60: drug_sense is empty
+WARNING messages_real_souha, row 60: drug is empty
+WARNING messages_real_souha, row 60: user_type is empty
+WARNING messages_real_souha, row 60: request is empty
+WARNING messages_real_souha, row 60: danger is empty
+WARNING messages_real_souha, row 61: drug_sense is empty
+WARNING messages_real_souha, row 61: drug is empty
+WARNING messages_real_souha, row 61: user_type is empty
+WARNING messages_real_souha, row 61: request is empty
+WARNING messages_real_souha, row 61: danger is empty
+WARNING messages_real_souha, row 62: drug_sense is empty
+WARNING messages_real_souha, row 62: drug is empty
+WARNING messages_real_souha, row 62: user_type is empty
+WARNING messages_real_souha, row 62: request is empty
+WARNING messages_real_souha, row 62: danger is empty
+WARNING messages_real_souha, row 63: drug_sense is empty
+WARNING messages_real_souha, row 63: drug is empty
+WARNING messages_real_souha, row 63: user_type is empty
+WARNING messages_real_souha, row 63: request is empty
+WARNING messages_real_souha, row 63: danger is empty
+WARNING messages_real_souha, row 64: drug_sense is empty
+WARNING messages_real_souha, row 64: drug is empty
+WARNING messages_real_souha, row 64: user_type is empty
+WARNING messages_real_souha, row 64: request is empty
+WARNING messages_real_souha, row 64: danger is empty
+WARNING messages_real_souha, row 65: drug_sense is empty
+WARNING messages_real_souha, row 65: drug is empty
+WARNING messages_real_souha, row 65: user_type is empty
+WARNING messages_real_souha, row 65: request is empty
+WARNING messages_real_souha, row 65: danger is empty
+WARNING messages_real_souha, row 66: drug_sense is empty
+WARNING messages_real_souha, row 66: drug is empty
+WARNING messages_real_souha, row 66: user_type is empty
+WARNING messages_real_souha, row 66: request is empty
+WARNING messages_real_souha, row 66: danger is empty
+WARNING messages_real_souha, row 67: drug_sense is empty
+WARNING messages_real_souha, row 67: drug is empty
+WARNING messages_real_souha, row 67: user_type is empty
+WARNING messages_real_souha, row 67: request is empty
+WARNING messages_real_souha, row 67: danger is empty
+WARNING messages_real_souha, row 68: drug_sense is empty
+WARNING messages_real_souha, row 68: drug is empty
+WARNING messages_real_souha, row 68: user_type is empty
+WARNING messages_real_souha, row 68: request is empty
+WARNING messages_real_souha, row 68: danger is empty
+WARNING messages_real_souha, row 69: drug_sense is empty
+WARNING messages_real_souha, row 69: drug is empty
+WARNING messages_real_souha, row 69: user_type is empty
+WARNING messages_real_souha, row 69: request is empty
+WARNING messages_real_souha, row 69: danger is empty
+WARNING messages_real_souha, row 70: drug_sense is empty
+WARNING messages_real_souha, row 70: drug is empty
+WARNING messages_real_souha, row 70: user_type is empty
+WARNING messages_real_souha, row 70: request is empty
+WARNING messages_real_souha, row 70: danger is empty
+WARNING messages_real_souha, row 71: drug_sense is empty
+WARNING messages_real_souha, row 71: drug is empty
+WARNING messages_real_souha, row 71: user_type is empty
+WARNING messages_real_souha, row 71: request is empty
+WARNING messages_real_souha, row 71: danger is empty
+WARNING messages_real_souha, row 72: drug_sense is empty
+WARNING messages_real_souha, row 72: drug is empty
+WARNING messages_real_souha, row 72: user_type is empty
+WARNING messages_real_souha, row 72: request is empty
+WARNING messages_real_souha, row 72: danger is empty
+WARNING messages_real_souha, row 73: drug_sense is empty
+WARNING messages_real_souha, row 73: drug is empty
+WARNING messages_real_souha, row 73: user_type is empty
+WARNING messages_real_souha, row 73: request is empty
+WARNING messages_real_souha, row 73: danger is empty
+WARNING messages_real_souha, row 74: drug_sense is empty
+WARNING messages_real_souha, row 74: drug is empty
+WARNING messages_real_souha, row 74: user_type is empty
+WARNING messages_real_souha, row 74: request is empty
+WARNING messages_real_souha, row 74: danger is empty
+WARNING messages_real_souha, row 75: drug_sense is empty
+WARNING messages_real_souha, row 75: drug is empty
+WARNING messages_real_souha, row 75: user_type is empty
+WARNING messages_real_souha, row 75: request is empty
+WARNING messages_real_souha, row 75: danger is empty
+WARNING messages_real_souha, row 76: drug_sense is empty
+WARNING messages_real_souha, row 76: drug is empty
+WARNING messages_real_souha, row 76: user_type is empty
+WARNING messages_real_souha, row 76: request is empty
+WARNING messages_real_souha, row 76: danger is empty
+WARNING messages_real_souha, row 77: drug_sense is empty
+WARNING messages_real_souha, row 77: drug is empty
+WARNING messages_real_souha, row 77: user_type is empty
+WARNING messages_real_souha, row 77: request is empty
+WARNING messages_real_souha, row 77: danger is empty
+WARNING messages_real_souha, row 78: drug_sense is empty
+WARNING messages_real_souha, row 78: drug is empty
+WARNING messages_real_souha, row 78: user_type is empty
+WARNING messages_real_souha, row 78: request is empty
+WARNING messages_real_souha, row 78: danger is empty
+WARNING messages_real_souha, row 79: drug_sense is empty
+WARNING messages_real_souha, row 79: drug is empty
+WARNING messages_real_souha, row 79: user_type is empty
+WARNING messages_real_souha, row 79: request is empty
+WARNING messages_real_souha, row 79: danger is empty
+WARNING messages_real_souha, row 80: drug_sense is empty
+WARNING messages_real_souha, row 80: drug is empty
+WARNING messages_real_souha, row 80: user_type is empty
+WARNING messages_real_souha, row 80: request is empty
+WARNING messages_real_souha, row 80: danger is empty
+WARNING messages_real_souha, row 81: drug_sense is empty
+WARNING messages_real_souha, row 81: drug is empty
+WARNING messages_real_souha, row 81: user_type is empty
+WARNING messages_real_souha, row 81: request is empty
+WARNING messages_real_souha, row 81: danger is empty
+WARNING messages_real_souha, row 82: drug_sense is empty
+WARNING messages_real_souha, row 82: drug is empty
+WARNING messages_real_souha, row 82: user_type is empty
+WARNING messages_real_souha, row 82: request is empty
+WARNING messages_real_souha, row 82: danger is empty
+WARNING messages_real_souha, row 83: drug_sense is empty
+WARNING messages_real_souha, row 83: drug is empty
+WARNING messages_real_souha, row 83: user_type is empty
+WARNING messages_real_souha, row 83: request is empty
+WARNING messages_real_souha, row 83: danger is empty
+WARNING messages_real_souha, row 84: drug_sense is empty
+WARNING messages_real_souha, row 84: drug is empty
+WARNING messages_real_souha, row 84: user_type is empty
+WARNING messages_real_souha, row 84: request is empty
+WARNING messages_real_souha, row 84: danger is empty
+WARNING messages_real_souha, row 85: drug_sense is empty
+WARNING messages_real_souha, row 85: drug is empty
+WARNING messages_real_souha, row 85: user_type is empty
+WARNING messages_real_souha, row 85: request is empty
+WARNING messages_real_souha, row 85: danger is empty
+WARNING messages_real_souha, row 86: drug_sense is empty
+WARNING messages_real_souha, row 86: drug is empty
+WARNING messages_real_souha, row 86: user_type is empty
+WARNING messages_real_souha, row 86: request is empty
+WARNING messages_real_souha, row 86: danger is empty
+WARNING messages_real_souha, row 87: drug_sense is empty
+WARNING messages_real_souha, row 87: drug is empty
+WARNING messages_real_souha, row 87: user_type is empty
+WARNING messages_real_souha, row 87: request is empty
+WARNING messages_real_souha, row 87: danger is empty
+WARNING messages_real_souha, row 88: drug_sense is empty
+WARNING messages_real_souha, row 88: drug is empty
+WARNING messages_real_souha, row 88: user_type is empty
+WARNING messages_real_souha, row 88: request is empty
+WARNING messages_real_souha, row 88: danger is empty
+WARNING messages_real_souha, row 89: drug_sense is empty
+WARNING messages_real_souha, row 89: drug is empty
+WARNING messages_real_souha, row 89: user_type is empty
+WARNING messages_real_souha, row 89: request is empty
+WARNING messages_real_souha, row 89: danger is empty
+WARNING messages_real_souha, row 90: drug_sense is empty
+WARNING messages_real_souha, row 90: drug is empty
+WARNING messages_real_souha, row 90: user_type is empty
+WARNING messages_real_souha, row 90: request is empty
+WARNING messages_real_souha, row 90: danger is empty
+WARNING messages_real_souha, row 91: drug_sense is empty
+WARNING messages_real_souha, row 91: drug is empty
+WARNING messages_real_souha, row 91: user_type is empty
+WARNING messages_real_souha, row 91: request is empty
+WARNING messages_real_souha, row 91: danger is empty
+WARNING messages_real_souha, row 92: drug_sense is empty
+WARNING messages_real_souha, row 92: drug is empty
+WARNING messages_real_souha, row 92: user_type is empty
+WARNING messages_real_souha, row 92: request is empty
+WARNING messages_real_souha, row 92: danger is empty
+WARNING messages_real_souha, row 93: drug_sense is empty
+WARNING messages_real_souha, row 93: drug is empty
+WARNING messages_real_souha, row 93: user_type is empty
+WARNING messages_real_souha, row 93: request is empty
+WARNING messages_real_souha, row 93: danger is empty
+WARNING messages_real_souha, row 94: drug_sense is empty
+WARNING messages_real_souha, row 94: drug is empty
+WARNING messages_real_souha, row 94: user_type is empty
+WARNING messages_real_souha, row 94: request is empty
+WARNING messages_real_souha, row 94: danger is empty
+WARNING messages_real_souha, row 95: drug_sense is empty
+WARNING messages_real_souha, row 95: drug is empty
+WARNING messages_real_souha, row 95: user_type is empty
+WARNING messages_real_souha, row 95: request is empty
+WARNING messages_real_souha, row 95: danger is empty
+WARNING messages_real_souha, row 96: drug_sense is empty
+WARNING messages_real_souha, row 96: drug is empty
+WARNING messages_real_souha, row 96: user_type is empty
+WARNING messages_real_souha, row 96: request is empty
+WARNING messages_real_souha, row 96: danger is empty
+WARNING messages_real_souha, row 97: drug_sense is empty
+WARNING messages_real_souha, row 97: drug is empty
+WARNING messages_real_souha, row 97: user_type is empty
+WARNING messages_real_souha, row 97: request is empty
+WARNING messages_real_souha, row 97: danger is empty
+WARNING messages_real_souha, row 98: drug_sense is empty
+WARNING messages_real_souha, row 98: drug is empty
+WARNING messages_real_souha, row 98: user_type is empty
+WARNING messages_real_souha, row 98: request is empty
+WARNING messages_real_souha, row 98: danger is empty
+WARNING messages_real_souha, row 99: drug_sense is empty
+WARNING messages_real_souha, row 99: drug is empty
+WARNING messages_real_souha, row 99: user_type is empty
+WARNING messages_real_souha, row 99: request is empty
+WARNING messages_real_souha, row 99: danger is empty
+WARNING messages_real_souha, row 100: drug_sense is empty
+WARNING messages_real_souha, row 100: drug is empty
+WARNING messages_real_souha, row 100: user_type is empty
+WARNING messages_real_souha, row 100: request is empty
+WARNING messages_real_souha, row 100: danger is empty
+WARNING messages_real_souha, row 101: drug_sense is empty
+WARNING messages_real_souha, row 101: drug is empty
+WARNING messages_real_souha, row 101: user_type is empty
+WARNING messages_real_souha, row 101: request is empty
+WARNING messages_real_souha, row 101: danger is empty
+WARNING messages_real_souha, row 102: drug_sense is empty
+WARNING messages_real_souha, row 102: drug is empty
+WARNING messages_real_souha, row 102: user_type is empty
+WARNING messages_real_souha, row 102: request is empty
+WARNING messages_real_souha, row 102: danger is empty
+WARNING messages_real_souha, row 103: drug_sense is empty
+WARNING messages_real_souha, row 103: drug is empty
+WARNING messages_real_souha, row 103: user_type is empty
+WARNING messages_real_souha, row 103: request is empty
+WARNING messages_real_souha, row 103: danger is empty
+WARNING messages_real_souha, row 104: drug_sense is empty
+WARNING messages_real_souha, row 104: drug is empty
+WARNING messages_real_souha, row 104: user_type is empty
+WARNING messages_real_souha, row 104: request is empty
+WARNING messages_real_souha, row 104: danger is empty
+WARNING messages_real_souha, row 105: drug_sense is empty
+WARNING messages_real_souha, row 105: drug is empty
+WARNING messages_real_souha, row 105: user_type is empty
+WARNING messages_real_souha, row 105: request is empty
+WARNING messages_real_souha, row 105: danger is empty
+WARNING messages_real_souha, row 106: drug_sense is empty
+WARNING messages_real_souha, row 106: drug is empty
+WARNING messages_real_souha, row 106: user_type is empty
+WARNING messages_real_souha, row 106: request is empty
+WARNING messages_real_souha, row 106: danger is empty
+WARNING messages_real_souha, row 107: drug_sense is empty
+WARNING messages_real_souha, row 107: drug is empty
+WARNING messages_real_souha, row 107: user_type is empty
+WARNING messages_real_souha, row 107: request is empty
+WARNING messages_real_souha, row 107: danger is empty
+WARNING messages_real_souha, row 108: drug_sense is empty
+WARNING messages_real_souha, row 108: drug is empty
+WARNING messages_real_souha, row 108: user_type is empty
+WARNING messages_real_souha, row 108: request is empty
+WARNING messages_real_souha, row 108: danger is empty
+WARNING messages_real_souha, row 109: drug_sense is empty
+WARNING messages_real_souha, row 109: drug is empty
+WARNING messages_real_souha, row 109: user_type is empty
+WARNING messages_real_souha, row 109: request is empty
+WARNING messages_real_souha, row 109: danger is empty
+WARNING messages_real_souha, row 110: drug_sense is empty
+WARNING messages_real_souha, row 110: drug is empty
+WARNING messages_real_souha, row 110: user_type is empty
+WARNING messages_real_souha, row 110: request is empty
+WARNING messages_real_souha, row 110: danger is empty
+WARNING messages_real_souha, row 111: drug_sense is empty
+WARNING messages_real_souha, row 111: drug is empty
+WARNING messages_real_souha, row 111: user_type is empty
+WARNING messages_real_souha, row 111: request is empty
+WARNING messages_real_souha, row 111: danger is empty
+WARNING messages_real_souha, row 112: drug_sense is empty
+WARNING messages_real_souha, row 112: drug is empty
+WARNING messages_real_souha, row 112: user_type is empty
+WARNING messages_real_souha, row 112: request is empty
+WARNING messages_real_souha, row 112: danger is empty
+WARNING messages_real_souha, row 113: drug_sense is empty
+WARNING messages_real_souha, row 113: drug is empty
+WARNING messages_real_souha, row 113: user_type is empty
+WARNING messages_real_souha, row 113: request is empty
+WARNING messages_real_souha, row 113: danger is empty
+WARNING messages_real_souha, row 114: drug_sense is empty
+WARNING messages_real_souha, row 114: drug is empty
+WARNING messages_real_souha, row 114: user_type is empty
+WARNING messages_real_souha, row 114: request is empty
+WARNING messages_real_souha, row 114: danger is empty
+WARNING messages_real_souha, row 115: drug_sense is empty
+WARNING messages_real_souha, row 115: drug is empty
+WARNING messages_real_souha, row 115: user_type is empty
+WARNING messages_real_souha, row 115: request is empty
+WARNING messages_real_souha, row 115: danger is empty
+WARNING messages_real_souha, row 116: drug_sense is empty
+WARNING messages_real_souha, row 116: drug is empty
+WARNING messages_real_souha, row 116: user_type is empty
+WARNING messages_real_souha, row 116: request is empty
+WARNING messages_real_souha, row 116: danger is empty
+WARNING messages_real_souha, row 117: drug_sense is empty
+WARNING messages_real_souha, row 117: drug is empty
+WARNING messages_real_souha, row 117: user_type is empty
+WARNING messages_real_souha, row 117: request is empty
+WARNING messages_real_souha, row 117: danger is empty
+WARNING messages_real_souha, row 118: drug_sense is empty
+WARNING messages_real_souha, row 118: drug is empty
+WARNING messages_real_souha, row 118: user_type is empty
+WARNING messages_real_souha, row 118: request is empty
+WARNING messages_real_souha, row 118: danger is empty
+WARNING messages_real_souha, row 119: drug_sense is empty
+WARNING messages_real_souha, row 119: drug is empty
+WARNING messages_real_souha, row 119: user_type is empty
+WARNING messages_real_souha, row 119: request is empty
+WARNING messages_real_souha, row 119: danger is empty
+WARNING messages_real_souha, row 120: drug_sense is empty
+WARNING messages_real_souha, row 120: drug is empty
+WARNING messages_real_souha, row 120: user_type is empty
+WARNING messages_real_souha, row 120: request is empty
+WARNING messages_real_souha, row 120: danger is empty
+WARNING messages_real_souha, row 121: drug_sense is empty
+WARNING messages_real_souha, row 121: drug is empty
+WARNING messages_real_souha, row 121: user_type is empty
+WARNING messages_real_souha, row 121: request is empty
+WARNING messages_real_souha, row 121: danger is empty
+WARNING messages_real_souha, row 122: drug_sense is empty
+WARNING messages_real_souha, row 122: drug is empty
+WARNING messages_real_souha, row 122: user_type is empty
+WARNING messages_real_souha, row 122: request is empty
+WARNING messages_real_souha, row 122: danger is empty
+WARNING messages_real_souha, row 123: drug_sense is empty
+WARNING messages_real_souha, row 123: drug is empty
+WARNING messages_real_souha, row 123: user_type is empty
+WARNING messages_real_souha, row 123: request is empty
+WARNING messages_real_souha, row 123: danger is empty
+WARNING messages_real_souha, row 124: drug_sense is empty
+WARNING messages_real_souha, row 124: drug is empty
+WARNING messages_real_souha, row 124: user_type is empty
+WARNING messages_real_souha, row 124: request is empty
+WARNING messages_real_souha, row 124: danger is empty
+WARNING messages_real_souha, row 125: drug_sense is empty
+WARNING messages_real_souha, row 125: drug is empty
+WARNING messages_real_souha, row 125: user_type is empty
+WARNING messages_real_souha, row 125: request is empty
+WARNING messages_real_souha, row 125: danger is empty
+WARNING messages_real_souha, row 126: drug_sense is empty
+WARNING messages_real_souha, row 126: drug is empty
+WARNING messages_real_souha, row 126: user_type is empty
+WARNING messages_real_souha, row 126: request is empty
+WARNING messages_real_souha, row 126: danger is empty
+WARNING messages_real_souha, row 127: drug_sense is empty
+WARNING messages_real_souha, row 127: drug is empty
+WARNING messages_real_souha, row 127: user_type is empty
+WARNING messages_real_souha, row 127: request is empty
+WARNING messages_real_souha, row 127: danger is empty
+WARNING messages_real_souha, row 128: drug_sense is empty
+WARNING messages_real_souha, row 128: drug is empty
+WARNING messages_real_souha, row 128: user_type is empty
+WARNING messages_real_souha, row 128: request is empty
+WARNING messages_real_souha, row 128: danger is empty
+WARNING messages_real_souha, row 129: drug_sense is empty
+WARNING messages_real_souha, row 129: drug is empty
+WARNING messages_real_souha, row 129: user_type is empty
+WARNING messages_real_souha, row 129: request is empty
+WARNING messages_real_souha, row 129: danger is empty
+WARNING messages_real_souha, row 130: drug_sense is empty
+WARNING messages_real_souha, row 130: drug is empty
+WARNING messages_real_souha, row 130: user_type is empty
+WARNING messages_real_souha, row 130: request is empty
+WARNING messages_real_souha, row 130: danger is empty
+WARNING messages_real_souha, row 131: drug_sense is empty
+WARNING messages_real_souha, row 131: drug is empty
+WARNING messages_real_souha, row 131: user_type is empty
+WARNING messages_real_souha, row 131: request is empty
+WARNING messages_real_souha, row 131: danger is empty
+WARNING messages_real_souha, row 132: drug_sense is empty
+WARNING messages_real_souha, row 132: drug is empty
+WARNING messages_real_souha, row 132: user_type is empty
+WARNING messages_real_souha, row 132: request is empty
+WARNING messages_real_souha, row 132: danger is empty
+WARNING messages_real_souha, row 133: drug_sense is empty
+WARNING messages_real_souha, row 133: drug is empty
+WARNING messages_real_souha, row 133: user_type is empty
+WARNING messages_real_souha, row 133: request is empty
+WARNING messages_real_souha, row 133: danger is empty
+WARNING messages_real_souha, row 134: drug_sense is empty
+WARNING messages_real_souha, row 134: drug is empty
+WARNING messages_real_souha, row 134: user_type is empty
+WARNING messages_real_souha, row 134: request is empty
+WARNING messages_real_souha, row 134: danger is empty
+WARNING messages_real_souha, row 135: drug_sense is empty
+WARNING messages_real_souha, row 135: drug is empty
+WARNING messages_real_souha, row 135: user_type is empty
+WARNING messages_real_souha, row 135: request is empty
+WARNING messages_real_souha, row 135: danger is empty
+WARNING messages_real_souha, row 136: drug_sense is empty
+WARNING messages_real_souha, row 136: drug is empty
+WARNING messages_real_souha, row 136: user_type is empty
+WARNING messages_real_souha, row 136: request is empty
+WARNING messages_real_souha, row 136: danger is empty
+WARNING messages_real_souha, row 137: drug_sense is empty
+WARNING messages_real_souha, row 137: drug is empty
+WARNING messages_real_souha, row 137: user_type is empty
+WARNING messages_real_souha, row 137: request is empty
+WARNING messages_real_souha, row 137: danger is empty
+WARNING messages_real_souha, row 138: drug_sense is empty
+WARNING messages_real_souha, row 138: drug is empty
+WARNING messages_real_souha, row 138: user_type is empty
+WARNING messages_real_souha, row 138: request is empty
+WARNING messages_real_souha, row 138: danger is empty
+WARNING messages_real_souha, row 139: drug_sense is empty
+WARNING messages_real_souha, row 139: drug is empty
+WARNING messages_real_souha, row 139: user_type is empty
+WARNING messages_real_souha, row 139: request is empty
+WARNING messages_real_souha, row 139: danger is empty
+WARNING messages_real_souha, row 140: drug_sense is empty
+WARNING messages_real_souha, row 140: drug is empty
+WARNING messages_real_souha, row 140: user_type is empty
+WARNING messages_real_souha, row 140: request is empty
+WARNING messages_real_souha, row 140: danger is empty
+WARNING messages_real_souha, row 141: drug_sense is empty
+WARNING messages_real_souha, row 141: drug is empty
+WARNING messages_real_souha, row 141: user_type is empty
+WARNING messages_real_souha, row 141: request is empty
+WARNING messages_real_souha, row 141: danger is empty
+WARNING messages_real_souha, row 142: drug_sense is empty
+WARNING messages_real_souha, row 142: drug is empty
+WARNING messages_real_souha, row 142: user_type is empty
+WARNING messages_real_souha, row 142: request is empty
+WARNING messages_real_souha, row 142: danger is empty
+WARNING messages_real_souha, row 143: drug_sense is empty
+WARNING messages_real_souha, row 143: drug is empty
+WARNING messages_real_souha, row 143: user_type is empty
+WARNING messages_real_souha, row 143: request is empty
+WARNING messages_real_souha, row 143: danger is empty
+WARNING messages_real_souha, row 144: drug_sense is empty
+WARNING messages_real_souha, row 144: drug is empty
+WARNING messages_real_souha, row 144: user_type is empty
+WARNING messages_real_souha, row 144: request is empty
+WARNING messages_real_souha, row 144: danger is empty
+WARNING messages_real_souha, row 145: drug_sense is empty
+WARNING messages_real_souha, row 145: drug is empty
+WARNING messages_real_souha, row 145: user_type is empty
+WARNING messages_real_souha, row 145: request is empty
+WARNING messages_real_souha, row 145: danger is empty
+WARNING messages_real_souha, row 146: drug_sense is empty
+WARNING messages_real_souha, row 146: drug is empty
+WARNING messages_real_souha, row 146: user_type is empty
+WARNING messages_real_souha, row 146: request is empty
+WARNING messages_real_souha, row 146: danger is empty
+WARNING messages_real_souha, row 147: drug_sense is empty
+WARNING messages_real_souha, row 147: drug is empty
+WARNING messages_real_souha, row 147: user_type is empty
+WARNING messages_real_souha, row 147: request is empty
+WARNING messages_real_souha, row 147: danger is empty
+WARNING messages_real_souha, row 148: drug_sense is empty
+WARNING messages_real_souha, row 148: drug is empty
+WARNING messages_real_souha, row 148: user_type is empty
+WARNING messages_real_souha, row 148: request is empty
+WARNING messages_real_souha, row 148: danger is empty
+WARNING messages_real_souha, row 149: drug_sense is empty
+WARNING messages_real_souha, row 149: drug is empty
+WARNING messages_real_souha, row 149: user_type is empty
+WARNING messages_real_souha, row 149: request is empty
+WARNING messages_real_souha, row 149: danger is empty
+WARNING messages_real_souha, row 150: drug_sense is empty
+WARNING messages_real_souha, row 150: drug is empty
+WARNING messages_real_souha, row 150: user_type is empty
+WARNING messages_real_souha, row 150: request is empty
+WARNING messages_real_souha, row 150: danger is empty
+WARNING messages_real_souha, row 151: drug_sense is empty
+WARNING messages_real_souha, row 151: drug is empty
+WARNING messages_real_souha, row 151: user_type is empty
+WARNING messages_real_souha, row 151: request is empty
+WARNING messages_real_souha, row 151: danger is empty
+WARNING messages_real_souha, row 152: drug_sense is empty
+WARNING messages_real_souha, row 152: drug is empty
+WARNING messages_real_souha, row 152: user_type is empty
+WARNING messages_real_souha, row 152: request is empty
+WARNING messages_real_souha, row 152: danger is empty
+WARNING messages_real_souha, row 153: drug_sense is empty
+WARNING messages_real_souha, row 153: drug is empty
+WARNING messages_real_souha, row 153: user_type is empty
+WARNING messages_real_souha, row 153: request is empty
+WARNING messages_real_souha, row 153: danger is empty
+WARNING messages_real_souha, row 154: drug_sense is empty
+WARNING messages_real_souha, row 154: drug is empty
+WARNING messages_real_souha, row 154: user_type is empty
+WARNING messages_real_souha, row 154: request is empty
+WARNING messages_real_souha, row 154: danger is empty
+WARNING messages_real_souha, row 155: drug_sense is empty
+WARNING messages_real_souha, row 155: drug is empty
+WARNING messages_real_souha, row 155: user_type is empty
+WARNING messages_real_souha, row 155: request is empty
+WARNING messages_real_souha, row 155: danger is empty
+WARNING messages_real_souha, row 156: drug_sense is empty
+WARNING messages_real_souha, row 156: drug is empty
+WARNING messages_real_souha, row 156: user_type is empty
+WARNING messages_real_souha, row 156: request is empty
+WARNING messages_real_souha, row 156: danger is empty
+WARNING messages_real_souha, row 157: drug_sense is empty
+WARNING messages_real_souha, row 157: drug is empty
+WARNING messages_real_souha, row 157: user_type is empty
+WARNING messages_real_souha, row 157: request is empty
+WARNING messages_real_souha, row 157: danger is empty
+WARNING messages_real_souha, row 158: drug_sense is empty
+WARNING messages_real_souha, row 158: drug is empty
+WARNING messages_real_souha, row 158: user_type is empty
+WARNING messages_real_souha, row 158: request is empty
+WARNING messages_real_souha, row 158: danger is empty
+WARNING messages_real_souha, row 159: drug_sense is empty
+WARNING messages_real_souha, row 159: drug is empty
+WARNING messages_real_souha, row 159: user_type is empty
+WARNING messages_real_souha, row 159: request is empty
+WARNING messages_real_souha, row 159: danger is empty
+WARNING messages_real_souha, row 160: drug_sense is empty
+WARNING messages_real_souha, row 160: drug is empty
+WARNING messages_real_souha, row 160: user_type is empty
+WARNING messages_real_souha, row 160: request is empty
+WARNING messages_real_souha, row 160: danger is empty
+WARNING messages_real_souha, row 161: drug_sense is empty
+WARNING messages_real_souha, row 161: drug is empty
+WARNING messages_real_souha, row 161: user_type is empty
+WARNING messages_real_souha, row 161: request is empty
+WARNING messages_real_souha, row 161: danger is empty
+WARNING messages_real_souha, row 162: drug_sense is empty
+WARNING messages_real_souha, row 162: drug is empty
+WARNING messages_real_souha, row 162: user_type is empty
+WARNING messages_real_souha, row 162: request is empty
+WARNING messages_real_souha, row 162: danger is empty
+WARNING messages_real_souha, row 163: drug_sense is empty
+WARNING messages_real_souha, row 163: drug is empty
+WARNING messages_real_souha, row 163: user_type is empty
+WARNING messages_real_souha, row 163: request is empty
+WARNING messages_real_souha, row 163: danger is empty
+WARNING messages_real_souha, row 164: drug_sense is empty
+WARNING messages_real_souha, row 164: drug is empty
+WARNING messages_real_souha, row 164: user_type is empty
+WARNING messages_real_souha, row 164: request is empty
+WARNING messages_real_souha, row 164: danger is empty
+WARNING messages_real_souha, row 165: drug_sense is empty
+WARNING messages_real_souha, row 165: drug is empty
+WARNING messages_real_souha, row 165: user_type is empty
+WARNING messages_real_souha, row 165: request is empty
+WARNING messages_real_souha, row 165: danger is empty
+WARNING messages_real_souha, row 166: drug_sense is empty
+WARNING messages_real_souha, row 166: drug is empty
+WARNING messages_real_souha, row 166: user_type is empty
+WARNING messages_real_souha, row 166: request is empty
+WARNING messages_real_souha, row 166: danger is empty
+WARNING messages_real_souha, row 167: drug_sense is empty
+WARNING messages_real_souha, row 167: drug is empty
+WARNING messages_real_souha, row 167: user_type is empty
+WARNING messages_real_souha, row 167: request is empty
+WARNING messages_real_souha, row 167: danger is empty
+WARNING messages_real_souha, row 168: drug_sense is empty
+WARNING messages_real_souha, row 168: drug is empty
+WARNING messages_real_souha, row 168: user_type is empty
+WARNING messages_real_souha, row 168: request is empty
+WARNING messages_real_souha, row 168: danger is empty
+WARNING messages_real_souha, row 169: drug_sense is empty
+WARNING messages_real_souha, row 169: drug is empty
+WARNING messages_real_souha, row 169: user_type is empty
+WARNING messages_real_souha, row 169: request is empty
+WARNING messages_real_souha, row 169: danger is empty
+WARNING messages_real_souha, row 170: drug_sense is empty
+WARNING messages_real_souha, row 170: drug is empty
+WARNING messages_real_souha, row 170: user_type is empty
+WARNING messages_real_souha, row 170: request is empty
+WARNING messages_real_souha, row 170: danger is empty
+WARNING messages_real_souha, row 171: drug_sense is empty
+WARNING messages_real_souha, row 171: drug is empty
+WARNING messages_real_souha, row 171: user_type is empty
+WARNING messages_real_souha, row 171: request is empty
+WARNING messages_real_souha, row 171: danger is empty
+WARNING messages_real_souha, row 172: drug_sense is empty
+WARNING messages_real_souha, row 172: drug is empty
+WARNING messages_real_souha, row 172: user_type is empty
+WARNING messages_real_souha, row 172: request is empty
+WARNING messages_real_souha, row 172: danger is empty
+WARNING messages_real_souha, row 173: drug_sense is empty
+WARNING messages_real_souha, row 173: drug is empty
+WARNING messages_real_souha, row 173: user_type is empty
+WARNING messages_real_souha, row 173: request is empty
+WARNING messages_real_souha, row 173: danger is empty
+WARNING messages_real_souha, row 174: drug_sense is empty
+WARNING messages_real_souha, row 174: drug is empty
+WARNING messages_real_souha, row 174: user_type is empty
+WARNING messages_real_souha, row 174: request is empty
+WARNING messages_real_souha, row 174: danger is empty
+WARNING messages_real_souha, row 175: drug_sense is empty
+WARNING messages_real_souha, row 175: drug is empty
+WARNING messages_real_souha, row 175: user_type is empty
+WARNING messages_real_souha, row 175: request is empty
+WARNING messages_real_souha, row 175: danger is empty
+WARNING messages_real_souha, row 176: drug_sense is empty
+WARNING messages_real_souha, row 176: drug is empty
+WARNING messages_real_souha, row 176: user_type is empty
+WARNING messages_real_souha, row 176: request is empty
+WARNING messages_real_souha, row 176: danger is empty
+WARNING messages_real_souha, row 177: drug_sense is empty
+WARNING messages_real_souha, row 177: drug is empty
+WARNING messages_real_souha, row 177: user_type is empty
+WARNING messages_real_souha, row 177: request is empty
+WARNING messages_real_souha, row 177: danger is empty
+WARNING messages_real_souha, row 178: drug_sense is empty
+WARNING messages_real_souha, row 178: drug is empty
+WARNING messages_real_souha, row 178: user_type is empty
+WARNING messages_real_souha, row 178: request is empty
+WARNING messages_real_souha, row 178: danger is empty
+WARNING messages_real_souha, row 179: drug_sense is empty
+WARNING messages_real_souha, row 179: drug is empty
+WARNING messages_real_souha, row 179: user_type is empty
+WARNING messages_real_souha, row 179: request is empty
+WARNING messages_real_souha, row 179: danger is empty
+WARNING messages_real_souha, row 180: drug_sense is empty
+WARNING messages_real_souha, row 180: drug is empty
+WARNING messages_real_souha, row 180: user_type is empty
+WARNING messages_real_souha, row 180: request is empty
+WARNING messages_real_souha, row 180: danger is empty
+WARNING eval-set: no eval-set CSV found: leakage check skipped
+# 6 file(s) checked, 178 error(s), 896 warning(s)

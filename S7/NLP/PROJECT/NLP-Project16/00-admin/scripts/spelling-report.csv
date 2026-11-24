@@ -1,0 +1,6 @@
+﻿file,row_id,owner,field,script,word_found,expected,rule,level,context
+dialogues_souha,D-SB-001,Souha Bensimessaoud,user_message,arabizi,nbghi,nebghi,one spelling per word (rule 5): rules table,variant,"nbghi nwaqaf zatla, wach ka…"
+dialogues_souha,D-SB-002,Souha Bensimessaoud,user_message,arabic,ما نتخاصم,ما نتخاصمش,negation needs the final ش (rule 4); ignore if ما means 'what',check,…، كيفاش نهدر معاه بلا ما نتخاصم معاه؟
+dialogues_souha,D-SB-006,Souha Bensimessaoud,user_message,arabizi,nbghi,nebghi,one spelling per word (rule 5): rules table,variant,… f ta3afi men 3amin w nbghi n3awen nas li f nafs …
+dialogues_souha,D-SB-016,Souha Bensimessaoud,user_message,mixed-fr,nbghi,nebghi,one spelling per word (rule 5): rules table,variant,nbghi nwaqaf l'ghabra mais …
+dialogues_souha,D-SB-017,Souha Bensimessaoud,user_message,arabic,ما نعطي,ما نعطيش,negation needs the final ش (rule 4); ignore if ما means 'what',check,… نهدر فيه مع مختص بلا ما نعطي اسمي؟
