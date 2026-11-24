@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HCI Lab 4 (II) - Answer Sheet</title><style>
+@page{size:A4;margin:12mm}
+*{box-sizing:border-box}
+body{font:13px/1.5 "Segoe UI",Arial,sans-serif;color:#1f2937;max-width:820px;margin:0 auto;padding:16px}
+.hd{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;font-size:11.5px;text-align:center}
+.hd .ar{direction:rtl;font-size:13px}
+.logo{font-weight:800;font-size:26px;color:#1e3a8a;line-height:1}.logo small{display:block;font-size:9px;color:#f97316;font-weight:700}
+.bar{background:#f97316;height:22px;margin:10px 0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.meta{display:flex;justify-content:space-between;font-weight:700;font-size:13px}
+h1{font-size:19px;margin:10px 0;text-align:center;border-top:1px solid #111;padding-top:8px}
+h2{font-size:14px;color:#fff;background:#f97316;padding:3px 10px;margin:22px 0 8px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+h3{font-size:13px;margin:14px 0 4px;color:#9a3412;line-height:1.35}
+.id{display:grid;grid-template-columns:2fr 1fr;gap:6px;margin:8px 0}
+.id div{border:1px solid #cbd5e1;border-radius:6px;padding:5px 8px;min-height:40px}
+.id b{display:block;font-size:10px;color:#64748b;text-transform:uppercase}
+.task{background:#fff7ed;border-left:3px solid #f97316;padding:6px 10px;margin:6px 0;font-size:12.5px}
+.task ul{margin:4px 0 0 18px;padding:0}
+.box{border:1px dashed #94a3b8;border-radius:6px;min-height:70px;padding:6px 8px;margin:4px 0;color:#1f2937;white-space:pre-wrap}
+.box.tall{min-height:120px}
+table{border-collapse:collapse;width:100%;margin:6px 0}
+th,td{border:1px solid #cbd5e1;padding:4px 6px;vertical-align:top;font-size:12px}
+th{background:#fff7ed}
+.pc{border:1px solid #fdba74;border-radius:10px;padding:10px 12px;margin:12px 0;break-inside:avoid-page}
+.pc h3{margin-top:0;color:#c2410c}
+.pc td:first-child{width:24%;background:#f8fafc;font-weight:600}
+.grp td{background:#ffedd5!important;font-weight:700;color:#9a3412;font-size:11px;text-transform:uppercase}
+.hint{color:#94a3b8;font-style:italic}
+.ft{margin-top:22px;font-size:11px;color:#64748b;border-top:1px solid #111;padding-top:6px;display:flex;justify-content:space-between;font-style:italic}
+.pb{position:fixed;right:14px;bottom:14px;box-shadow:0 3px 10px rgba(0,0,0,.25);background:#f97316;color:#fff;border:0;border-radius:8px;padding:9px 14px;font-weight:700;cursor:pointer}
+[contenteditable]:focus{outline:2px solid #fdba74;background:#fffbf5}
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin:8px 0}
+.gallery figure{margin:0;background:#f8fafc;border:1px solid #e2e8f0;border-radius:6px;padding:6px;text-align:center}
+.gallery img{width:100%;height:auto;max-height:240px;object-fit:contain;border-radius:4px;border:1px solid #cbd5e1}
+.gallery figcaption{font-size:11px;color:#475569;margin-top:4px;font-weight:500}
+@media print{.pb{display:none}[contenteditable]:focus{outline:none;background:none}.gallery{grid-template-columns:repeat(3,1fr)}.gallery figure{break-inside:avoid;page-break-inside:avoid}}
+</style></head><body>
+<button class="pb" onclick="window.print()">Print / save as PDF</button>
+<script>
+(function(){
+  try {
+    for (var k in localStorage) {
+      if (k.indexOf('lab4') !== -1 || k.indexOf('lab6') !== -1) localStorage.removeItem(k);
+    }
+  } catch(e){}
+})();
+</script>
+
+<div class="hd">
+<div>PEOPLE'S DEMOCRATIC REPUBLIC OF ALGERIA<br>Ministry of Higher Education and Scientific Research<br>The National School of Artificial Intelligence<br><b>Intelligent Systems Engineering Department</b></div>
+<div class="logo">ensia<small>The National School of<br>Artificial Intelligence</small></div>
+<div class="ar">الجمهورية الجزائرية الديمقراطية الشعبية<br>وزارة التعليم العالي والبحث العلمي<br>المدرسة الوطنية العليا للذكاء الاصطناعي<br>قسم هندسة الأنظمة الذكية</div>
+</div>
+<div class="bar"></div>
+<div class="meta"><span>Human Computer Interaction Labs</span><span>4<sup>th</sup> Year 2026/2027</span></div>
+<div class="meta"><span>Lab 4 (II) Semester: S7</span><span>Answer Sheet</span></div>
+<h1>From Users to Interfaces - part II:<br>Building the Blueprint - Low &amp; Med-Fidelity Prototyping</h1>
+<div class="bar"></div>
+
+<div class="id">
+<div contenteditable="true"><b>Member 1: full name</b>Belhimer Mohamed Ayoub</div><div contenteditable="true"><b>Student ID</b>232331674810</div>
+<div contenteditable="true"><b>Member 2: full name</b>Bouyahia Moukhlis Yacine</div><div contenteditable="true"><b>Student ID</b>232332375808</div>
+<div contenteditable="true"><b>Member 3: full name</b>Kharroubi nasrellah</div><div contenteditable="true"><b>Student ID</b>232331783420</div>
+<div contenteditable="true"><b>Group</b>1</div><div contenteditable="true"><b>Date</b>23/11</div>
+</div>
+<div class="task"><b>Objectives.</b>
+<ul>
+<li>Create <b>low/medium-fidelity prototypes</b> for desktop and mobile applications.</li>
+<li>Adapt a design concept across different platforms.</li>
+<li>Conduct peer reviews by evaluating prototypes from a persona's perspective.</li>
+<li>Structure information and features to align with user personas and scenarios.</li>
+<li>Reflect on the role of prototyping in bridging user needs and interface design.</li>
+<li>Work in groups of 3 max to generate more reliable results and more accurate findings related to <b>UI</b> and <b>UX</b>.</li>
+</ul></div>
+
+<!-- ================= ACTIVITY 1 ================= -->
+<h2>1. Activity 1: From Ideas to Wireframes [55 mins Disc]</h2>
+<div class="task">Group work (3–4 students).<br>
+Using the Car Showroom case (<i>appendix A</i>), the personas, and your previously defined design headlines:</div>
+
+<h3>A. Design both a <u>Website</u> and a <u>Mobile App</u> prototype using paper &amp; pen and Balsamiq Cloud.</h3>
+<table>
+<tr><td style="width:30%;background:#f8fafc;font-weight:600">Link to the Balsamiq project (website)</td><td contenteditable="true"><a href="https://balsamiq.cloud/swyxdl8/pwt7aym" target="_blank" style="color:#1e3a8a;font-weight:600;text-decoration:underline">https://balsamiq.cloud/swyxdl8/pwt7aym</a></td></tr>
+<tr><td style="background:#f8fafc;font-weight:600">Link to the Balsamiq project (mobile)</td><td contenteditable="true"><a href="https://balsamiq.cloud/sd6a7jd/pg04mk1" target="_blank" style="color:#1e3a8a;font-weight:600;text-decoration:underline">https://balsamiq.cloud/sd6a7jd/pg04mk1</a></td></tr>
+<tr><td style="background:#f8fafc;font-weight:600">Paper sketches: how many, who drew them</td><td contenteditable="true">5 sheets (7 screens total). Belhimer Mohamed Ayoub (Mobile Login &amp; Home), Bouyahia Moukhlis Yacine (Mobile Search/Filter &amp; Car Details), and Kharroubi nasrellah (Web Home, Search Catalog &amp; Car Details/Compare).</td></tr>
+<tr><td style="background:#f8fafc;font-weight:600">Fidelity you chose, and why</td><td contenteditable="true">Low to Medium fidelity. Low-fidelity paper sketches for rapid concept exploration and frictionless iteration; medium-fidelity Balsamiq wireframes to test layout structure, screen flow, and navigation before committing to high-fidelity graphics.</td></tr>
+</table>
+
+<h3>B. Create interactive low/medium-fidelity wireframes for both platforms.</h3>
+<table>
+<tr><th style="width:6%">#</th><th style="width:24%">Screen name</th><th style="width:32%">What the user can do on it</th><th>Goes to which screen</th></tr>
+<tr><td>1</td><td contenteditable="true">Mobile Login Screen</td><td contenteditable="true">Enter email/password, use Google or Facebook social login, access password recovery or sign up.</td><td contenteditable="true">Mobile Home Page</td></tr>
+<tr><td>2</td><td contenteditable="true">Mobile Home Page</td><td contenteditable="true">Search anywhere, filter by quick category tabs (All, Event, Family, Sport), view car cards with prices, tap favorite star.</td><td contenteditable="true">Car Description Page, Search and Filter, Favorites</td></tr>
+<tr><td>3</td><td contenteditable="true">Mobile Search &amp; Filter</td><td contenteditable="true">Type query, set price and year range sliders, filter by make, model, transmission, fuel, seats, body type.</td><td contenteditable="true">Car Description Page, Mobile Home Page</td></tr>
+<tr><td>4</td><td contenteditable="true">Mobile Car Description</td><td contenteditable="true">Swipe vehicle photo gallery (1/6), inspect specification grid (year, body, transmission), initiate inquiry/booking.</td><td contenteditable="true">Booking / Inquiry Summary, Home Page</td></tr>
+<tr><td>5</td><td contenteditable="true">Web Homepage (Showroom)</td><td contenteditable="true">Search inventory, view featured promotions &amp; discounts (-20%, -10%), view showroom contacts and social media.</td><td contenteditable="true">Web Search Page, Car Details Page</td></tr>
+<tr><td>6</td><td contenteditable="true">Web Car Details &amp; Compare</td><td contenteditable="true">View large photo carousel with arrows, select color options, click "Compare with" for side-by-side specs, click "Book this car".</td><td contenteditable="true">Booking Modal, Vehicle Comparison Screen</td></tr>
+</table>
+<p class="hint">Paste a screenshot of your wireframes here (or print the Balsamiq export and staple it to this sheet).</p>
+<div class="box tall" contenteditable="true" style="white-space:normal;overflow:auto">
+<div class="gallery">
+  <figure>
+    <img src="img/mobile_login_home.jpg" alt="Mobile Login and Home Paper Sketch">
+    <figcaption><b>Fig 1:</b> Mobile Login &amp; Home Sketch</figcaption>
+  </figure>
+  <figure>
+    <img src="img/mobile_desc_search.jpg" alt="Mobile Search and Description Paper Sketch">
+    <figcaption><b>Fig 2:</b> Mobile Search &amp; Details Sketch</figcaption>
+  </figure>
+  <figure>
+    <img src="img/web_home.jpg" alt="Web Homepage Paper Sketch">
+    <figcaption><b>Fig 3:</b> Web Home Sketch</figcaption>
+  </figure>
+  <figure>
+    <img src="img/web_search.jpg" alt="Web Search Page Paper Sketch">
+    <figcaption><b>Fig 4:</b> Web Search &amp; Filter Sketch</figcaption>
+  </figure>
+  <figure>
+    <img src="img/web_desc.jpg" alt="Web Car Description Paper Sketch">
+    <figcaption><b>Fig 5:</b> Web Car Details &amp; Compare Sketch</figcaption>
+  </figure>
+  <figure>
+    <img src="img/mobile_balsamiq_all.png" alt="Balsamiq Mobile Wireframe Suite">
+    <figcaption><b>Fig 6:</b> Balsamiq Mobile Wireframe Suite</figcaption>
+  </figure>
+  <figure>
+    <img src="img/web_balsamiq_all.png" alt="Balsamiq Web Wireframe Suite">
+    <figcaption><b>Fig 7:</b> Balsamiq Web Wireframe Suite</figcaption>
+  </figure>
+</div>
+</div>
+
+<h3>C. Adapt the desktop design to mobile.</h3>
+<table>
+<tr><th style="width:26%">Element</th><th style="width:37%">On the website</th><th>On the mobile app, and why it changes</th></tr>
+<tr><td contenteditable="true">Navigation</td><td contenteditable="true">Top horizontal header bar with persistent search input, direct links, and profile icon.</td><td contenteditable="true">Bottom navigation bar (Home, Favorites, Purchases, Notifications, Profile) for natural one-handed thumb reachability on handheld screens.</td></tr>
+<tr><td contenteditable="true">Search and filters</td><td contenteditable="true">Top search bar with horizontal category tags and wide multi-slider filter controls directly on the page.</td><td contenteditable="true">Dedicated search screen with vertical dropdown pickers and compact sliders to prevent cluttering small vertical viewports.</td></tr>
+<tr><td contenteditable="true">Car comparison</td><td contenteditable="true">Side-by-side multi-column comparison table accessed via the top-right "Compare with" button.</td><td contenteditable="true">Stacked specification cards or swipeable comparisons; multi-column tables do not fit within narrow portrait mobile widths.</td></tr>
+<tr><td contenteditable="true">Main action (test drive, contact…)</td><td contenteditable="true">Prominent "Book this car" button and full contact footer (phone numbers, showroom email, social channels).</td><td contenteditable="true">Sticky bottom CTA button with direct tap-to-call dialer and in-app messaging to instantly reach sales reps.</td></tr>
+<tr><td contenteditable="true">Media &amp; Photo Showcase</td><td contenteditable="true">Large photo viewer with clickable left/right arrow buttons alongside car descriptions.</td><td contenteditable="true">Full-width swipeable image carousel with pagination indicator dots (1/6) optimized for intuitive touch swiping.</td></tr>
+</table>
+
+<h3>D. Structure information and features intuitively.</h3>
+<p class="hint">Write your menu: 4 to 7 top-level items, at most 3 levels, in the users' words.</p>
+<div class="box" contenteditable="true">Home
+ ├─ Explore Inventory (All, Family, Sport, Low-end, Luxury)
+ │   ├─ Filter by Budget &amp; Year
+ │   └─ Compare Vehicles
+ ├─ Deals &amp; Discounts (Featured Offers, Promotions -20%)
+ ├─ Test Drive &amp; Booking (Schedule Visit, Direct Inquiry)
+ ├─ My Garage (Saved Favorites, Track Inquiries)
+ └─ Showroom Info (Contact Us, Locations, Opening Hours)</div>
+
+<h3>E. Ensure the design reflects the needs of your personas and scenarios.</h3>
+<table>
+<tr><th style="width:24%">Persona</th><th style="width:26%">Their main goal</th><th style="width:26%">Which screen answers it</th><th>In how many taps or clicks</th></tr>
+<tr><td contenteditable="true">The Road Trip Enthusiast</td><td contenteditable="true">Find a reliable, spacious 4x4 or family car with high fuel efficiency and luggage space.</td><td contenteditable="true">Search &amp; Filter screen (filter by category: 4x4 / Family) &rarr; Car Description.</td><td contenteditable="true">2 taps/clicks (Category chip &rarr; Car card)</td></tr>
+<tr><td contenteditable="true">The Weekend Racer (Tifosi)</td><td contenteditable="true">Inspect high-performance sports cars, engine specs, horsepower, and track capabilities.</td><td contenteditable="true">"Sport" category tab on Home/Search &rarr; Car Details &amp; Compare screen.</td><td contenteditable="true">2 taps/clicks (Tap "Sport" &rarr; Select vehicle)</td></tr>
+<tr><td contenteditable="true">The Student on a Budget</td><td contenteditable="true">Find an affordable, fuel-efficient daily driver within a strict low budget limit.</td><td contenteditable="true">Search Filters (set budget slider / "Low-end" tab) &rarr; Promotions (-20%).</td><td contenteditable="true">2 taps/clicks (Set budget &rarr; View car)</td></tr>
+<tr><td contenteditable="true">Negative persona (Samir)</td><td contenteditable="true">what we deliberately do NOT offer: unauthorized bulk image scraping and unregistered broker bookings.</td><td contenteditable="true">Car Description (watermarked photos) &amp; Booking form (mandatory verified ID pre-qualification).</td><td contenteditable="true">0 taps (Blocked by verification gate)</td></tr>
+</table>
+
+<!-- ================= ACTIVITY 3 ================= -->
+<h2>2. Activity 3: Peer Testing Feedback Loop [25 mins Disc]</h2>
+<div class="task">Open discussion and exchange between groups.</div>
+
+<h3>A. Exchange prototypes with another group.</h3>
+<table>
+<tr><td style="width:30%;background:#f8fafc;font-weight:600">We tested the prototype of group</td><td contenteditable="true">Smail Imed eddine</td></tr>
+<tr><td style="background:#f8fafc;font-weight:600">The group that tested ours</td><td contenteditable="true">Smail Imed eddine</td></tr>
+</table>
+
+<h3>B. Test the prototypes by role-playing as one of the personas (e.g., “Would Ahmed find this intuitive?”).</h3>
+<table>
+<tr><td style="width:30%;background:#f8fafc;font-weight:600">Persona we played</td><td contenteditable="true">The Student on a Budget (Nassim)</td></tr>
+<tr><td style="background:#f8fafc;font-weight:600">Task we tried to do as this persona</td><td contenteditable="true">Filter cars strictly under a 100k budget, sort by lowest price, and locate financing / student discount options.</td></tr>
+</table>
+
+<h3>C. Provide constructive feedback regarding the user needs.</h3>
+<table>
+<tr><th style="width:5%">#</th><th style="width:30%">What happened (facts)</th><th style="width:28%">Why it is a problem for the persona</th><th style="width:12%">Serious?</th><th>What we suggest</th></tr>
+<tr><td>1</td><td contenteditable="true">No min/max price slider labels; only a generic search input without an explicit price cap filter.</td><td contenteditable="true">The budget student cannot set a strict price ceiling and gets expensive luxury cars in the initial view.</td><td contenteditable="true">High</td><td contenteditable="true">Add dual-handle budget slider with clear numerical values and quick chips (&lt; 80k, &lt; 150k).</td></tr>
+<tr><td>2</td><td contenteditable="true">Estimated monthly installment / financing details were buried in small footer text.</td><td contenteditable="true">Student needs to check monthly affordability before clicking to book a visit.</td><td contenteditable="true">Medium</td><td contenteditable="true">Display estimated monthly cost directly below total price on each vehicle card.</td></tr>
+<tr><td>3</td><td contenteditable="true">Car detail page lacked fuel consumption (L/100km) in the quick overview specs.</td><td contenteditable="true">Fuel running cost is a primary financial constraint for a student commuter.</td><td contenteditable="true">Medium</td><td contenteditable="true">Include average fuel consumption and fuel type prominently in the spec table.</td></tr>
+<tr><td>4</td><td contenteditable="true">The "Book visit" button did not state whether the consultation is free.</td><td contenteditable="true">Students hesitate to click fearing hidden fees or upfront deposit obligations.</td><td contenteditable="true">Low</td><td contenteditable="true">Add reassurance microcopy: "100% Free visit, no deposit required".</td></tr>
+</table>
+
+<h3>D. Incorporate this feedback into your design decisions. These improvements will be essential for the next lab.</h3>
+<table>
+<tr><th style="width:5%">#</th><th style="width:34%">Their remark</th><th style="width:12%">We keep / we change</th><th>The change we make, and on which screen</th></tr>
+<tr><td>1</td><td contenteditable="true">"On mobile, the filter dropdown list is long and requires excessive vertical scrolling."</td><td contenteditable="true">We change</td><td contenteditable="true">Group filters into collapsible accordions with a sticky "Apply Filters" button on Mobile Search &amp; Filter screen.</td></tr>
+<tr><td>2</td><td contenteditable="true">"The 'Compare with' button on web is very intuitive for comparing sports car specs side by side."</td><td contenteditable="true">We keep</td><td contenteditable="true">Keep the prominent top-right Compare CTA on Web Car Details and highlight horsepower/speed differences.</td></tr>
+<tr><td>3</td><td contenteditable="true">"On mobile home page, car cards in the family section lack quick spec badges (transmission, fuel)."</td><td contenteditable="true">We change</td><td contenteditable="true">Add small icon badges (e.g. 'Auto', 'Diesel') directly on Mobile Home car cards next to price.</td></tr>
+<tr><td>4</td><td contenteditable="true">"Promotional discount badges (-20%, -10%) on Web Home catch attention quickly and clearly."</td><td contenteditable="true">We keep</td><td contenteditable="true">Maintain bright promotional discount tags on both Web Home and Mobile Home featured car cards.</td></tr>
+</table>
+
+<!-- ================= ACTIVITY 4 ================= -->
+<h2>3. Activity 4: Reflection Circle [10 mins Disc]</h2>
+<h3>A. How did personas influence your design decisions?</h3>
+<div class="box" contenteditable="true">Personas anchored our interface choices in real user motivations rather than personal preferences. The Student on a Budget drove our decision to prioritize budget sliders, promotional badges (-20%), and entry-level filters. The Weekend Racer justified adding technical specifications and a prominent "Compare with" feature. The Negative Persona (Samir) established defensive requirements: protecting catalog images with watermarks and gating test-drive bookings with identity verification to prevent unofficial middleman reselling.</div>
+<h3>B. What differences did you notice between designing for desktop vs. mobile?</h3>
+<div class="box" contenteditable="true">1. Screen Real Estate &amp; Density: Desktop allows side-by-side vehicle comparisons, wide multi-column grids, and persistent search bars. Mobile requires concise vertical stacking and focused single-task screens.
+2. Navigation &amp; Ergonomics: Desktop relies on top navigation headers and mouse hover actions, whereas mobile requires a bottom thumb-accessible navigation bar and touch-friendly gestures (swiping car cards and photo carousels).
+3. Filter Complexity: Desktop can show open filter panels alongside results; mobile requires dedicated filter overlays with collapsible menus to avoid cluttering results.</div>
+<h3>C. What was easier or harder about creating low/medium-fidelity prototypes?</h3>
+<div class="box" contenteditable="true">Easier: Low-fidelity paper sketches enabled instant ideation and collaborative alignment across the team without getting distracted by fonts, colors, or CSS. Medium-fidelity in Balsamiq quickly structured layout hierarchy and interaction links.
+Harder: Deciding the right level of functional detail to represent in wireframes (e.g., how to display complex car comparison specs without overcrowding the screen) and adapting wide desktop tables into compact mobile views.</div>
+
+<div class="ft"><span>Human Computer Interaction: Lab 4 (II)</span><span>Answer Sheet</span><span>Semester 7, 2026/2027</span></div>
+</body></html>
