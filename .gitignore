@@ -54,3 +54,4 @@ wheels/
 *.bak
 kenlm/
 *.arpa
+.~lock.*#
