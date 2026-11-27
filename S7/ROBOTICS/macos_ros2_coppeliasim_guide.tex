@@ -1,0 +1,293 @@
+\documentclass[11pt,a4paper]{article}
+
+% -----------------------------------------------------------------------------
+% PACKAGES & CONFIGURATION
+% -----------------------------------------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[margin=1.8cm,top=2.0cm,bottom=2.0cm,headheight=14pt]{geometry}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins}
+\usepackage{fancyvrb}
+\usepackage{etoolbox}
+\usepackage{upquote}
+\usepackage{hyperref}
+
+% -----------------------------------------------------------------------------
+% COLOR DEFINITIONS (ENSIA Lab Theme)
+% -----------------------------------------------------------------------------
+\definecolor{primary}{RGB}{31, 78, 121}        % Deep Navy Blue (#1f4e79)
+\definecolor{darktext}{RGB}{30, 30, 30}        % Text color
+\definecolor{codebg}{RGB}{246, 247, 249}       % Shaded code box background
+\definecolor{codeborder}{RGB}{195, 205, 215}   % Code box border
+\definecolor{barcolor}{RGB}{31, 78, 121}       % Left accent bar
+\definecolor{notebg}{RGB}{238, 244, 250}       % Soft note box background
+
+% -----------------------------------------------------------------------------
+% HEADERS & FOOTERS (Matching ENSIA Lab Sheet)
+% -----------------------------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textit{ENSIA -- AI and Data Science}}
+\fancyhead[R]{\small\textit{Introduction to Mobile Robotics}}
+\fancyfoot[L]{\small\textit{macOS Setup Guide: ROS 2 Jazzy (RoboStack + Pixi) \& CoppeliaSim}}
+\fancyfoot[R]{\small\textit{Page \thepage}}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.5pt}
+
+% -----------------------------------------------------------------------------
+% SECTION TITLE FORMATTING
+% -----------------------------------------------------------------------------
+\titleformat{\section}
+  {\color{primary}\Large\bfseries}{\thesection.}{0.6em}{}
+
+\titleformat{\subsection}
+  {\color{primary}\large\bfseries}{}{0pt}{}
+
+\titlespacing*{\section}{0pt}{10pt plus 1pt minus 1pt}{5pt}
+\titlespacing*{\subsection}{0pt}{8pt plus 1pt minus 1pt}{4pt}
+
+% -----------------------------------------------------------------------------
+% BOX STYLING
+% -----------------------------------------------------------------------------
+\newtcolorbox{cmdtcb}{
+  enhanced,
+  colback=codebg,
+  colframe=barcolor,
+  arc=1.0mm,
+  leftrule=2.5pt,
+  rightrule=0.4pt,
+  toprule=0.4pt,
+  bottomrule=0.4pt,
+  boxsep=0.2mm,
+  left=2.5mm,
+  right=2.5mm,
+  top=0.5mm,
+  bottom=0.5mm
+}
+\DefineVerbatimEnvironment{cmdbox}{Verbatim}{fontsize=\footnotesize}
+\BeforeBeginEnvironment{cmdbox}{\begin{cmdtcb}}
+\AfterEndEnvironment{cmdbox}{\end{cmdtcb}}
+
+\newtcolorbox{notebox}[1][Note]{
+  enhanced,
+  colback=notebg,
+  colframe=barcolor,
+  arc=1.0mm,
+  leftrule=2.5pt,
+  rightrule=0.4pt,
+  toprule=0.4pt,
+  bottomrule=0.4pt,
+  boxsep=1.0mm,
+  left=2.5mm,
+  right=2.5mm,
+  top=1.5mm,
+  bottom=1.5mm,
+  title={\textbf{#1}},
+  coltitle=primary,
+  attach title to upper={\par\vspace{2pt}}
+}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=primary,
+  citecolor=primary,
+  urlcolor=primary,
+  pdftitle={macOS Setup Guide: ROS 2 Jazzy (RoboStack + Pixi) \& CoppeliaSim}
+}
+
+% -----------------------------------------------------------------------------
+% DOCUMENT BODY
+% -----------------------------------------------------------------------------
+\begin{document}
+
+\begin{center}
+  {\small ENSIA -- Artificial Intelligence and Data Science \quad \textbullet \quad Semester 7}\\[0.2cm]
+  {\LARGE \textbf{\color{primary}macOS Setup Guide: ROS 2 Jazzy \& CoppeliaSim}}\\[0.15cm]
+  {\normalsize Native Apple Silicon (\texttt{arm64}) Installation via RoboStack + Pixi}\\[0.25cm]
+  \rule{\linewidth}{0.8pt}
+\end{center}
+\vspace{-0.1cm}
+
+This guide lets macOS students run \textbf{ROS 2 Jazzy} natively alongside \textbf{CoppeliaSim} without a virtual machine, and includes the macOS-specific build fix for the \texttt{libsimExtROS2.dylib} plugin crash.
+
+% =============================================================================
+\section{Install Pixi \& ROS 2 Jazzy (RoboStack)}
+% =============================================================================
+
+\begin{enumerate}[leftmargin=1.5em]
+  \item Install \textbf{Pixi} (the package manager recommended by RoboStack):
+\begin{cmdbox}
+curl -fsSL https://pixi.sh/install.sh | bash
+\end{cmdbox}
+  Restart your terminal (or run \texttt{source \textasciitilde/.zshrc}) so \texttt{pixi} is on your \texttt{PATH}.
+
+  \item Create a Pixi workspace with the RoboStack Jazzy channel:
+\begin{cmdbox}
+mkdir -p ~/ros_jazzy_pixi && cd ~/ros_jazzy_pixi
+pixi init -c https://prefix.dev/robostack-jazzy -c https://prefix.dev/conda-forge
+\end{cmdbox}
+
+  \item Add ROS 2 Jazzy Desktop, build tools, and CoppeliaSim's Python IPC dependencies (\texttt{pyzmq}, \texttt{cbor2}):
+\begin{cmdbox}
+pixi add ros-jazzy-desktop colcon-common-extensions
+pixi add ros-jazzy-teleop-twist-keyboard
+pixi add ros-jazzy-plotjuggler-ros pyzmq cbor2
+\end{cmdbox}
+
+  \item \textit{(Recommended)} Pin local discovery in \texttt{\textasciitilde/ros\_jazzy\_pixi/pixi.toml} so nodes on the same Mac always discover each other cleanly:
+\begin{cmdbox}
+printf '\n[activation.env]\n' >> ~/ros_jazzy_pixi/pixi.toml
+printf 'ROS_AUTOMATIC_DISCOVERY_RANGE = "LOCALHOST"\n' >> ~/ros_jazzy_pixi/pixi.toml
+printf 'ROS_DOMAIN_ID = "42"\n' >> ~/ros_jazzy_pixi/pixi.toml
+\end{cmdbox}
+
+  \item Verify ROS 2 works by running the talker and listener in two terminals:
+\begin{cmdbox}
+cd ~/ros_jazzy_pixi
+pixi run ros2 run demo_nodes_cpp talker
+\end{cmdbox}
+\begin{cmdbox}
+cd ~/ros_jazzy_pixi
+pixi run ros2 run demo_nodes_py listener
+\end{cmdbox}
+  You should see \texttt{Hello World} messages published and received.
+\end{enumerate}
+
+% =============================================================================
+\section{Install CoppeliaSim}
+% =============================================================================
+
+\begin{enumerate}[leftmargin=1.5em]
+  \item Download \textbf{CoppeliaSim Edu} for \textbf{macOS (Apple Silicon / arm64)} from the official downloads page:\\
+  \url{https://downloads.coppeliarobotics.com} \quad (or \url{https://www.coppeliarobotics.com}).
+  \item Open the downloaded archive and move \texttt{coppeliaSim.app} into \texttt{/Applications/coppeliaSim.app}.
+\end{enumerate}
+
+% =============================================================================
+\section{Build \texttt{sim\_ros2\_interface} with the macOS Python Fix}
+% =============================================================================
+
+\begin{notebox}[Issue Description (macOS)]
+When starting a ROS 2 simulation in CoppeliaSim on macOS, the simulation fails by default with:
+\begin{center}
+\texttt{[CoppeliaSim:error] Cannot load library libsimExtROS2.dylib: (dlopen(...): symbol not found in flat namespace '\_PyExc\_RuntimeError')} \quad and \quad \texttt{plugin 'ROS2': load failed.}
+\end{center}
+ROS 2 message packages (\texttt{rosidl\_generator\_py}) depend on Python C-API symbols, but the upstream \texttt{sim\_ros2\_interface} \texttt{CMakeLists.txt} only searches for \texttt{Interpreter} without linking \texttt{Python3::Python}. Under macOS \texttt{dyld}, unlinked Python symbols cannot be resolved at runtime.
+\end{notebox}
+
+\begin{enumerate}[leftmargin=1.5em]
+  \item Clone \texttt{simROS2} into a ROS 2 workspace:
+\begin{cmdbox}
+mkdir -p ~/ros2_ws/src && cd ~/ros2_ws/src
+git clone https://github.com/CoppeliaRobotics/simROS2.git sim_ros2_interface
+\end{cmdbox}
+
+  \item Patch \texttt{CMakeLists.txt} to explicitly link \texttt{Python3::Python}:
+\begin{cmdbox}
+python3 -c '
+import os
+p = os.path.expanduser("~/ros2_ws/src/sim_ros2_interface/CMakeLists.txt")
+s = open(p).read()
+s = s.replace("find_package(Python3 REQUIRED COMPONENTS Interpreter)",
+              "find_package(Python3 REQUIRED COMPONENTS Interpreter Development)", 1)
+s = s.replace("target_link_libraries(simROS2 PRIVATE Boost::boost)",
+              "target_link_libraries(simROS2 PRIVATE Boost::boost Python3::Python)", 1)
+open(p, "w").write(s)
+'
+\end{cmdbox}
+
+  \item Add the lab message types (\texttt{Pose2D}, \texttt{PoseStamped}, \texttt{Clock}, \texttt{Imu}) to \texttt{meta/interfaces.txt}:
+\begin{cmdbox}
+printf '%s\n' \
+  geometry_msgs/msg/PoseStamped \
+  rosgraph_msgs/msg/Clock \
+  sensor_msgs/msg/Imu \
+  geometry_msgs/msg/Pose2D \
+  >> ~/ros2_ws/src/sim_ros2_interface/meta/interfaces.txt
+\end{cmdbox}
+
+  \item Build cleanly inside the Pixi environment (this automatically links the plugin and Lua scripts into CoppeliaSim):
+\begin{cmdbox}
+cd ~/ros2_ws
+export COPPELIASIM_ROOT_DIR="/Applications/coppeliaSim.app/Contents/Resources"
+pixi run --manifest-path ~/ros_jazzy_pixi/pixi.toml \
+  colcon build --symlink-install --cmake-clean-cache
+\end{cmdbox}
+\end{enumerate}
+
+% =============================================================================
+\section{Wrap CoppeliaSim so Applications/Finder Launches Inherit ROS 2}
+% =============================================================================
+
+macOS GUI apps launched from Applications, Finder, or Spotlight do not inherit your terminal's \texttt{AMENT\_PREFIX\_PATH}. Wrapping the launcher (and removing the old bundle signature) lets you open \textbf{CoppeliaSim} directly from Applications:
+
+\begin{enumerate}[leftmargin=1.5em]
+  \item Rename the original binary to \texttt{coppeliaSim\_bin}:
+\begin{cmdbox}
+mv /Applications/coppeliaSim.app/Contents/MacOS/coppeliaSim \
+  /Applications/coppeliaSim.app/Contents/MacOS/coppeliaSim_bin
+\end{cmdbox}
+
+  \item Create the ROS 2 wrapper script at \texttt{/Applications/coppeliaSim.app/Contents/MacOS/coppeliaSim}:
+\begin{cmdbox}
+printf '%s\n' \
+  '#!/usr/bin/env bash' \
+  'if [ -z "$AMENT_PREFIX_PATH" ]; then' \
+  '    MANIFEST="$HOME/ros_jazzy_pixi/pixi.toml"' \
+  '    hook="$("$HOME/.pixi/bin/pixi" shell-hook -s bash --manifest-path "$MANIFEST" 2>/dev/null)"' \
+  '    eval "$hook"' \
+  'fi' \
+  'export ROS_AUTOMATIC_DISCOVERY_RANGE=LOCALHOST' \
+  'export ROS_DOMAIN_ID=42' \
+  'export COPPELIASIM_ROOT_DIR="/Applications/coppeliaSim.app/Contents/Resources"' \
+  'exec "$(dirname "$0")/coppeliaSim_bin" "$@"' \
+  > /Applications/coppeliaSim.app/Contents/MacOS/coppeliaSim
+chmod +x /Applications/coppeliaSim.app/Contents/MacOS/coppeliaSim
+\end{cmdbox}
+
+  \item Remove the stale code signature and quarantine flags so macOS does not report the modified app as damaged:
+\begin{cmdbox}
+rm -rf /Applications/coppeliaSim.app/Contents/_CodeSignature
+xattr -cr /Applications/coppeliaSim.app
+\end{cmdbox}
+\end{enumerate}
+
+% =============================================================================
+\section{Verify Everything Together}
+% =============================================================================
+
+\begin{enumerate}[leftmargin=1.5em]
+  \item In CoppeliaSim, open a ROS 2 lab scene and press \textbf{Play}.
+  \item Confirm there are no \texttt{simROS2} or \texttt{plugin 'ROS2': load failed} errors in the CoppeliaSim console.
+  \item In a second terminal, run \texttt{cd \textasciitilde/ros\_jazzy\_pixi \&\& pixi run ros2 topic list} and confirm the simulation topics appear.
+\end{enumerate}
+
+% =============================================================================
+\section{Daily Workflow (Quick Reference)}
+% =============================================================================
+
+Once setup is complete, you never need to rebuild unless you edit \texttt{sim\_ros2\_interface}. Whenever you want to work on a lab, use two terminals:
+
+\begin{itemize}[leftmargin=1.5em]
+  \item \textbf{Applications / Terminal 1 (Start CoppeliaSim with ROS 2):}
+  Open \textbf{CoppeliaSim} directly from Applications/Spotlight, or run in Terminal:
+\begin{cmdbox}
+/Applications/coppeliaSim.app/Contents/MacOS/coppeliaSim
+\end{cmdbox}
+  \item \textbf{Terminal 2 (Run ROS 2 nodes, topics, and tools):}
+\begin{cmdbox}
+cd ~/ros_jazzy_pixi
+pixi shell
+\end{cmdbox}
+  Inside that shell, run any ROS 2 command (e.g., \texttt{ros2 topic list}, \texttt{ros2 topic echo /odom}, \texttt{ros2 run teleop\_twist\_keyboard teleop\_twist\_keyboard}, or \texttt{plotjuggler}).
+\end{itemize}
+
+\end{document}
