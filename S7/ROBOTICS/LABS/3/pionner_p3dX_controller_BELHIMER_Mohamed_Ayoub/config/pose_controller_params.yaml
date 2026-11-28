@@ -1,0 +1,41 @@
+pose_controller:
+  ros__parameters:
+    # State feedback control gains
+    k_rho: 0.5
+    k_alpha: 1.2
+    k_beta: -0.3
+
+    # Goal tolerances
+    tolerance_dist: 0.1
+    tolerance_theta: 0.05
+
+    # Target pose: (x=6.0, y=3.0, theta=pi/2 ~ 1.5707963)
+    goal_x: 6.0
+    goal_y: 3.0
+    goal_theta: 1.5707963
+
+    # Velocity limits
+    v_max: 0.6
+    w_max: 1.2
+
+enhanced_pose_controller:
+  ros__parameters:
+    # State feedback control gains
+    k_rho: 0.5
+    k_alpha: 1.2
+    k_beta: -0.3
+
+    # Constant linear speed [m/s]
+    v_const: 0.5
+
+    # Goal tolerances
+    tolerance_dist: 0.1
+    tolerance_theta: 0.05
+
+    # Target pose: (x=6.0, y=3.0, theta=pi/2 ~ 1.5707963)
+    goal_x: 6.0
+    goal_y: 3.0
+    goal_theta: 1.5707963
+
+    # Angular velocity limit
+    w_max: 1.2

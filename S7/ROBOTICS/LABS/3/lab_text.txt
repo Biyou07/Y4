@@ -1,0 +1,1541 @@
+ENSIA
+Artificial Intelligence and Data Science
+Semester 7
+
+Introduction to Mobile Robotics
+Lab Assignments
+
+Lab 3: Pose Control of a Differential Drive
+Robot
+
+Academic Year 2026–2027
+Instructor: Dr. A. Khelloufi
+
+ENSIA
+
+Contents
+Goals
+
+2
+
+1 State Feedback Control
+
+2
+
+2 State Feedback Control Enhanced
+
+4
+
+3 Submission Requirements
+
+4
+
+4 Code Implementation
+
+6
+
+Appendices
+
+11
+
+A Modeling Robot Dynamics
+A.1 State Space Models . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+A.1.1 Types of State Space Models . . . . . . . . . . . . . . . . . . . . . . . . . .
+A.1.2 Converting Higher-Order Models Into State Space Form . . . . . . . . . . .
+A.2 Kinematics and Dynamics . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+A.2.1 Generalized Coordinates . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+A.3 Wheeled Robot Motion Models . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+A.3.1 Unicycle/Differential Drive Model . . . . . . . . . . . . . . . . . . . . . . .
+A.3.2 Bicycle/Simple Car Model . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+11
+11
+12
+13
+14
+14
+15
+15
+16
+
+B Motion Control
+B.1 Open-Loop Control . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+B.2 Closed-Loop Control . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+B.3 Stability Analysis . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+B.3.1 Definition of Stability . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+B.3.2 Why Stability Matters . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+B.3.3 State-Space Models and the Transfer Function . . . . . . . . . . . . . . . .
+B.3.4 Stability Conditions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+B.3.5 Stability of the Open-Loop System ẋ = Ax . . . . . . . . . . . . . . . . . .
+B.3.6 Stabilising by State Feedback . . . . . . . . . . . . . . . . . . . . . . . . . .
+B.3.7 Linearisation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+17
+17
+18
+19
+19
+20
+20
+21
+23
+23
+24
+
+1
+
+ENSIA – AI and Data Science
+
+Introduction to Mobile Robotics
+
+Goals
+• Implement a closed-loop controller to drive a differential-drive robot from an initial pose
+to a desired goal pose using ROS 2. The controller must subscribe to the robot’s pose
+information and publish velocity commands to achieve the target position and orientation.
+• Enhance the controller such that the robot performs the same trajectory but with a constant
+forward speed. Generalize the control law for forward and backward velocities.
+
+1. State Feedback Control
+A differential-drive robot, with two wheels mounted on a fixed frame, is characterized by its linear
+and angular velocities (v, ω). The robot operates in a world frame, as shown in Figure 1, where
+its pose is defined by the vector [x, y, θ]T . The target goal pose is similarly given as [xg , yg , θg ]T .
+
+Figure 1: State feedback control onto a reference pose. All angles are given in the positive right-hand
+coordinate frame (counter clockwise).
+To achieve smooth and stable convergence to the goal, we adopt the state feedback control law
+described in [1]. This controller is designed within a coordinate system relative to the robot’s goal.
+Instead of the global pose coordinates [x, y, θ]T , the system’s state is defined by the relative error
+variables illustrated in Figure 1:
+[ρ, α, β]T .
+• ρ: the distance-to-goal,
+• α: the heading error–the angle to the goal relative to the robot’s current orientation.
+• β: the orientation error–the angle between the goal direction and the robot’s goal
+orientation.
+
+Lab 3: Pose Control of a Differential Drive Robot
+
+Page 2
+
+ENSIA – AI and Data Science
+
+Introduction to Mobile Robotics
+
+The state-space representation of the system is described by the following equations:
+ρ̇ = −v cos(α),
+v sin(α)
+α̇ =
+− ω,
+ρ
+v sin(α)
+β̇ = −
+.
+ρ
+To achieve convergence to the goal pose [ρ, α, β]T = 0, we apply the control law:
+v = kρ ρ
+
+(1)
+
+ω = kα α + kβ β
+
+(2)
+
+Strong stability of the closed-loop system (asymptotic stability of the nonlinear system) is guaranteed
+provided the control gains satisfy the following conditions:
+kρ > 0
+
+(3)
+
+kβ < 0
+
+(4)
+
+0 < kα +
+
+5
+2
+kβ − kρ
+3
+π
+
+(5)
+
+Tasks:
+1. Start CoppeliaSim and load scene ENSIA_IMR_Lab3.ttt.
+2. Create a new ROS 2 package and call it pionner_p3dX_controller.
+3. Navigate into ros2_ws/src/pionner_p3dX_controller/src and create a C++ or Python
+file named pionner_p3dX_pose_controller. The node shall be named pose_controller..
+4. Open the file using your preferred text editor and write a subscriber to the topic /pose
+(robot pose) and a publisher to the topic /cmd_vel (velocity command).
+5. What are the respective roles of the callback function and the rclcpp::spin()/rclpy.spin()
+function in a ROS 2 node? Explain how they work together to handle incoming messages
+and execute the corresponding operations.
+6. Implement the close-loop pose controller defined by the equations 1 and 2 in order to drive
+the robot from its initial pose (xo , yo , θo ) to the goal pose (xg , yg , θg ).
+• Use the control law equations to compute linear (cmd_vel_msg.linear.x) and
+angular
+(cmd_vel_msg.angular.z) velocities.
+• Create a parameter file defining kρ , kα , kβ , and the target pose (xg , yg , θg ) (for
+example (6, 3, π/2)).
+• Tune the parameters kρ , kα , and kβ to meet the stability criteria (equations 3, 4
+and 5) and ensure smooth convergence.
+• Build the package and run pose_controller node.
+7. Use the tool ros2 bag to record and play data published on topics in your system:
+Lab 3: Pose Control of a Differential Drive Robot
+
+Page 3
+
+ENSIA – AI and Data Science
+
+Introduction to Mobile Robotics
+
+$ ros2 bag record -a -o Lab3_<<your name>> # recording all topics
+$ ros2 bag play Lab3_<<your name>> # playing the bag file
+8. Using PlotJuggler, plot:
+• control inputs (v, ω) from /cmd_vel,
+• the robot’s pose (x, y, θ) from /pose,
+• the robot’s path in the xy-plane.
+9. Analyze results and conclude.
+
+2. State Feedback Control Enhanced
+Although the presented control law possesses a simple structure and strong stability guarantees, it
+suffers from two practical limitations.
+First, the controller is designed exclusively for forward motion (v > 0). This leads to cumbersome
+and non-optimal paths in scenarios where reversing would be more efficient, such as when the
+goal is behind the robot’s initial orientation. A more general control law that accommodates both
+forward and backward motion is therefore desirable.
+Second, the exponential decay of the linear velocity (v = kρ ρ) as the robot approaches the goal
+results in very slow convergence during the final phase of the trajectory. To rectify this without
+altering the path’s geometry, we can exploit the fact that a path is defined by the ratio of linear to
+angular velocity v/ω. Since the trajectory remains unchanged if the ratio v/ω is kept constant, the
+control outputs can be scaled to maintain a constant forward speed while preserving the original
+path-following behavior.
+
+Tasks:
+1. Create a new ROS 2 node and call it enhanced_pose_controller.
+2. Improve your previous controller code in order to tackle the above shortcomings. The robot
+should be able to drive in both directions depending on where it is located with respect to
+the target pose and it should drive towards it with a constant speed.
+3. Use PlotJuggler to plot the robot’s control inputs (v, ω) from /cmd_vel topic. Plot also
+the robot’s pose (x, y, θ), as well as the robot’s path from /pose topic.
+4. Analyze results and conclude.
+
+3. Submission Requirements
+1. Lab Report: Submit a detailed report documenting the work carried out during this lab.
+The report must include:
+• Answers to all the tasks and questions.
+• Relevant plots illustrating the robot’s pose and path from /pose control inputs from
+/cmd vel.
+• A discussion and analysis of the obtained results.
+• Screenshots demonstrating the successful compilation of your nodes.
+
+Lab 3: Pose Control of a Differential Drive Robot
+
+Page 4
+
+ENSIA – AI and Data Science
+
+Introduction to Mobile Robotics
+
+• Supporting screenshots and any other relevant materials.
+2. ROS Package: Provide the ROS package for Pioneer P3DX controller with your name.
+The package should include:
+• The two developed nodes (C++ or Python).
+• The configuration file.
+• The bag file.
+3. Demo Videos: Submit videos showing robot behavior for closed-loop and enhanced
+closed-loop control.
+Note: On Ubuntu, you can use the keyboard shortcut Ctrl + Alt + Shift + R to start
+and stop screen recording.
+
+Lab 3: Pose Control of a Differential Drive Robot
+
+Page 5
+
+ENSIA – AI and Data Science
+
+Introduction to Mobile Robotics
+
+4. Code Implementation
+Below is a base code template to guide your implementation:
+
+in C++
+#include <rclcpp/rclcpp.hpp>
+#include <geometry_msgs/msg/pose2_d.hpp>
+#include <geometry_msgs/msg/twist.hpp>
+#include <cmath>
+using namespace std;
+class PoseController : public rclcpp::Node
+{
+public:
+PoseController() : Node("pose_controller")
+{
+// Declare and get parameters with default values
+this->declare_parameter("k_rho", 0.0);
+this->declare_parameter("k_alpha", 0.0);
+this->declare_parameter("k_beta", 0.0);
+this->declare_parameter("tolerance_dist", 0.2);
+this->declare_parameter("tolerance_theta", 0.1);
+this->declare_parameter("goal_x", 6.0);
+this->declare_parameter("goal_y", 3.0);
+this->declare_parameter("goal_theta", M_PI/2);
+this->get_parameter("k_rho", k_rho_);
+this->get_parameter("k_alpha", k_alpha_);
+this->get_parameter("k_beta", k_beta_);
+this->get_parameter("tolerance_dist", tolerance_dist_);
+this->get_parameter("tolerance_theta", tolerance_theta_);
+this->get_parameter("goal_x", goal_x_);
+this->get_parameter("goal_y", goal_y_);
+this->get_parameter("goal_theta", goal_theta_);
+// Subscriber to get the robot’s pose
+pose_sub_ =
+// Publisher to send velocity commands
+cmd_vel_pub_ =
+RCLCPP_INFO(this->get_logger(), "Pose Controller Node has started with goal at
+(%.2f, %.2f, %.2f)", goal_x_, goal_y_, goal_theta_);
+}
+private:
+void poseCallback(const geometry_msgs::msg::Pose2D::SharedPtr msg)
+{
+x_ = ;
+y_ = ;
+theta_ = ;
+
+Lab 3: Pose Control of a Differential Drive Robot
+
+Page 6
+
+ENSIA – AI and Data Science
+
+Introduction to Mobile Robotics
+
+// Calculate control errors
+double dx = ;
+double dy = ;
+double dtheta = ;
+double rho = ; // Distance to the goal
+double alpha = ; // Angle to the goal
+double beta = ; // Orientation error
+// Create velocity command message
+// Check if the robot is within tolerance of the goal
+if (rho > tolerance_dist_)
+{
+// Apply control law if robot is far from goal
+}
+else if (std::abs(dtheta) > tolerance_theta_)
+{
+// If position is correct but orientation needs adjusting
+}
+else
+{
+// Stop the robot if goal is reached
+RCLCPP_INFO(this->get_logger(), "Goal Reached!");
+}
+// Publish the velocity command
+}
+double normalizeAngle(double angle)
+{
+while (angle > M_PI)
+angle -= 2.0 * M_PI;
+while (angle < -M_PI)
+angle += 2.0 * M_PI;
+return angle;
+}
+// Control and tolerance parameters
+double k_rho_;
+double k_alpha_;
+double k_beta_;
+double tolerance_dist_;
+double tolerance_theta_;
+// Current Pose
+double x_;
+double y_;
+double theta_;
+
+Lab 3: Pose Control of a Differential Drive Robot
+
+Page 7
+
+ENSIA – AI and Data Science
+
+Introduction to Mobile Robotics
+
+// Goal Pose
+double goal_x_;
+double goal_y_;
+double goal_theta_;
+rclcpp::Subscription<geometry_msgs::msg::Pose>::SharedPtr pose_sub_;
+rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr cmd_vel_pub_;
+rclcpp::TimerBase::SharedPtr timer_;
+};
+int main(int argc, char *argv[]) {
+rclcpp::init(argc, argv);
+rclcpp::spin(std::make_shared<PoseController>());
+rclcpp::shutdown();
+return 0;
+}
+
+Lab 3: Pose Control of a Differential Drive Robot
+
+Page 8
+
+ENSIA – AI and Data Science
+
+Introduction to Mobile Robotics
+
+in python
+import rclpy
+from rclpy.node import Node
+from geometry_msgs.msg import Pose2D, Twist
+import math
+class PoseController(Node):
+def __init__(self):
+super().__init__(’pose_controller’)
+# Declare and get parameters with default values
+self.declare_parameter(’k_rho’, 0.0)
+self.declare_parameter(’k_alpha’, 0.0)
+self.declare_parameter(’k_beta’, 0.0)
+self.declare_parameter(’tolerance_dist’, 0.2)
+self.declare_parameter(’tolerance_theta’, 0.1)
+self.declare_parameter(’goal_x’, 6.0)
+self.declare_parameter(’goal_y’, 3.0)
+self.declare_parameter(’goal_theta’, math.pi/2)
+# Load parameters
+self.k_rho = self.get_parameter(’k_rho’).get_parameter_value().double_value
+self.k_alpha = self.get_parameter(’k_alpha’).get_parameter_value().double_value
+self.k_beta = self.get_parameter(’k_beta’).get_parameter_value().double_value
+self.tolerance_dist =
+self.get_parameter(’tolerance_dist’).get_parameter_value().double_value
+self.tolerance_theta =
+self.get_parameter(’tolerance_theta’).get_parameter_value().double_value
+self.goal_x = self.get_parameter(’goal_x’).get_parameter_value().double_value
+self.goal_y = self.get_parameter(’goal_y’).get_parameter_value().double_value
+self.goal_theta =
+self.get_parameter(’goal_theta’).get_parameter_value().double_value
+# Subscriber to get the robot’s pose
+self.pose_sub =
+# Publisher to send velocity commands
+self.cmd_vel_pub =
+self.get_logger().info("Pose Controller Node has started with goal at ({}, {},
+{})".format(
+self.goal_x, self.goal_y, self.goal_theta))
+def pose_callback(self, msg):
+x =
+y =
+theta =
+# Calculate control errors
+dx =
+dy =
+dtheta =
+Lab 3: Pose Control of a Differential Drive Robot
+
+Page 9
+
+ENSIA – AI and Data Science
+
+Introduction to Mobile Robotics
+
+rho =
+# Distance to the goal
+alpha =
+# Angle to the goal
+beta =
+# Orientation error
+# Create velocity command message
+# Check if the robot is within tolerance of the goal
+if rho > self.tolerance_dist:
+# Apply control law if robot is far from goal
+elif abs(dtehta) > self.tolerance_theta:
+# If position is correct but orientation needs adjusting
+else:
+# Stop the robot if goal is reached
+self.get_logger().info("Goal Reached!")
+# Publish the velocity command
+
+def normalize_angle(self, angle):
+# Normalize angle to be within [-pi, pi]
+while angle > math.pi:
+angle -= 2.0 * math.pi
+while angle < -math.pi:
+angle += 2.0 * math.pi
+return angle
+def main(args=None):
+rclpy.init(args=args)
+node = PoseController()
+rclpy.spin(node)
+node.destroy_node()
+rclpy.shutdown()
+if __name__ == ’__main__’:
+main()
+
+Lab 3: Pose Control of a Differential Drive Robot
+
+Page 10
+
+ENSIA – AI and Data Science
+
+Introduction to Mobile Robotics
+
+A. Modeling Robot Dynamics
+Robots can take on a wide variety of forms: they may have rigid or flexible structures, rely
+on different types of actuators for control, perceive their surroundings through diverse sensing
+modalities, or even exist as purely virtual agents. Despite this variety of embodiments, nearly all
+robotic systems share a fundamental characteristic—they are dynamic agents whose states evolve
+over time. The most immediate example of robot dynamics is physical motion, encompassing
+changes in position, velocity, joint configurations, and sensor orientations. A deep understanding of
+the dynamical properties of a robotic system is essential to its effective design and control. For
+instance, building a bipedal robot capable of walking or running requires detailed modeling of its
+motion to ensure that the mechanical structure and actuators can withstand the forces and torques
+involved. Accurate dynamic models are also critical for designing control strategies that achieve
+stable, efficient, and responsive locomotion[2].
+
+A.1 State Space Models
+A state space model is a mathematical framework for describing the behavior of a dynamical system.
+Every state space model consists of two key components: a state and a model.
+Definition A.1 (State). The state of a dynamical system at time t0 is a minimal set of variables
+x(t0 ) such that, given the control input u(t) for all t ≥ t0 , the future evolution of the system’s state
+x(t) for all t ≥ t0 is uniquely determined, independently of the system’s behavior for t < t0 .
+For example, a simple mobile robot with a rigid body can be represented by a finite and lowdimensional state (e.g., the position and velocity of its center of mass).
+When modeling the dynamics of a robot, it is important to define the state in a way that aligns
+with the specific goals and requirements of the application. In practice, the complexity of the state
+representation can often be reduced by omitting parts of the robot’s dynamics that are irrelevant to
+the problem at hand. For instance, in developing software to enable an autonomous car to navigate
+urban environments, it may be sufficient to model only its position, orientation, and velocity, while
+abstracting away the internal mechanics of the engine, tires, or suspension. Conversely, if the car is
+being designed for high-performance racing, these specifics become critical to accurately capture
+and optimize its behavior.
+The second key component of a state space model is the model itself, which defines the rules and
+equations governing the evolution of the state over time by relating it to a set of inputs and outputs.
+The inputs to a model refer to external factors or control signals that influence the behavior of
+the system (the term input is used interchangeably with control and action in different domains of
+robotics). These can include velocities, forces, torques, voltages, or any other external stimuli that
+drive the system’s dynamics. We assume the input is finite-dimensional and denote it by the vector
+u ∈ Rm .
+The outputs of a model are the observable variables or measurements derived from the system.
+These typically come from sensors or other measurement devices that capture data reflecting the
+system’s state and behavior. For example, a robot equipped with a global navigation satellite
+system (GNSS) sensor may directly measure its position but not its heading. We assume the output
+is finite-dimensional and denote it by the vector y ∈ Rq .
+Definition A.2 (Model). A model describes the evolution of a dynamical system through two
+types of equations: state equations and observation equations. The state equations specify how the
+state evolves as a function of the current state and inputs, while the observation equations define
+how the state influences the measurable outputs.
+State equations are typically modeled as differential equations describing the changes in the state
+
+Lab 3: Pose Control of a Differential Drive Robot
+
+Page 11
+
+ENSIA – AI and Data Science
+
+Introduction to Mobile Robotics
+
+with respect to an independent variable, usually time:
+ẋ(t) = f x(t), u(t) ,
+
+
+(6)
+
+n
+m
+n
+where ẋ(t) = dx(t)
+dt is the time derivative of the state vector x(t), and f : R × R → R is the
+dynamics function of the system.
+
+Observation equations take the form:
+y(t) = h x(t), u(t) ,
+
+
+(7)
+
+where y(t) denotes the output at time t, and h : Rn × Rm → Rq is a function that relates the state
+and inputs to the system’s output.
+Together, the definitions of the state x, input u, output y, and Equations (6) and (7) form the
+state-space model.
+In summary, state-space models provide a powerful formalism for modeling, analyzing, and controlling robotic systems. Mastering and effectively utilizing state-space models is crucial for advancing
+robotic capabilities, enabling systems to autonomously navigate, interact, and adapt in dynamic
+and complex environments.
+A.1.1 Types of State Space Models
+State-space models, as represented in Equations (6) and (7), can be classified based on two key
+properties: linearity and time-invariance.
+A model is said to be time-invariant if the functions f and h do not explicitly depend on time
+t; otherwise, it is time-varying. A model is said to be linear if the functions f and h are linear
+functions of both the state x and control u. If this property does not hold, the system is said to be
+nonlinear.
+Example A.1.1 (Linear time-invariant model). Consider the system:
+ẋ = x + u,
+
+y = x.
+
+(8)
+
+This model is linear and time-invariant because the functions describing the system depend linearly
+on x and u, and there is no explicit time dependence.
+Example A.1.2 (Nonlinear time-varying model). Consider the system:
+ẋ = tx + u,
+
+y = x2 .
+
+(9)
+
+This model is nonlinear due to the quadratic output term x2 , and it is also time-varying because
+the state equation explicitly depends on time through the term tx. Note, however, that the state
+equation ẋ = tx + u is linear. Therefore, the nonlinearity in this system arises solely from the
+output equation, not from the state dynamics.
+Linear models and their standard form.
+Linear models are particularly important due to their analytical tractability and widespread
+applicability. They are commonly expressed in a standard matrix form:
+ẋ(t) = A(t)x(t) + B(t)u(t),
+y(t) = C(t)x(t) + D(t)u(t),
+
+(10)
+
+where the matrices A(t), B(t), C(t), and D(t) are of appropriate dimensions and define the linear
+relationships for the state dynamics and the output. We refer to the matrix A(t) as the dynamics
+matrix, B(t) as the control matrix, C(t) as the output or sensor matrix, and D(t) as the direct or
+Lab 3: Pose Control of a Differential Drive Robot
+
+Page 12
+
+ENSIA – AI and Data Science
+
+Introduction to Mobile Robotics
+
+feed-forward matrix. If the matrices A(t), B(t), C(t), and D(t) are time-invariant, we have a Linear
+Time-Invariant (LTI) system, which is a cornerstone of control theory.
+Despite the inherently nonlinear nature of many real-world systems, linear models are often
+employed due to their simplicity and ease of manipulation. A common practice is to approximate
+nonlinear systems with linear models around specific operating points using a technique known as
+linearization.
+A.1.2 Converting Higher-Order Models Into State Space Form
+The state space model, as described by Equation (6), is represented by first-order differential
+equations. However, many robotics applications involve higher-order differential equation models,
+such as those governing the dynamics of robotic arms or wheeled robots. To analyze and control
+these systems in a unified framework, we can convert higher-order models into first-order state
+space form by introducing additional state variables.
+Consider a linear n-th order differential equation:
+θ(n) + an−1 θ(n−1) + · · · + a1 θ̇ + a0 θ = u,
+
+(11)
+
+where ai ∈ R are constants and θ is the state variable. To convert this differential equation into
+state-space form, that is, a set of first-order differential equations, we can define an n-dimensional
+state vector:
+ 
+
+
+x1
+θ(n−1)
+ 
+ (n−2) 
+ x2 
+θ
+
+
+ . .
+x=
+:=
+(12)
+ .. 
+ . 
+ . 
+ . 
+xn
+
+θ
+
+Given that ẋ1 = θ(n) , ẋ2 = x1 , ẋ3 = x2 , and so on, we can express the higher-order differential
+equation as a system of first-order state-space equations:
+ẋ1
+−an−1 x1 − an−2 x2 − · · · − a1 xn−1 − a0 xn
+1
+  
+  
+x1
+ ẋ2  
+ 0
+ . =
+ +  .  u.
+..
+ .  
+ .
+.
+ .  
+ .
+
+
+
+
+
+
+
+
+ẋn
+
+ 
+
+(13)
+
+0
+
+xn−1
+
+In this particular case, the model is linear, so it can be represented in matrix form:
+
+
+−an−1 −an−2
+ 1
+0
+
+
+0
+1
+
+ẋ(t) = 
+..
+ ..
+ .
+.
+0
+0
+|
+
+···
+···
+···
+..
+.
+···
+
+
+
+ 
+−a1 −a0
+1
+
+0
+0 
+ 
+0
+
+0
+0  x(t) +  .  u(t).
+.
+
+..
+.. 
+.
+.
+. 
+0
+1
+0
+|{z}
+
+{z
+A
+
+}
+
+(14)
+
+B
+
+Example A.2.1 (Converting Newton’s second law to state-space form). Many robotic
+systems, such as robotic arms and wheeled robots, involve dynamics that can be described by
+Newton’s second law. Understanding how to convert these higher-order dynamics into state-space
+form is crucial for controlling and analyzing numerous robotic systems.
+Newton’s second law describes the acceleration response of a mass m resulting from a force F :
+F = ms̈,
+
+Lab 3: Pose Control of a Differential Drive Robot
+
+(15)
+
+Page 13
+
+ENSIA – AI and Data Science
+
+Introduction to Mobile Robotics
+
+where s represents the one-dimensional positional displacement of the mass. Newton’s second law,
+in this form, is a classic example of a double integrator system.
+To convert this second-order differential equation into state-space form, we first define the state
+vector:
+" #
+s
+x :=
+.
+(16)
+ṡ
+Then, we represent the dynamics in state-space form:
+0
+0 1
+ẋ =
+x +  1  u,
+0 0
+| {z }
+|m
+{z }
+"
+
+#
+
+A
+
+
+
+
+
+(17)
+
+B
+
+where u represents the applied force F . By defining the state vector x and expressing the original
+second-order differential equation in this manner, we have effectively transformed it into a set of
+first-order differential equations.
+
+A.2 Kinematics and Dynamics
+Understanding a robot’s physical motion is essential for enabling its autonomous operation. For
+instance, it is crucial to determine how an autonomous vehicle’s actions, such as adjusting throttle
+and steering, affect its state and interaction with the environment. Similarly, it is important to
+understand how a robot manipulator’s movements impact its ability to manipulate objects. A
+crucial aspect of this understanding involves the concepts of kinematics and dynamics, which govern
+the robot’s physical motion and the constraints it must adhere to.
+Definition A.2.1 (Kinematics). Kinematics is the study of the motion of physical systems,
+concerned with describing positions, velocities, and accelerations over time, without reference to
+the forces or torques that produce the motion.
+A robot’s kinematics outline limitations on its motion that are determined by its physical state or
+geometry. These constraints arise from the physical structure of the system, such as joint limits,
+actuator placement, linkage geometry, and the ways in which different components are mechanically
+connected. They determine how the system can move, independent of any external forces.
+Definition A.2.2 (Dynamics). Dynamics is the study of the motion of physical systems as
+determined by the forces and torques acting upon them. It seeks to relate a system’s motion to the
+underlying physical causes of that motion, such as gravity, friction, or applied inputs.
+In the context of robotic or mechanical systems, dynamics are typically governed by Newton’s
+Second Law, which states that the acceleration of a body is proportional to the net force acting on
+it.
+A.2.1 Generalized Coordinates
+A robot’s physical state, also referred to as its configuration, provides a complete specification of
+the position of every point on the robot at a given instant. A configuration can be represented
+using a set of variables known as generalized coordinates, denoted by q(t) ∈ Rng . Generalized
+coordinates form a set of parameters that uniquely describe the robot’s configuration relative to
+a reference frame. Depending on the system, they may include joint angles, Cartesian positions,
+orientations, or other parameters defining the robot’s physical arrangement.
+Importantly, the configuration, namely the generalized coordinates, typically constitutes only a
+part of the full system state x. As discussed in previous sections, in a state-space model, the state
+is a complete set of variables sufficient to determine the system’s future evolution, given an external
+Lab 3: Pose Control of a Differential Drive Robot
+
+Page 14
+
+ENSIA – AI and Data Science
+
+Introduction to Mobile Robotics
+
+input. This usually includes both the generalized coordinates q and their time derivatives, called
+generalized velocities, denoted as q̇. In some systems, the state may also include additional internal
+variables such as actuator dynamics, sensor states, or environmental parameters.
+Example A.2.1 (Rolling wheel).
+The configuration of a wheel rolling on a plane can be represented by three parameters: the contact
+point position coordinates (x, y) and the heading angle θ relative to a fixed reference frame. This
+set of parameters,
+h
+
+q= x y θ
+
+i⊤
+
+(18)
+
+,
+
+constitutes just one possible choice of generalized coordinates to define the wheel’s configuration.
+
+Figure 2: Generalized coordinates for a wheel rolling without slipping on a plane.
+
+A.3 Wheeled Robot Motion Models
+Robots are developed in diverse forms, sizes, and configurations, each featuring distinct mobility
+solutions tailored to specific applications. Among these, wheeled robots are particularly common
+because of their excellent mobility and simple design. In this section, we introduce two fundamental
+kinematic models of wheeled robots: the unicycle (differential-drive) model and the bicycle (car-like)
+model.
+A.3.1 Unicycle/Differential Drive Model
+The unicycle model is one of the simplest kinematic models used for modeling robot motion. It
+assumes that the robot moves forward or backward along its longitudinal axis and can rotate
+around its vertical axis. Figure 3-a illustrates a simplified diagram of the generalized coordinates
+for the unicycle model. Its kinematic model is given by:
+ẋ
+cos θ 0 " #
+  
+ v
+,
+ẏ  =  sin θ 0
+ω
+0
+1
+θ̇
+ 
+
+
+
+
+
+(19)
+
+where v represents the linear velocity and ω denotes the angular velocity.
+While the unicycle model may be a simplified representation of the robot’s true kinematics, it
+remains valuable in many contexts where detailed dynamics are unnecessary. Its main advantage
+lies in its simplicity, which often enables more computationally efficient algorithms. In practice,
+such lower-fidelity models are often used in the early stages of a system’s design or decision-making
+process, and are later refined or supplemented with more accurate models when higher precision is
+required.
+The differential drive model is a variation of the unicycle model. It consists of two wheels fixed on
+a shared rear axle and a passive front wheel that introduces no additional kinematic constraints.
+h
+
+This model uses the same generalized coordinates as the unicycle model, q = x y θ
+Lab 3: Pose Control of a Differential Drive Robot
+
+i⊤
+
+, but also
+Page 15
+
+ENSIA – AI and Data Science
+
+Introduction to Mobile Robotics
+
+Figure 3: Generalized coordinates for unicycle/differential drive robots.
+requires the definition of two geometric parameters: the width of the rear axle, denoted by L, and
+the radius of the wheels, denoted by r, as illustrated in Figure 3-b.
+Instead of using the linear velocity v and the body angular velocity ω as inputs, as in Equation (19),
+the differential drive model can be expressed in terms of the angular velocities of the left and right
+wheels, ωl and ωr . Assuming pure rolling without slipping, the corresponding kinematic model is
+given by:
+  
+
+r
+r
+" #
+ẋ
+2 cos θ 2 cos θ
+  r
+ ωl
+r
+,
+(20)
+ẏ  =  2 sin θ 2 sin θ 
+ωr
+r
+r
+−L
+θ̇
+L
+A.3.2 Bicycle/Simple Car Model
+The bicycle model is a simplified kinematic model commonly used to approximate the motion of
+vehicles with two front-steered wheels and two rear-driven wheels, such as cars or mobile robots
+with similar geometry. The model captures key steering dynamics while assuming no slip at the
+contact points of the wheels. It is called a “bicycle” model because the two front wheels and two
+rear wheels are collapsed into a single front and rear wheel aligned on a common axis, forming a
+virtual two-wheeled vehicle. Compared to the unicycle and differential drive models introduced
+earlier, the bicycle model enforces more realistic kinematic constraints on how the system can
+turn. In particular, it captures the fact that the vehicle must steer to follow curved paths and
+cannot rotate in place. As such, it provides a better approximation for many wheeled systems while
+remaining relatively simple.
+
+Figure 4: (a) The bicycle model approximates the motion of a four-wheeled vehicle by collapsing
+each axle into a single wheel, aligned with the vehicle’s centerline. (b) The same bicycle model
+applied to a car-like vehicle.
+Lab 3: Pose Control of a Differential Drive Robot
+
+Page 16
+
+ENSIA – AI and Data Science
+
+Introduction to Mobile Robotics
+
+Figure 4-a shows the simplified geometry of the bicycle model. Figure 4-b illustrates how the same
+kinematic model can be interpreted in the context of a four-wheeled vehicle. The key idea is that
+both front wheels steer with a common angle ϕ, and the vehicle moves forward with velocity v,
+subject to the no-slip constraints. These assumptions lead to the following differential equations
+characterizing the car model:
+ẋ = v cos θ,
+ẏ = v sin θ,
+v
+θ̇ = tan ϕ,
+L
+
+(21)
+
+where (x, y) is the position of the rear axle center, θ is the heading angle, v is the forward speed, ϕ
+is the steering angle, and L is the length of the wheelbase (the distance between the front and rear
+h
+
+axles). Therefore, we define the state vector as x = x y θ
+h
+
+u= v ϕ
+
+i⊤
+
+i⊤
+
+, and the control input vector as
+
+.
+
+B. Motion Control
+In section A, we introduced the state-space model as a mathematical formulation for representing a
+robot’s dynamics. These models, typically expressed as systems of differential equations, provide a
+foundational framework that describes how the state of a robot evolves over time in response to
+control inputs. In this section, we turn to a fundamental question: given a state-space model of the
+robot, how can we determine the control inputs that will drive it to execute a desired behavior?
+The robots must transform high-level goals into precise physical actions. This process is often
+described hierarchically, spanning decision-making, motion planning, and control. Each layer plays
+a distinct role, yet they remain deeply interconnected.
+At the higher level of this hierarchy, decision-making governs what tasks the robot should perform
+to fulfill its objectives. It involves reasoning over goals, resources, and constraints, often under
+uncertainty. In a self-driving car, for example, this may correspond to deciding when to overtake,
+yield, or reroute. Because it involves strategic considerations rather than immediate actuation,
+decision-making typically unfolds on the order of seconds to minutes. Ultimately, decision-making
+defines the high-level objectives that guide subsequent layers of the hierarchy.
+Once a high-level decision has been made, motion planning determines how to realize it in the
+robot’s physical environment. This is typically expressed in terms of the robot’s configuration
+space and involves finding a collision-free path that respects geometric and kinematic constraints.
+For instance, motion planning may compute a path for a mobile robot to navigate a cluttered
+warehouse without collisions.
+Finally, low-level control ensures that the robot faithfully executes the desired trajectory in the
+physical world by converting the trajectory into actuation commands. Controllers must operate at
+high frequency, applying feedback to correct deviations caused by disturbances, modeling errors, or
+sensor noise. Whether adjusting wheel velocities, joint forces, or thrust vectors, control is what
+closes the loop between higher-level plans and physical reality.
+Together, these layers form the backbone of an autonomous system: decision-making provides
+strategic guidance, motion planning translates that guidance into feasible paths, and control ensures
+that the robot can follow those trajectories in the real world.
+
+B.1 Open-Loop Control
+Open-loop control refers to a system in which the control action is independent of the output
+(current state). The controller sends commands to the actuator(s), but it does not receive feedback
+Lab 3: Pose Control of a Differential Drive Robot
+
+Page 17
+
+ENSIA – AI and Data Science
+
+Introduction to Mobile Robotics
+
+about the resulting motion.
+
+Figure 5: Open-loop control.
+The control is computed purely as a function of time for a given initial state,
+u∗ (t) = ℓ(x(t0 ), t),
+
+(22)
+
+However, because open-loop strategies depend only on time and not on the current system state, they
+are inherently vulnerable to disturbances, modeling errors, and other execution-time uncertainties.
+
+B.2 Closed-Loop Control
+Closed-loop control, also called feedback control, is a system in which the control action depends
+on the output (the system state). The controller continuously adjusts its input based on feedback
+from sensors to achieve the desired output.
+Specifically, rather than seeking an open-loop sequence u(t), closed-loop aims to determine an
+optimal control law of the form
+u(t) = π(x(t), t),
+which explicitly depends on the current state in addition to the current time. Such closed-loop
+control laws are often referred to as feedback controllers or control policies.
+
+Figure 6: Closed-loop control.
+Formally, we define a closed-loop control law as follows:
+Definition B.1 (Closed-loop control law). A closed-loop control law is a function
+π : Rn × R → Rm
+that maps the current state 1 x(t) ∈ Rn and time t ∈ R to a control input u(t) ∈ Rm :
+u(t) = π(x(t), t).
+
+(23)
+
+1
+When the full system state is not directly measurable, closed-loop control laws can be defined based on the
+current measured system outputs, i.e., u(t) = π(y(t), t), where y(t) denotes the measured system output at time t.
+In this case, the closed-loop policy is referred to as an output feedback policy.
+
+Lab 3: Pose Control of a Differential Drive Robot
+
+Page 18
+
+ENSIA – AI and Data Science
+
+Introduction to Mobile Robotics
+
+Under idealized assumptions—that is, exact system models, perfect knowledge of the state, and
+absence of disturbances—the optimal open-loop sequence and the optimal closed-loop policy would
+produce identical behavior. In practice, however, such conditions are rarely met, with real systems
+inevitably facing model uncertainties, external disturbances, and measurement noise. In these
+settings, closed-loop policies offer a distinct advantage, as they continuously adapt the control
+input to the actual system state, thereby providing levels of robustness that are difficult to achieve
+through open-loop strategies.
+The central goal of classical feedback control is to regulate a system’s output so that it tracks a
+desired reference signal. For example, in the context of an autonomous vehicle, one might want to
+control the vehicle’s speed to match a target velocity or maintain a specific distance from another
+vehicle.
+The classical paradigm of feedback control is built on a simple yet powerful principle: continuously
+measure the system output, compare it against the desired reference, and compute corrective actions
+based on the resulting discrepancy, known as the error signal. These corrective inputs are then
+applied to the system, ensuring that the output continually adjusts toward the desired behavior.
+For example, the vehicle accelerates if its speed is below the target speed and decelerates if it is
+above it.
+Classical feedback controllers are generally designed to satisfy a set of fundamental desiderata:
+• Stability: The controller should ensure that the system remains stable. While there are
+several formal notions of stability, the essential requirement is that, loosely speaking, the
+system remains bounded in its behavior.
+• Tracking: The controller should minimize the error between the system output and the
+desired reference, ensuring that the system follows the commanded trajectory as closely as
+possible.
+• Disturbance rejection: The controller should attenuate the effects of external disturbances
+and measurement noise, keeping system performance relatively unaffected by unexpected
+inputs.
+• Robustness: The controller should perform well despite uncertainties in the system model
+or parameters, ensuring reliable operation under varying conditions.
+
+B.3 Stability Analysis
+In control engineering, stability is the first requirement a design must meet. A system is stable
+when a small disturbance or a bounded command cannot make its variables grow without limit:
+the response stays bounded and, ideally, returns to a steady state. A stable closed loop behaves
+predictably; an unstable one is useless, however good its other properties are.
+For a robot this is concrete: stability decides whether an arm settles at its target position or keeps
+oscillating and drives its motors to saturation.
+B.3.1 Definition of Stability
+Two points of view are used:
+• the input–output view (BIBO stability), which looks at the transfer function;
+• the internal view (Lyapunov stability), which looks at the state and at the response to a
+push or an initial error.
+Definition B.2 (BIBO stability). A system is bounded-input bounded-output (BIBO) stable if
+every bounded input produces a bounded output (starting from zero initial conditions).
+Lab 3: Pose Control of a Differential Drive Robot
+
+Page 19
+
+ENSIA – AI and Data Science
+
+Introduction to Mobile Robotics
+
+Definition B.3 (Lyapunov stability). Consider an equilibrium point of ẋ = f (x), taken at x = 0.
+It is
+• stable if a small initial disturbance stays small for all time;
+• asymptotically stable if it is stable and the state returns to 0 as t → ∞;
+• unstable if a small initial disturbance can grow large.
+Type
+
+Response without input
+
+Example
+
+Asymptotically stable
+Marginally stable
+Unstable
+
+goes to 0
+stays bounded, does not decay
+grows without bound
+
+e−t
+sin t
+et
+
+Figure 7: Asymptotically stable (left), marginally stable (center), and unstable (right) system
+responses.
+B.3.2 Why Stability Matters
+1. Safety: it prevents uncontrolled oscillations and unbounded motion that can damage the
+robot or its surroundings.
+2. Reliable operation: a stable system gives a predictable, steady output.
+3. Performance: speed and accuracy only make sense for a stable system.
+4. Design: stability analysis helps to choose controller gains that keep the system stable.
+B.3.3 State-Space Models and the Transfer Function
+A linear time-invariant system (LTI) can be written in state space as
+ẋ = Ax + Bu,
+
+y = Cx + Du,
+
+(24)
+
+where x is the state vector (for a robot joint: position and velocity), u the input (motor torque)
+and y the output (measured position). The transfer function is
+G(s) = C(sI − A)−1 B + D =
+
+C adj(sI − A) B
++ D.
+det(sI − A)
+
+(25)
+
+The characteristic polynomial is det(sI − A). Its roots are the eigenvalues of A, and they are the
+poles of G(s).
+
+Lab 3: Pose Control of a Differential Drive Robot
+
+Page 20
+
+ENSIA – AI and Data Science
+
+Introduction to Mobile Robotics
+
+Example B.1 (A robot joint). A joint is modelled by θ̈ + 3θ̇ + 2θ = u, where θ is its angle and u
+the torque input. With the state x = (θ, θ̇)⊤ :
+"
+
+#
+
+" #
+
+0
+1
+0
+ẋ =
+x+
+u,
+−2 −3
+1
+Then det(sI − A) = s2 + 3s + 2 and G(s) =
+
+1
+s2 + 3s + 2
+
+h
+
+i
+
+y = 1 0 x.
+.
+
+B.3.4 Stability Conditions
+a) Stability based on pole locations
+The location of the roots of the characteristic polynomial (the poles) in the s-plane determines
+stability. Knowing where the roots lie, we can say whether the system is stable, unstable or
+marginally stable (Figure 8).
+
+Figure 8: Stability regions in the s-plane. Poles in the left half plane are stable; poles in the right
+half plane are unstable; poles on the jω-axis are marginal.
+Pole location
+
+Stability
+
+All poles in the left half plane, Re(s) < Stable
+0
+Any pole in the right half plane, Unstable
+Re(s) > 0
+Poles on the jω-axis, Re(s) = 0
+Marginally stable
+
+Response
+Decays
+Grows
+Oscillates
+
+Each pole adds a term to the response. A pole p = σ ± jω gives a term like eσt cos(ωt + ϕ). So the
+sign of the real part σ decides the behaviour: σ < 0 decays, σ > 0 grows, σ = 0 neither (Figure 9).
+b) The Routh–Hurwitz criterion The Routh–Hurwitz criterion tells whether all roots of a
+polynomial are in the left half plane without solving for the roots. Consider
+∆(s) = an sn + an−1 sn−1 + · · · + a1 s + a0 = 0,
+
+an > 0.
+
+(If an < 0, multiply the whole equation by −1; the roots do not change.)
+Necessary condition. If the system is stable, all coefficients must be positive: ai > 0 for
+i = 0, . . . , n (none missing and none negative). This is a quick first check, but it is not sufficient
+for n ≥ 3.
+Lab 3: Pose Control of a Differential Drive Robot
+
+Page 21
+
+ENSIA – AI and Data Science
+
+Introduction to Mobile Robotics
+
+Figure 9: Time response for different pole locations.
+Routh array. Write the coefficients in the first two rows, alternating, then compute each new
+row from the two rows above it:
+Ri,j =
+
+Ri−1,1 Ri−2,j+1 − Ri−2,1 Ri−1,j+1
+Ri−1,1
+sn
+sn−1
+sn−2
+..
+.
+s0
+
+Theorem B.1 (Routh’s criterion).
+
+an
+an−1
+R3,1
+
+an−2
+an−3
+R3,2
+
+(missing entries = 0).
+···
+···
+···
+
+Rn+1,1
+
+• The number of sign changes in the first column equals the number of roots in the right half
+plane.
+• The system is stable if and only if all elements of the first column are positive (no sign
+change).
+Example B.2 (A stable system). s3 + 2s2 + 3s + 4 = 0:
+1
+3
+2
+4
+2·3−1·4
+1
+=1 0
+s
+2
+1·4−2·0
+=4
+s0
+1
+The first column 1, 2, 1, 4 is positive: the system is stable.
+Example B.3 (An unstable system). s3 + s2 + 2s + 8 = 0 has all coefficients positive, but:
+s3
+s2
+
+s3
+s2
+s1
+s0
+
+1
+1
+1·2−1·8
+= −6
+1
+8
+
+2
+8
+0
+
+The first column 1, 1, −6, 8 has two sign changes: two roots are in the right half plane, so the system
+is unstable.
+Lab 3: Pose Control of a Differential Drive Robot
+
+Page 22
+
+ENSIA – AI and Data Science
+
+Introduction to Mobile Robotics
+
+For a second-order polynomial a2 s2 + a1 s + a0 the test is simple: the system is stable if and only if
+all three coefficients have the same sign.
+B.3.5 Stability of ẋ = Ax
+Without input u, the solution of ẋ = Ax is x(t) = eAt x(0). If A is diagonalisable with eigenvalues
+P
+λi and eigenvectors vi , then x(t) = i ci eλi t vi . Since each eigenvalue of A gives a term like eλt in
+the state, so the eigenvalues decide stability, exactly as poles do:
+• all eigenvalues have Re(λ) < 0: asymptotically stable;
+• at least one eigenvalue has Re(λ) > 0: unstable;
+• eigenvalues on the imaginary axis Re(λ) = 0: marginally stable.
+Example B.4 (Checking stability from A).
+"
+
+#
+
+0
+1
+(a) The robot joint of Example B.1, A =
+: det(sI − A) = s2 + 3s + 2 = (s + 1)(s + 2),
+−2 −3
+λ = −1, −2. Both are negative: asymptotically stable.
+"
+
+#
+
+0 1
+(b) A =
+: s2 − s − 2 = (s − 2)(s + 1), λ = 2, −1. One is positive: unstable.
+2 1
+"
+
+#
+
+0 1
+(c) A =
+: s2 + 4 = 0, λ = ±2j. On the imaginary axis: marginally stable.
+−4 0
+Routh–Hurwitz applied to det(sI − A): There is no need to compute the eigenvalues: expand
+det(sI − A) and apply the Routh test to its coefficients. 
+
+0
+1
+0
+
+
+0
+1  we get det(sI − A) =
+Example B.5 (Using the Routh test on A). For A =  0
+−4 −3 −2
+3
+2
+s + 2s + 3s + 4. This is the polynomial of Example B.2, whose first column 1, 2, 1, 4 is positive.
+So A is stable.
+B.3.6 Stabilising by State Feedback
+An unstable system can be stabilised by feeding back the state: u = −Kx . The closed loop is
+ẋ = (A − BK)x,
+so we choose K such that the eigenvalues of A − BK are in" the #left half plane.
+0 1
+Example B.6 (Stabilising an unstable plant). Take A =
+(eigenvalues ±1: unstable) and
+1 0
+" #
+
+B=
+
+0
+. With K = [k1 k2 ]:
+1
+"
+
+#
+
+0
+1
+A − BK =
+,
+1 − k1 −k2
+
+det(sI − A + BK) = s2 + k2 s + (k1 − 1).
+
+By the second-order rule the system is stable if k2 > 0 and k1 > 1. To place the poles at −2 and
+−3 we need s2 + 5s + 6, so k2 = 5 and k1 = 7 (Fig. 10).
+
+Lab 3: Pose Control of a Differential Drive Robot
+
+Page 23
+
+ENSIA – AI and Data Science
+
+Introduction to Mobile Robotics
+
+Figure 10: Response x1 (t) from x(0) = (0.1, 0): unstable open loop (dashed) and stabilised closed
+loop with K = [7 5] (solid).
+B.3.7 Linearisation
+Many physical systems, including robots, are described by nonlinear differential equations. Although
+nonlinear models provide a more general description of system dynamics, their analysis and control
+design can be mathematically challenging. Linearisation is therefore commonly used to approximate
+a nonlinear system by a linear model in the neighborhood of a particular operating point. Consider
+a general nonlinear system described by
+ẋ = f (x, u),
+
+y = h(x, u),
+
+(26)
+
+where x ∈ Rn is the state vector, u ∈ Rm is the input vector, and y ∈ Rp is the output vector. The
+functions f and h describe the system dynamics and output, respectively.
+Equilibrium Point An equilibrium point (or operating point) is a state xe at which the system
+state remains constant over time when a constant input ue is applied. Mathematically, it satisfies
+f (xe , ue ) = 0.
+
+(27)
+
+In other words, if the system starts at the equilibrium state and the equilibrium input is maintained,
+its state does not change with time.
+Linear Approximation To obtain a linear approximation, consider small deviations from the
+equilibrium point:
+δx = x − xe ,
+δu = u − ue .
+(28)
+Using a first-order Taylor series expansion of the nonlinear functions around (xe , ue ), the system
+can be approximated by
+δ ẋ ≈ Aδx + Bδu,
+(29)
+where A and B are the Jacobian matrices of the system dynamics, evaluated at the equilibrium
+point:
+∂f
+∂f
+A=
+,
+B=
+.
+(30)
+∂x (xe ,ue )
+∂u (xe ,ue )
+Similarly, the output equation can be linearized as
+δy ≈ Cδx + Dδu,
+Lab 3: Pose Control of a Differential Drive Robot
+
+(31)
+Page 24
+
+ENSIA – AI and Data Science
+
+Introduction to Mobile Robotics
+
+where
+C=
+
+∂h
+,
+∂x (xe ,ue )
+
+D=
+
+∂h
+.
+∂u (xe ,ue )
+
+(32)
+
+The resulting linear model has the same state-space structure as an LTI system, with constant
+matrices A, B, C, and D. It describes the behavior of the original nonlinear system approximately,
+provided that the deviations from the equilibrium point remain sufficiently small.
+Local Stability Analysis The stability of an equilibrium point can be investigated by examining
+the eigenvalues of the system matrix A. These eigenvalues determine how small deviations from
+the equilibrium point evolve over time. For a linearized continuous-time system, the following
+conditions apply:
+• Asymptotically stable equilibrium: If all eigenvalues of A have strictly negative real
+parts, i.e.,
+Re(λi ) < 0,
+∀i,
+(33)
+small deviations from the equilibrium point decay exponentially with time, and the system
+returns to its equilibrium.
+• Unstable equilibrium: If at least one eigenvalue of A has a strictly positive real part, i.e.,
+Re(λi ) > 0,
+
+for at least one i,
+
+(34)
+
+there exists a direction in which small deviations grow with time, making the equilibrium
+unstable.
+• Marginal stability: If all eigenvalues have nonpositive real parts and at least one has a
+zero real part, the linearized system may be marginally stable.
+The state-feedback control law can then be applied to the linearized model as δu = −Kδx, where
+K is the feedback gain matrix. Substituting this control law into the linearized state equation
+yields the closed-loop system
+δ ẋ = Acl δx.
+(35)
+where Acl = A − BK is the Jacobian matrix of the closed-loop nonlinear system, evaluated at the
+equilibrium point. The feedback gain K is designed such that all eigenvalues of A − BK have
+strictly negative real parts, thereby ensuring local asymptotic stability of the equilibrium point of
+the original nonlinear system.
+
+References
+[1] R. Siegwart, I. Nourbakhsh, and D. Scaramuzza, “Introduction to Autonomous Mobile Robots”,
+2nd ed. Cambridge, MA, MIT Press, 2011, Chapter 3.6, p. 91.
+[2] D. Gammelli, J. Lorenzetti, K. Luo, G. Zardini, and M. Pavone, “Principles of Robot Autonomy”,
+preprint, 2026.
+
+Lab 3: Pose Control of a Differential Drive Robot
+
+Page 25
+
+
